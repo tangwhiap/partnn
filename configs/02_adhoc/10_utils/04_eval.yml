@@ -1,0 +1,197 @@
+###################################################################################################
+#################################### Metric Calculation Inputs ####################################
+###################################################################################################
+
+################## Evaluation Profile 1 ###################
+################# Polynomial PP Metrics ###################
+eval/polyhst: 
+  # The evaluation frequency (the higher, the less frequent)
+  # frq/ref: refs/cst/evlfrq
+  # The evaluation pp input space ('x' or 'u')
+  ppinp/space: u
+  # Whether the original x inputs should go through the nn 
+  # pre-prcessor's forward/inverse round trip.
+  ppinp/rndtrp: false
+  # The transformations applied before evaluation
+  pp/type: uidentity
+  # The data splits to the number of points mapping 
+  splits: 
+    # The train split size is 80% of the dataset size
+    train: 20000
+    # The test split size is 20% of the dataset size
+    test: 5000
+    # Generate the same number of normal points as the dataset
+    normal: 25000
+  # The sigmal scale for sampling
+  sigscale: 0.0
+  # The randomization of evaluation indices ('none', 'shuffle', or 'iid')
+  rndmztn: shuffle
+  # Whether to store the evaluated tensors
+  store: false
+
+# Noisy samples for evaluating reconstruction performance
+eval/polyhstnoisy:
+  ref: eval/polyhst
+  # The sigmal scale for sampling
+  sigscale/def: 1.0
+  # No need for normal samples
+  pop: splits/normal
+
+################## Evaluation Profile 2 ###################
+################ Menger Curvature Metric ##################
+# For menger curvature calculations, we should have 
+# "rndmztn = 'none'" and "n" be a multiple of "n_t".
+eval/trajs:
+  # The number of evaluation points
+  n: 500
+  # The evaluation frequency (the higher, the less frequent)
+  # frq/ref: refs/cst/evlfrq
+  # The evaluation pp input space ('x' or 'u')
+  ppinp/space: u
+  # Whether the original x inputs should go through the nn 
+  # pre-prcessor's forward/inverse round trip.
+  ppinp/rndtrp: false
+  # The transformations applied before evaluation
+  pp/type: uidentity
+  # The data splits to the number of points mapping 
+  splits: [train, test]
+  # The sigmal scale for sampling
+  sigscale: 0.0
+  # The randomization of evaluation indices ('none', 'shuffle', or 'iid')
+  rndmztn: none
+  # Whether to store the evaluated tensors
+  store: false
+
+################## Evaluation Profile 3 ###################
+################## Aerosol Metric Input ###################
+eval/aerox:
+  # The evaluation frequency (the higher, the less frequent)
+  # frq/ref: refs/cst/vizfrq
+  # The evaluation pp input space ('x' or 'u')
+  ppinp/space: x
+  # Whether the original x inputs should go through the nn 
+  # pre-prcessor's forward/inverse round trip.
+  ppinp/rndtrp: true
+  # The transformations applied before evaluation
+  pp/type: xidentity
+  # The data splits list ('train', 'test', 'normal', or 'snr')
+  splits: 
+    # The train split size is 80% of the dataset size
+    train: 1000
+    # The test split size is 20% of the dataset size
+    test: 1000
+  # The sigmal scale for sampling
+  sigscale: 0.0
+  # The randomization of evaluation indices ('none', 'shuffle', or 'iid')
+  rndmztn: shuffle
+  # Whether to store the evaluated tensors
+  store: false
+
+###################################################################################################
+###################################### Visualization Inputs #######################################
+###################################################################################################
+
+################## Evaluation Profile 3 ###################
+################### MDS Scatter Plots #####################
+eval/identity:
+  # The evaluation frequency (the higher, the less frequent)
+  # frq/ref: refs/cst/vizfrq
+  # The evaluation pp input space ('x' or 'u')
+  ppinp/space: x
+  # Whether the original x inputs should go through the nn 
+  # pre-prcessor's forward/inverse round trip.
+  ppinp/rndtrp: true
+  # The transformations applied before evaluation
+  pp/type: xidentity
+  # The data splits list ('train', 'test', 'normal', or 'snr')
+  splits: 
+    # The train split size is 80% of the dataset size
+    train: 5000
+    # The test split size is 20% of the dataset size
+    test: 5000
+    # Generate the same number of normal points as the dataset
+    normal: 5000
+  # The sigmal scale for sampling
+  sigscale: 0.0
+  # The randomization of evaluation indices ('none', 'shuffle', or 'iid')
+  rndmztn: shuffle
+  # Whether to store the evaluated tensors
+  store: false
+
+################## Evaluation Profile 4 ###################
+############### Scenario Stacked Bar Plots ################
+# Visualizing the Entire Scenario 0
+eval/snr0:
+  # The number of evaluation points
+  n: 25
+  # The evaluation frequency (the higher, the less frequent)
+  # frq/ref: refs/cst/vizfrq
+  # The data splits list ('train', 'test', 'normal', or 'snr')
+  splits: [snr]
+  # The scenario indices for evaluation
+  snr/idxs: [0]
+  # The sigmal scale for sampling
+  sigscale: 0.0
+  # The evaluation pp input space (either 'x' or 'u')
+  ppinp/space: x
+  # Whether the original x inputs should go through the nn 
+  # pre-prcessor's forward/inverse round trip.
+  ppinp/rndtrp: true
+  # The transformations applied before evaluation
+  pp/type: xidentity
+  # The randomization of evaluation indices ('none', 'shuffle', or 'iid')
+  rndmztn: none
+  # Whether to store the evaluated tensors
+  store: true
+
+# Visualizing the Entire Scenario 1
+eval/snr1/ref: eval/snr0
+eval/snr1/snr/idxs/def: [1]
+
+# Visualizing the Entire Scenario 2
+eval/snr2/ref: eval/snr0
+eval/snr2/snr/idxs/def: [2]
+
+# Visualizing the Entire Scenario 3
+eval/snr3/ref: eval/snr0
+eval/snr3/snr/idxs/def: [3]
+
+# Visualizing the Entire Scenario 4
+eval/snr4/ref: eval/snr0
+eval/snr4/snr/idxs/def: [4]
+
+################## Evaluation Profile 5 ###################
+############### Generating Random Samples #################
+# Generating Random Samples (Set 0)
+eval/randgen0:
+  # The number of evaluation points
+  n: 25
+  # The evaluation frequency (the higher, the less frequent)
+  # frq/ref: refs/cst/vizfrq
+  # The data splits list ('train', 'test', 'normal', or 'snr')
+  splits: [normal]
+  # The sigmal scale for sampling
+  sigscale: 0.0
+  # The evaluation pp input space ('x' or 'u')
+  ppinp/space: x
+  # Whether the original x inputs should go through the nn 
+  # pre-prcessor's forward/inverse round trip.
+  ppinp/rndtrp: true
+  # The transformations applied before evaluation
+  pp/type: xidentity
+  # The randomization of evaluation indices ('none', 'shuffle', or 'iid')
+  rndmztn: none
+  # Whether to store the evaluated tensors
+  store: true
+
+# Generating Random Samples (Set 1)
+eval/randgen1/ref: eval/randgen0
+# Generating Random Samples (Set 2)
+eval/randgen2/ref: eval/randgen0
+# Generating Random Samples (Set 3)
+eval/randgen3/ref: eval/randgen0
+# Generating Random Samples (Set 4)
+eval/randgen4/ref: eval/randgen0
+
+
+

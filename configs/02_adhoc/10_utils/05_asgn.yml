@@ -1,0 +1,119 @@
+assgnmnts:
+  # No re-alignment or re-assignment is necessary
+  same:
+    type: same
+  
+  # Finding the nearst blob in the z space to a point. 
+  # This is Useful for assigning a normal z to 
+  # the closest training blob.
+  z2mufaiss:
+    type: knn
+    k: 1
+    node: z/z/pnts::z/z/mu
+    ref: faiss/exact
+
+  # Finding the nearst blob in the z space to another blob. 
+  # This is Useful for assigning a training blob to the other
+  # closest training blob(s).
+  mu2mufaiss:
+    type: knn
+    k: 4
+    node: z/z/mu
+    ref: faiss/exact
+  
+  # k-means approximate nearst neighbor search
+  mu2mu2faiss:
+    type: knn
+    k: 2
+    node: z/z/mu
+    ref: faiss/kmeans
+
+  # k-means approximate nearst neighbor search with 
+  # product quantization
+  mu2mu3faiss:
+    type: knn
+    k: 2
+    node: z/z/mu
+    ref: faiss/kmeansqntzd
+
+  # The torch varaint of the same assignments
+  z2mu:
+    type: knn
+    k: 1
+    node: z/z/pnts::z/z/mu
+    lib: torch
+    # GPU memory in Mega-Bytes per seed
+    ram/mb: 100
+
+  mu2mu:
+    type: knn
+    k: 101
+    node: z/z/mu
+    lib: torch
+    # GPU memory in Mega-Bytes per seed
+    ram/mb: 100
+
+faiss:
+  exact:
+    # The approximate nearst neighbor library 
+    lib: faiss
+
+    # Brute-force search against all the database
+    index: IndexFlatL2
+
+  kmeans:
+    # The approximate nearst neighbor library
+    lib: faiss
+
+    # Performing k-means on the database
+    index: IndexIVFFlat
+
+    # Applying no quantization before k-means
+    quantizer: IndexFlatL2
+
+    # The high-level index metric (not the quantizer)
+    metric: METRIC_L2
+
+    # The number of clusters/centroids for the high-level k-means
+    # As a rule of thumb, if you have N points and you want to 
+    # choose C clusters, set C such that
+    #     N / 256 <= C <= N / 39
+    # source: 
+    #     https://github.com/facebookresearch/faiss/wiki/FAQ
+    nlist: 200
+
+    # The number of closest clusters to search for each query
+    nprobe: 2
+
+  kmeansqntzd:
+    # The approximate nearst neighbor library
+    lib: faiss
+
+    # Performing k-means on the database
+    index: IndexIVFPQ
+
+    # Bad interface: we give it a "Flat" quantizer and it 
+    # will instantiate a "PQ" quantizer itself out of it.
+    quantizer: IndexFlatL2
+
+    # The number of clusters/centroids for the high-level k-means
+    # As a rule of thumb, if you have N points and you want to 
+    # choose C clusters, set C such that
+    #     N / 256 <= C <= N / 39
+    # source: 
+    #     https://github.com/facebookresearch/faiss/wiki/FAQ
+    nlist: 200
+
+    # Number of segments for product quantization (e.g., if you 
+    # have a 128-d vector data and want to perform PQ on each 2 
+    # dimensions, you will have M = 128 / 2 = 64 segments).
+    M: 2
+
+    # The number of bits to encode each segment.
+    nbits: 8
+
+    # The high-level index metric (not the quantizer)
+    metric: METRIC_L2
+
+    # The number of closest clusters to search for each query
+    nprobe: 2

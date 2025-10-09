@@ -1,0 +1,602 @@
+# Notes: 
+#   This file is an conditonal labeling update to `12_utils/10_eval.yml`.
+#   This file focuses on mass fraction quantile classes as labels.
+
+###################################################################################################
+#################################### Metric Calculation Inputs ####################################
+###################################################################################################
+
+################## Evaluation Profile 1 ###################
+################# Polynomial PP Metrics ###################
+eval/polyhst: 
+  # The evaluation frequency (the higher, the less frequent)
+  # frq/ref: refs/cst/evlfrq
+  # The evaluation pp input space ('x' or 'u')
+  ppinp/space: u
+  # Whether the original x inputs should go through the nn 
+  # pre-prcessor's forward/inverse round trip.
+  ppinp/rndtrp: false
+  # The transformations applied before evaluation
+  pp/type: uidentity
+  # The data splits and variants configuration
+  splits:
+    # The train split size is 80% of the dataset size
+    train/n: 20000
+    # The train split variational label noise injection scale
+    # train/lbl/sigscale: 0
+    # The train split decoded variants
+    train/vrnts/ref: vrnts/train
+    
+    # The test split size is 20% of the dataset size
+    test/n: 5000
+    # The test split variational label noise injection scale
+    # test/lbl/sigscale: 0
+    # The test split decoded variants
+    test/vrnts/ref: vrnts/test
+    
+    # Generate the same number of normal points as the dataset
+    normal/n: 25000
+    # The normal split variational label noise injection scale
+    # normal/lbl/sigscale: 0
+    # The normal split decoded variants
+    normal/vrnts/ref: vrnts/normal
+
+  # The randomization of evaluation indices ('none', 'shuffle', or 'iid')
+  rndmztn: shuffle
+  # Whether to store the evaluated tensors
+  store: false
+
+# Noisy samples for evaluating reconstruction performance
+eval/polyhstnoisy:
+  ref: eval/polyhst
+  # The sigma scales for sampling
+  def:
+    # splits/train/lbl/sigscale: 1.0
+    splits/train/vrnts/rcnst/ltnt/sigscale: 1.0
+    # splits/test/lbl/sigscale: 1.0
+    splits/test/vrnts/rcnst/ltnt/sigscale: 1.0
+    # splits/normal/lbl/sigscale: 1.0
+    splits/normal/vrnts/genr/ltnt/sigscale: 1.0
+    splits/normal/vrnts/gaus/ltnt/sigscale: 1.0
+
+  # No need for normal samples
+  pop: splits/normal
+
+################## Evaluation Profile 2 ###################
+################ Menger Curvature Metric ##################
+# For menger curvature calculations, we should have 
+# "rndmztn = 'none'" and "n" be a multiple of "n_t".
+eval/trajs:
+  # The number of evaluation points
+  n: 500
+  # The evaluation frequency (the higher, the less frequent)
+  # frq/ref: refs/cst/evlfrq
+  # The evaluation pp input space ('x' or 'u')
+  ppinp/space: u
+  # Whether the original x inputs should go through the nn 
+  # pre-prcessor's forward/inverse round trip.
+  ppinp/rndtrp: false
+  # The transformations applied before evaluation
+  pp/type: uidentity
+  # The data splits to the number of points mapping 
+  splits: [train, test]
+  # The sigma scale for sampling
+  sigscale: 0.0
+  # The randomization of evaluation indices ('none', 'shuffle', or 'iid')
+  rndmztn: none
+  # Whether to store the evaluated tensors
+  store: false
+
+################## Evaluation Profile 3 ###################
+################## Aerosol Metric Input ###################
+eval/xaero:
+  # The evaluation frequency (the higher, the less frequent)
+  # frq/ref: refs/cst/vizfrq
+  # The evaluation pp input space ('x' or 'u')
+  ppinp/space: x
+  # Whether the original x inputs should go through the nn 
+  # pre-prcessor's forward/inverse round trip.
+  ppinp/rndtrp: true
+  # The transformations applied before evaluation
+  pp/type: xidentity
+  # The data splits list ('train', 'test', 'normal', or 'snr')
+  splits: 
+    # The train split size is 80% of the dataset size
+    train: 1000
+    # The test split size is 20% of the dataset size
+    test: 1000
+  # The sigma scale for sampling
+  sigscale: 0.0
+  # The randomization of evaluation indices ('none', 'shuffle', or 'iid')
+  rndmztn: shuffle
+  # Whether to store the evaluated tensors
+  store: false
+
+################## Evaluation Profile 4 ###################
+################# Realism Metric Inputs ###################
+# The x-space realism inputs
+eval/xrealsim:
+  # The evaluation frequency (the higher, the less frequent)
+  # frq/ref: refs/cst/vizfrq
+  # The evaluation pp input space ('x' or 'u')
+  ppinp/space: x
+  # Whether the original x inputs should go through the nn
+  # pre-prcessor's forward/inverse round trip.
+  ppinp/rndtrp: true
+  # The transformations applied before evaluation
+  pp/type: xidentity
+    # The data splits list ('train', 'test', 'normal', or 'snr')
+  splits:
+    # The test split size is 20% of the dataset size
+    test/n: 5000
+    # The test split variational label noise injection scale
+    # test/lbl/sigscale: 0
+    # The test split decoded variants
+    test/vrnts/ref: vrnts/test
+    
+    # Generate the same number of normal points as the dataset
+    normal/n: 5000
+    # The normal split variational label noise injection scale
+    # normal/lbl/sigscale: 0
+    # The normal split decoded variants
+    normal/vrnts/ref: vrnts/normal
+    normal/vrnts/genr/lbl/split/def: test
+    normal/vrnts/gaus/lbl/split/def: test
+    normal/vrnts/gaus/ltnt/mean/type/def: test
+    normal/vrnts/gaus/ltnt/cov/type/def: test
+  
+  # The randomization of evaluation indices ('none', 'shuffle', or 'iid')
+  rndmztn: shuffle
+  # Whether to store the evaluated tensors
+  store: false
+
+# The u-space realism inputs
+eval/urealsim:
+  ref: eval/polyhst
+  def: 
+    splits:
+      # The test split size is 20% of the dataset size
+      test/n: 5000
+      # Generate the same number of normal points as the dataset
+      normal/n: 5000
+      normal/vrnts/genr/lbl/split: test
+      normal/vrnts/gaus/lbl/split: test
+      normal/vrnts/gaus/ltnt/mean/type: test
+      normal/vrnts/gaus/ltnt/cov/type: test
+  pop: splits/train
+
+###################################################################################################
+###################################### Visualization Inputs #######################################
+###################################################################################################
+
+################## Evaluation Profile 5 ###################
+################### MDS Scatter Plots #####################
+eval/identity:
+  # The evaluation frequency (the higher, the less frequent)
+  # frq/ref: refs/cst/vizfrq
+  # The evaluation pp input space ('x' or 'u')
+  ppinp/space: x
+  # Whether the original x inputs should go through the nn 
+  # pre-prcessor's forward/inverse round trip.
+  ppinp/rndtrp: true
+  # The transformations applied before evaluation
+  pp/type: xidentity
+  # The data splits list ('train', 'test', 'normal', or 'snr')
+  splits:
+    # The train split size is 80% of the dataset size
+    train/n: 5000
+    # The train split variational label noise injection scale
+    # train/lbl/sigscale: 0
+    # The train split decoded variants
+    train/vrnts/ref: vrnts/train
+    
+    # The test split size is 20% of the dataset size
+    test/n: 5000
+    # The test split variational label noise injection scale
+    # test/lbl/sigscale: 0
+    # The test split decoded variants
+    test/vrnts/ref: vrnts/test
+    
+    # Generate the same number of normal points as the dataset
+    normal/n: 5000
+    # The normal split variational label noise injection scale
+    # normal/lbl/sigscale: 0
+    # The normal split decoded variants
+    normal/vrnts/ref: vrnts/normal
+
+  # The randomization of evaluation indices ('none', 'shuffle', or 'iid')
+  rndmztn: shuffle
+  # Whether to store the evaluated tensors
+  store/incs: 
+    - space: y
+
+################## Evaluation Profile 6 ###################
+############### Scenario Stacked Bar Plots ################
+# Visualizing the Entire Scenario 0
+eval/snr0:
+  # The number of evaluation points
+  n: 25
+  # The evaluation frequency (the higher, the less frequent)
+  # frq/ref: refs/cst/vizfrq
+  # The data splits list ('train', 'test', 'normal', or 'snr')
+  splits: [snr]
+  # The scenario indices for evaluation
+  snr/idxs: [0]
+  # The sigma scale for sampling
+  sigscale: 0.0
+  # The evaluation pp input space (either 'x' or 'u')
+  ppinp/space: x
+  # Whether the original x inputs should go through the nn 
+  # pre-prcessor's forward/inverse round trip.
+  ppinp/rndtrp: true
+  # The transformations applied before evaluation
+  pp/type: xidentity
+  # The randomization of evaluation indices ('none', 'shuffle', or 'iid')
+  rndmztn: none
+  # Whether to store the evaluated tensors
+  store: true
+
+# Visualizing the Entire Scenario 1
+eval/snr1/ref: eval/snr0
+eval/snr1/snr/idxs/def: [1]
+
+# Visualizing the Entire Scenario 2
+eval/snr2/ref: eval/snr0
+eval/snr2/snr/idxs/def: [2]
+
+# Visualizing the Entire Scenario 3
+eval/snr3/ref: eval/snr0
+eval/snr3/snr/idxs/def: [3]
+
+# Visualizing the Entire Scenario 4
+eval/snr4/ref: eval/snr0
+eval/snr4/snr/idxs/def: [4]
+
+################## Evaluation Profile 7 ###################
+############### Generating Random Samples #################
+# Generating Random Samples (Set 0)
+eval/randgen0:
+  # The evaluation frequency (the higher, the less frequent)
+  # frq/ref: refs/cst/vizfrq
+  # The data splits list ('train', 'test', 'normal', or 'snr')
+  splits:
+    # The normal split size
+    normal/n: 25
+    # The normal split variational label noise injection scale
+    # normal/lbl/sigscale: 0
+    # The normal split decoded variants
+    normal/vrnts/genr/ref: vrnts/nrmqntl/genr0
+  
+  # The evaluation pp input space ('x' or 'u')
+  ppinp/space: x
+  # Whether the original x inputs should go through the nn 
+  # pre-prcessor's forward/inverse round trip.
+  ppinp/rndtrp: true
+  # The transformations applied before evaluation
+  pp/type: xidentity
+  # The randomization of evaluation indices ('none', 'shuffle', or 'iid')
+  rndmztn: none
+  # Whether to store the evaluated tensors
+  store: true
+
+# Generating Random Samples (Set 1)
+eval/randgen1/ref: eval/randgen0
+eval/randgen1/splits/normal/vrnts/genr/lbl/y/def: [[0, 1, 0, 0]]
+# Generating Random Samples (Set 2)
+eval/randgen2/ref: eval/randgen0
+eval/randgen2/splits/normal/vrnts/genr/lbl/y/def: [[0, 0, 1, 0]]
+# Generating Random Samples (Set 3)
+eval/randgen3/ref: eval/randgen0
+eval/randgen3/splits/normal/vrnts/genr/lbl/y/def: [[0, 0, 0, 1]]
+# Generating Random Samples (Set 4)
+eval/randgen4/ref: eval/randgen0
+eval/randgen4/splits/normal/vrnts/genr/lbl/y/def: [[1, 0, 0, 0]]
+
+################## Evaluation Profile 6 ###################
+################ Aerosol PP Measurements ##################
+eval/yaero: 
+  # The evaluation frequency (the higher, the less frequent)
+  # frq/ref: refs/cst/evlfrq
+  # The evaluation pp input space ('x' or 'u')
+  ppinp/space: x
+  # Whether the original x inputs should go through the nn 
+  # pre-prcessor's forward/inverse round trip.
+  ppinp/rndtrp: true
+
+  # The transformations applied before evaluation
+  pp/type: aeromeasures
+  # The physical processes to be computationally measured
+  pp/measures: [m_chmprthst, n_prthst, ccn_cdf, qs_pop, qs_prt, qscs_prt, 
+    qa_pop, qa_prt, qacs_prt, frznfrac_tmp, logfrznfrac_tmp]
+  # The minimum epsilon value for the CDF interval.
+  pp/aeroccn/eps_histmin: 1e-3
+  # The maximum epsilon value for the CDF interval.
+  pp/aeroccn/eps_histmax: 1e-1
+  # The number of bins to divide the log-epsilon interval into.
+  pp/aeroccn/n_epshist: 100
+  # The temperature used to compute the critical relative humidity values; 
+  # the `A` factor in the computation relies on this temperature.
+  pp/aeroccn/tmprtr_sclr: 287.0
+  # The number of newtonian root finding iterations to compute the critical diameters.
+  pp/aeroccn/void_kappa: 0.0
+  # The number of newtonian root finding iterations to compute the critical diameters.
+  pp/aeroccn/n_rfiters: 150
+  # The relative update size stopping threshold for the newtonian root finder.
+  pp/aeroccn/e_rfiters: 1e-10
+  # The evaluation mini-batch size for computing the metric
+  pp/aeroccn/eval/bs: 512
+  # Whether to be strict about the newton root finding convergence
+  pp/aeroccn/strict: true
+  # The optical wave length for measuring the optical efficiency properties.
+  pp/aeroopt/wave_length: [300e-9, 400e-9, 500e-9, 600e-9, 700e-9, 800e-9, 900e-9, 1000e-9]
+  # The number of iterations needed for the mie sequence summations to converge.
+  pp/aeroopt/n_max: 220
+  # The optical refraction coefficient for particles with zero volume.
+  pp/aeroopt/void_refr: "'1.5+0.0j'"
+  # The evaluation mini-batch size for computing the metric
+  pp/aeroopt/eval/bs: 64
+  # The lower end of the the temperature range in Celsius.
+  # Usually, this value should be around -40 degrees.
+  pp/aeroinp/tmprtr_inpmin: -40.0
+  # The higher end of the the temperature range in Celsius.
+  # Usually, this value should be around 0 degrees.
+  pp/aeroinp/tmprtr_inpmax: 0.0
+  # The number of temperature bins.
+  pp/aeroinp/n_tmprtr: 100
+  # The evaluation mini-batch size for computing the metric
+  pp/aeroinp/eval/bs: 512
+
+  # The data splits to the number of points mapping 
+  splits: 
+    # The train split size is 80% of the dataset size
+    train/n: 1000
+    # The train split variational label noise injection scale
+    # train/lbl/sigscale: 0
+    # The train split decoded variants
+    train/vrnts/ref: vrnts/train
+
+    # The test split size is 20% of the dataset size
+    test/n: 1000
+    # The test split variational label noise injection scale
+    # test/lbl/sigscale: 0
+    # The test split decoded variants
+    test/vrnts/orig/ref: vrnts/test/orig
+    test/vrnts/rcnst/ref: vrnts/test/rcnst
+    test/vrnts/znrm/ref: vrnts/hdnltnt/znrm
+    test/vrnts/zgus/ref: vrnts/hdnltnt/zgus
+    test/vrnts/yknn/ref: vrnts/hdnltnt/yknn
+    
+    # Generate the same number of normal points as the dataset
+    normal/n: 1000
+    # The normal split variational label noise injection scale
+    # normal/lbl/sigscale: 0
+    # The normal split decoded variants
+    normal/vrnts/genr/ref: vrnts/normal/genr
+    normal/vrnts/genr0/ref: vrnts/nrmqntl/genr0
+    normal/vrnts/genr1/ref: vrnts/nrmqntl/genr1
+    normal/vrnts/genr2/ref: vrnts/nrmqntl/genr2
+    normal/vrnts/genr3/ref: vrnts/nrmqntl/genr3
+    normal/vrnts/gaus/ref: vrnts/normal/gaus
+    normal/vrnts/gaus0/ref: vrnts/nrmqntl/gaus0
+    normal/vrnts/gaus1/ref: vrnts/nrmqntl/gaus1
+    normal/vrnts/gaus2/ref: vrnts/nrmqntl/gaus2
+    normal/vrnts/gaus3/ref: vrnts/nrmqntl/gaus3
+
+  # The randomization of evaluation indices ('none', 'shuffle', or 'iid')
+  rndmztn: shuffle
+  # Whether to store the evaluated tensors
+  store: true
+
+# ################## Evaluation Profile 7 ###################
+# ########## Balanced Split Polynomial PP Metrics ###########
+# eval/polyhstbal: 
+#   ref: eval/polyhst
+#   # The train split size is 80% of the dataset size
+#   splits/train/def: 5000
+#   # The test split size is 20% of the dataset size
+#   splits/test/def: 5000
+#   # Generate the same number of normal points as the dataset
+#   splits/normal/def: 5000
+
+###########################################################
+#################### Variants Profiles ####################
+###########################################################
+
+##################### Regular Variants ####################
+# The variants generated for the training split
+vrnts/train:
+  # The original variant
+  orig/type: orig
+  # The reconstruction variant
+  rcnst/type: rcnst
+  # The latent variable type:
+  #    'orig': the latent produced by the encoder
+  #    'normal': sample normal
+  rcnst/ltnt/type: orig
+  # The latent sigma scale for noise injection
+  rcnst/ltnt/sigscale: 0.0
+  # The number of latent vectors per sample
+  rcnst/ltnt/n: 1
+  # The label type:
+  #    'orig': the same labels provided to the encoder
+  #    'iid': iid sampling of labels from another split
+  #    'fixed': fixed label value
+  rcnst/lbl/type: orig
+
+# The variants generated for the testing split
+vrnts/test:
+  # The original variant
+  orig/type: orig
+  # The reconstruction variant
+  rcnst/type: rcnst
+  # The latent variable type:
+  #    'orig': the latent produced by the encoder
+  #    'normal': sample normal
+  rcnst/ltnt/type: orig
+  # The latent sigma scale for noise injection
+  rcnst/ltnt/sigscale: 0.0
+  # The number of latent vectors per sample
+  rcnst/ltnt/n: 1
+  # The label type:
+  #    'orig': the same labels provided to the encoder
+  #    'iid': iid sampling of labels from another split
+  #    'fixed': fixed label value
+  rcnst/lbl/type: orig
+
+# The variants generated for the normal split
+vrnts/normal:
+  # The generated variant
+  genr/type: genr
+  # The latent variable type:
+  #    'orig': the latent produced by the encoder
+  #    'normal': sample from a normal distribution
+  genr/ltnt/type: normal
+  # The normal distribution's mean for sampling the latents. 
+  # Should be either 'zero' or an evaluated split.
+  genr/ltnt/mean/type: zero
+  # The normal distribution's cov matrix for sampling the latents. 
+  # Should be either 'identity' or an evaluated split.
+  genr/ltnt/cov/type: identity
+  # The latent sigma scale for noise injection
+  genr/ltnt/sigscale: 1.0
+  # The number of latent vectors per sample
+  genr/ltnt/n: 1
+  # The label type:
+  #    'orig': the same labels provided to the encoder
+  #    'iid': iid sampling of labels from another split
+  #    'fixed': fixed label value
+  genr/lbl/type: iid
+  # The split to sample the labels from in an iid manner
+  genr/lbl/split: train
+
+  gaus/ref: vrnts/normal/genr
+  gaus/def:
+    # The normal distribution's mean for sampling the latents. 
+    # Should be either 'zero' or an evaluated split.
+    ltnt/mean/type: train
+    # The normal distribution's cov matrix for sampling the latents. 
+    # Should be either 'identity' or an evaluated split.
+    ltnt/cov/type: train
+    # The subsampling size of the covariance matrix data. 
+    # A null value will default to using the entire covariance 
+    # data for the related computations.
+    ltnt/cov/nsamp: 100
+
+################## Conditional Variants ###################
+# The variants generated for the normal split with
+# fixed one hot labels
+vrnts/hdnltnt:
+  # The normal z reconstruction variant
+  znrm/type: rcnst
+  # The latent variable type:
+  #    'orig': the latent produced by the encoder
+  #    'normal': sample normal
+  #    'knn': the k nearest label neighbors in another split
+  znrm/ltnt/type: normal
+  # The normal distribution's mean for sampling the latents. 
+  # Should be either 'zero' or an evaluated split.
+  genr0/ltnt/mean/type: zero
+  # The normal distribution's cov matrix for sampling the latents. 
+  # Should be either 'identity' or an evaluated split.
+  genr0/ltnt/cov/type: identity
+  # The latent sigma scale for noise injection
+  znrm/ltnt/sigscale: 1.0
+  # The number of latent vectors per sample
+  znrm/ltnt/n: 2
+  # The label type:
+  #    'orig': the same labels provided to the encoder
+  #    'iid': iid sampling of labels from another split
+  #    'fixed': fixed label value
+  znrm/lbl/type: orig
+
+  zgus/ref: vrnts/hdnltnt/znrm
+  zgus/def:
+    # The normal distribution's mean for sampling the latents. 
+    # Should be either 'zero' or an evaluated split.
+    ltnt/mean/type: train
+    # The normal distribution's cov matrix for sampling the latents. 
+    # Should be either 'identity' or an evaluated split.
+    ltnt/cov/type: train
+    # The subsampling size of the covariance matrix data. 
+    # A null value will default to using the entire covariance 
+    # data for the related computations.
+    ltnt/cov/nsamp: 100
+
+  # The label-knn z reconstruction variant
+  yknn/type: rcnst
+  # The latent variable type:
+  #    'orig': the latent produced by the encoder
+  #    'normal': sample normal
+  #    'knn': the k nearest label neighbors in another split
+  yknn/ltnt/type: knn
+  # The label knn search split
+  yknn/ltnt/split: train
+  # The assignment library
+  yknn/ltnt/asgn/lib: torch
+  # GPU memory in Mega-Bytes per seed
+  yknn/ltnt/asgn/ram/mb: 100
+  # The latent sigma scale for noise injection
+  yknn/ltnt/sigscale: 0.0
+  # The number of latent vectors per sample
+  yknn/ltnt/n: 2
+  # The label type:
+  #    'orig': the same labels provided to the encoder
+  #    'iid': iid sampling of labels from another split
+  #    'fixed': fixed label value
+  yknn/lbl/type: orig
+
+vrnts/nrmqntl:
+  # The generated variant
+  genr0/type: genr
+  # The latent variable type:
+  #    'orig': the latent produced by the encoder
+  #    'normal': sample normal
+  genr0/ltnt/type: normal
+  # The normal distribution's mean for sampling the latents. 
+  # Should be either 'zero' or an evaluated split.
+  genr0/ltnt/mean/type: zero
+  # The normal distribution's cov matrix for sampling the latents. 
+  # Should be either 'identity' or an evaluated split.
+  genr0/ltnt/cov/type: identity
+  # The latent sigma scale for noise injection
+  genr0/ltnt/sigscale: 1.0
+  # The number of latent vectors per sample
+  genr0/ltnt/n: 1
+  # The label type:
+  #    'orig': the same labels provided to the encoder
+  #    'iid': iid sampling of labels from another split
+  #    'fixed': fixed label value
+  genr0/lbl/type: fixed
+  # The split to sample the labels from in an iid manner
+  genr0/lbl/y: [[1, 0, 0, 0]]
+
+  genr1/ref: vrnts/nrmqntl/genr0
+  genr1/lbl/y/def: [[0, 1, 0, 0]]
+
+  genr2/ref: vrnts/nrmqntl/genr0
+  genr2/lbl/y/def: [[0, 0, 1, 0]]
+
+  genr3/ref: vrnts/nrmqntl/genr0
+  genr3/lbl/y/def: [[0, 0, 0, 1]]
+
+  gaus0/ref: vrnts/nrmqntl/genr0
+  gaus0/def:
+    # The normal distribution's mean for sampling the latents. 
+    # Should be either 'zero' or an evaluated split.
+    ltnt/mean/type: train
+    # The normal distribution's cov matrix for sampling the latents. 
+    # Should be either 'identity' or an evaluated split.
+    ltnt/cov/type: train
+    # The subsampling size of the covariance matrix data. 
+    # A null value will default to using the entire covariance 
+    # data for the related computations.
+    ltnt/cov/nsamp: 100
+
+  gaus1/ref: vrnts/nrmqntl/gaus0
+  gaus1/lbl/y/def: [[0, 1, 0, 0]]
+
+  gaus2/ref: vrnts/nrmqntl/gaus0
+  gaus2/lbl/y/def: [[0, 0, 1, 0]]
+
+  gaus3/ref: vrnts/nrmqntl/gaus0
+  gaus3/lbl/y/def: [[0, 0, 0, 1]]

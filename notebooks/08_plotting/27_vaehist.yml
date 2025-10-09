@@ -1,0 +1,475 @@
+figures:
+  mlpgnrl:
+    name: MLP General
+
+    ltntdim:
+      name: Latent Dimension
+      columns:
+      - [nn/dec/d_ltnt, nn/enc/d_ltnt, nn/ltnt/dim]
+
+    klwmu:
+      name: KL Weight (Mu)
+      columns:
+      - [cri/kl/mu/w]
+    klwsig:
+      name: KL Weight (Sigma)
+      columns:
+      - [cri/kl/sig/w]
+
+    encdepth:
+      name: Encoder Depth
+      columns:
+      - [nn/enc/depth]
+    encwidth:
+      name: Encoder Width
+      columns:
+      - [nn/enc/width]
+    decwidth:
+      name: Decoder Width
+      columns:
+      - [nn/dec/width]
+
+    decdepth:
+      name: Decoder Depth
+      columns:
+      - [nn/dec/depth]
+
+    actfun:
+      name: Activation Function
+      columns:
+      - [nn/dec/act, nn/enc/act]
+    sigtnsfmtn:
+      name: Sigma Transformation
+      columns:
+      - [nn/ltnt/sig/tnsfm]
+
+    batchnrm:
+      name: Batch Normalization
+      columns:
+      - [nn/enc/norm, nn/dec/norm]
+
+  mlpppmag:
+    name: MLP PP Magnitude
+
+    magdim:
+      name: Mag Dimension
+      columns:
+      - [nn/pp/magdim]
+
+    magpnrm:
+      name: Mag P-Norm
+      columns:
+      - [nn/pp/magpnrm]
+
+    magexp:
+      name: Mag Exponent
+      columns:
+      - [nn/pp/magexp]
+
+    magshft:
+      name: Mag Shift
+      columns:
+      - [nn/pp/magshft]
+
+    magscl:
+      name: Mag Scale
+      columns:
+      - [nn/pp/magscl]
+
+    magscleps:
+      name: Mag Scale Epsilon
+      columns:
+      - [nn/pp/magscleps]
+  mlpppnrm:
+    name: MLP PP Normalization
+
+    nrmeps:
+      name: Normalization Epsilon
+      columns:
+      - [nn/pp/nrmeps]
+
+    nrmexp:
+      name: Norm Exponent
+      columns:
+      - [nn/pp/nrmexp]
+
+    nrmshft:
+      name: Norm Shift
+      columns:
+      - [nn/pp/nrmshft]
+
+    nrmscl:
+      name: Norm Scale
+      columns:
+      - [nn/pp/nrmscl]
+
+    nrmscleps:
+      name: Norm Scale Epsilon
+      columns:
+      - [nn/pp/nrmscleps]
+
+    nrmscldim:
+      name: Norm Shift/Scale Dim
+      columns:
+      - [nn/pp/nrmscldim]
+  mlpppcnt:
+    name: MLP PP Count
+
+    cnteps:
+      name: Count Epsilon
+      columns:
+      - [nn/pp/cnteps]
+    cntexp:
+      name: Count Exponent
+      columns:
+      - [nn/pp/cntexp]
+    cntshft:
+      name: Count Shift
+      columns:
+      - [nn/pp/cntshft]
+
+    cntscl:
+      name: Count Scale
+      columns:
+      - [nn/pp/cntscl]
+    cntscleps:
+      name: Count Scale Epsilon
+      columns:
+      - [nn/pp/cntscleps]
+
+    cntscldim:
+      name: Count Shift/Scale Dim
+      columns:
+      - [nn/pp/cntscldim]
+
+  cnngnrl:
+    name: CNN General
+
+    ltntdim:
+      name: Latent Dimension
+      columns:
+      - [nn/dec/d_ltnt, nn/enc/d_ltnt, nn/ltnt/dim]
+
+    klwmu:
+      name: KL Weight (Mu)
+      columns:
+      - [cri/kl/mu/w]
+    klwsig:
+      name: KL Weight (Sigma)
+      columns:
+      - [cri/kl/sig/w]
+
+    encconvdepth:
+      name: Encoder's Convolutional Depth
+      columns:
+      - [nn/enc/depth_cnn]
+
+    decconvdepth:
+      name: Decoder's Convolutional Depth
+      columns:
+      - [nn/dec/depth_cnn]
+    encconvchnls:
+      name: Encoder's Convolutional Channels
+      columns:
+      - [nn/enc/nchnls_cnn]
+    decconvchnls:
+      name: Decoder's Convolutional Channels
+      columns:
+      - [nn/dec/nchnls_cnn]
+    enckrnlsize:
+      name: Encoder's Kernel Size
+      columns:
+      - [nn/enc/krnlsz_cnn]
+    deckrnlsize:
+      name: Decoder's Kernel Size
+      columns:
+      - [nn/dec/krnlsz_cnn]
+    encmlpdepth:
+      name: Encoder's MLP Depth
+      columns:
+      - [nn/enc/depth_mlp]
+    decmlpdepth:
+      name: Decoder's MLP Depth
+      columns:
+      - [nn/dec/depth_mlp]
+    encmlpwidth:
+      name: Encoder's MLP Width
+      columns:
+      - [nn/enc/width_mlp]
+    decmlpwidth:
+      name: Decoder's MLP Width
+      columns:
+      - [nn/dec/width_mlp]
+
+    actfun:
+      name: Activation Function
+      columns:
+      - [nn/dec/act, nn/enc/act]
+    sigtnsfmtn:
+      name: Sigma Transformation
+      columns:
+      - [nn/ltnt/sig/tnsfm]
+
+    batchnrm:
+      name: Batch Normalization
+      columns:
+      - [nn/enc/norm, nn/dec/norm]
+
+  cnnppmag:
+    name: CNN PP Magnitude
+
+    magdim:
+      name: Mag Dimension
+      columns:
+      - [nn/pp/magdim]
+
+    magpnrm:
+      name: Mag P-Norm
+      columns:
+      - [nn/pp/magpnrm]
+
+    magexp:
+      name: Mag Exponent
+      columns:
+      - [nn/pp/magexp]
+
+    magshft:
+      name: Mag Shift
+      columns:
+      - [nn/pp/magshft]
+
+    magscl:
+      name: Mag Scale
+      columns:
+      - [nn/pp/magscl]
+
+    magscleps:
+      name: Mag Scale Epsilon
+      columns:
+      - [nn/pp/magscleps]
+  cnnppnrm:
+    name: CNN PP Normalization
+
+    nrmeps:
+      name: Normalization Epsilon
+      columns:
+      - [nn/pp/nrmeps]
+
+    nrmexp:
+      name: Norm Exponent
+      columns:
+      - [nn/pp/nrmexp]
+
+    nrmshft:
+      name: Norm Shift
+      columns:
+      - [nn/pp/nrmshft]
+
+    nrmscl:
+      name: Norm Scale
+      columns:
+      - [nn/pp/nrmscl]
+
+    nrmscleps:
+      name: Norm Scale Epsilon
+      columns:
+      - [nn/pp/nrmscleps]
+
+    nrmscldim:
+      name: Norm Shift/Scale Dim
+      columns:
+      - [nn/pp/nrmscldim]
+  cnnppcnt:
+    name: CNN PP Count
+
+    cnteps:
+      name: Count Epsilon
+      columns:
+      - [nn/pp/cnteps]
+    cntexp:
+      name: Count Exponent
+      columns:
+      - [nn/pp/cntexp]
+    cntshft:
+      name: Count Shift
+      columns:
+      - [nn/pp/cntshft]
+
+    cntscl:
+      name: Count Scale
+      columns:
+      - [nn/pp/cntscl]
+    cntscleps:
+      name: Count Scale Epsilon
+      columns:
+      - [nn/pp/cntscleps]
+
+    cntscldim:
+      name: Count Shift/Scale Dim
+      columns:
+      - [nn/pp/cntscldim]
+
+  
+drop:
+  columns: []
+
+rename:
+  columns:
+    epoch: Epoch
+  colrplc:
+    perf: Performance
+    loss: Loss
+    mse: MSE
+    mae: MAE
+    total: Total
+    net: Total
+    rcnst: Reconstruction
+    ltnt: Latent
+    kl: KL
+    train: Train
+    test: Test
+    mu: Mu
+    sig: Sigma
+    underscale: Under-Scaled
+    overscale: Over-Scaled
+    l2d: L2-Distance
+    l1d: L1-Distance
+    l2sq: L2-Squared
+    l2: L2
+    l1: L2
+
+    m_chmprthst: Speciated Mass
+    n_prthst: Particle Counts
+
+    m_chmprtnrm: Speciated Normalized Mass
+    m_prthstmag: Speciated Mass Magnitude
+    n_prthstnrm: Normalized Particle Count
+
+    reconstruction: Reconstruction
+    realism: Realism
+    urealism: U-Realism
+    xrealism: X-Realism
+    proximity: Proximity
+    congestion: Congestion
+    curvature: Curvature
+
+    sqerr: Sq. Error
+    abserr: Abs. Error
+
+    mean: Mean
+    min: Min
+    median: Median
+    max: Max
+    q5: 5th Percentile
+    q10: 10th Percentile
+    q25: 25th Percentile
+    q75: 75th Percentile
+    q90: 90th Percentile
+    q95: 95th Percentile
+
+    '1': 1st Neighbor
+    '2': 2nd Neighbor
+    '3': 3rd Neighbor
+    '10': 10th Neighbor
+    '100': 100th Neighbor
+
+    tvaprx: TV
+    wass:2,1: Wass (L2)
+    wass:2,2: Wass (L2-Squared)
+    hlngr:bc: Bhattacharya
+    hlngr:h1: Hellinger
+    hlngr:h2: Hellinger-Squared
+    hlngr:tv: Hellinger TV-Approx
+    kl:fwd: KL (Forward)
+    kl:inv: KL (Reverse)
+
+    menger:theta: Menger Angle
+    menger:curve: Menger Curve
+
+    icc:0.5: ICC-Sqrt
+    icc:1: ICC
+    uslcwass: Uniform Slices
+    wslcwass1: SVD Slices
+    wslcwass2:0.0: SVD( 0.0) Slices
+    wslcwass2:0.5: SVD( 0.5) Slices
+    wslcwass2:1.0: SVD( 1.0) Slices
+    wslcwass2:-0.5: SVD(-0.5) Slices
+    wslcwass2:-1.0: SVD(-1.0) Slices
+
+    polyhst: Clean
+    polyhstnoisy: Noisy
+
+    mahal: Mahalanobis
+
+    aerosol: Aerosol
+    # magdim: Mag Dim
+    # magpnrm: Mag P-Norm
+    # magexp: Mag Exponent
+    # magshft: Mag Shift
+    # magscl: Mag Scale
+    # nrmexp: Norm Exponent
+    # nrmshft: Norm Shift
+    # nrmscl: Norm Scale
+    # nrmscldim: Norm Shift/Scale Dim
+    # cntexp: Count Exponent
+    # cntshft: Count Shift
+    # cntscl: Count Scale
+    # cntscldim: Count Shift/Scale Dim
+    ccn_err: CCN Spectrum Error
+    opt_err: Optical Error
+    inp_err: INP Frozen Fraction Curve Error
+    loginp_err: INP Log Frozen Fraction Curve Error
+    qs_relerr: Scattering Efficiency Relative Error
+    qa_relerr: Absorption Efficiency Relative Error
+    n_relerr: Count Relative Error
+    m_chmrelerr: Speciated Mass Relative Error
+    m_relerr: Total Mass Relative Error
+    m_perchmrelerr: Per-Species Mass Relative Error
+
+    exp: Exp
+    explin: Exp-Linear
+
+
+bokeh/global:
+  kind: line
+  xcol: Epoch
+  ycol: Loss/Total
+  huecol: fpidxgrp
+  frame_width: 540
+  frame_height: 310
+  fig_title: 'Ablation: {ablname}'
+  tooltip: [y/mean]
+  x_axis_type: linear
+  x_tick_fmt: eng
+  x_tick_lbls: [0, 5000, 10000, 15000, 20000, 25000, 30000]
+  y_axis_type: log
+  y_tick_fmt:
+  y_tick_lbls:
+
+  ## Light Theme
+  label_color: black
+  label_font: 10pt
+  header_color: black
+  theme:
+  background_color: white
+
+  ## Dark Theme
+  # label_color: white
+  # label_font: 10pt
+  # header_color: white
+  # theme: dark_minimal
+  # background_color: black
+
+
+dashboard:
+  header: The Histogram VAE Problem
+  menu_width: 200
+  majoridcol: fpidxgrp
+  minoridcol: fpidx
+  ncols: 4
+  sharex: true
+  sharey: all
+  colsep: /
+  color_reset: figure
+  colors: ['#001c7f', '#12711c', '#8c0800', '#b1400d', '#591e71', '#592f0d', '#a23582',
+    '#3c3c3c', '#b8850a', '#006374']

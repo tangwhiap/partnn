@@ -1,0 +1,383 @@
+frames:
+  #################################################################################################
+  ####################################### Stacked Bar Plots #######################################
+  #################################################################################################
+
+  #########################################################
+  ################## Non-Processed Bars ###################
+  #########################################################
+  # The frame type
+  stckbar1/type: bar
+  # The frame title
+  stckbar1/title: X0 (Non-Processed)
+  # The number of figure rows in the frame
+  stckbar1/nrows: null
+  # The number of figure columns in the frame
+  stckbar1/ncols: 6
+  # Whether to share the x axis among frame figures
+  stckbar1/sharex: all
+  # Whether to share the y axis among frame figures
+  stckbar1/sharey: all
+  # The columns responsible for color divisions
+  stckbar1/hue_vizcols: []
+  # The columns responsible for figure divisions
+  stckbar1/fig_vizcols: [v_split, v_varname, v_repr]
+  # The set of evaluations to restrict the dashboard to.
+  stckbar1/inc: 
+    - {eid: snr*, chems: all, v_node: m_chmhst}
+  stckbar1/exc: null
+  # The string formatter for the internal figure names/ids
+  stckbar1/fig_namfmt: '{frame_name}/{v_varname}'
+  # The string formatter for the formal figure titles
+  stckbar1/fig_ttlfmt: '{v_varname}'
+  # The translation of `v_repr` field to `glyph_name` for this particular frame
+  stckbar1/vrepr2glyph: {pnts: vas1}
+  # The x axis type for the figures of the frame
+  stckbar1/figkwa/x_axis_type: log
+  # The x axis label of the figures
+  stckbar1/figkwa/x_label: Diameter
+  # The y axis label of the figures
+  stckbar1/figkwa/y_label: Mass
+  # The hue label of the figures
+  stckbar1/figkwa/hue_label: Chemical
+  # The x axis tick formatter
+  stckbar1/figkwa/x_tick_frmtr: diam
+  # The y axis tick formatter
+  stckbar1/figkwa/y_tick_frmtr: mass
+  # The hue values formatter
+  stckbar1/figkwa/hue_tick_frmtr: null
+
+  #########################################################
+  ########### Pre-Processed Normalization Bars ############
+  #########################################################
+  # Here's the translation mapping
+  # x_0: m_chmprthst or m_chmhst
+  # x_1: l02_nonzero
+  # x_2: l06_norm
+  # x_3: l07_normtns
+  # x_4: m_prthstmag
+  # x_5: l03_nrmlzd
+  # x_6: l04_nrmlzd
+  # x_7: m_chmprtnrm
+
+  # The Pre-Processed Normalization Bar Plots
+  stckbar2/ref: frames/stckbar1
+  stckbar2/def:
+    # The frame title
+    title: X1 (PP Normalization)
+    # The set of evaluations to restrict the dashboard to.
+    inc: [{eid: 'snr*', chems: all, v_node: l02_nonzero}]
+    # The translation of `v_repr` field to `glyph_name` for this particular frame
+    vrepr2glyph: {pnts: vas1}
+    # The y axis label of the figures
+    figkwa/y_label: PP Mass
+    # The y axis tick formatter
+    figkwa/y_tick_frmtr: null
+
+  # The Pre-Processed Normalization Bar Plots
+  stckbar3/ref: frames/stckbar2
+  stckbar3/def:
+    # The frame title
+    title: X5 (PP Normalization)
+    # The set of evaluations to restrict the dashboard to.
+    inc: [{eid: 'snr*', chems: all, v_node: l03_nrmlzd}]
+    exc: [{v_varname: abserr}]
+
+  # The Pre-Processed Normalization Bar Plots
+  stckbar4/ref: frames/stckbar2
+  stckbar4/def:
+    # The frame title
+    title: X6 (PP Normalization)
+    # The set of evaluations to restrict the dashboard to.
+    inc: [{eid: 'snr*', chems: all, v_node: l04_nrmlzd}]
+    exc: [{v_varname: abserr}]
+  
+  # The Pre-Processed Normalization Bar Plots
+  stckbar5/ref: frames/stckbar2
+  stckbar5/def:
+    # The frame title
+    title: X7 (PP Normalization)
+    # The set of evaluations to restrict the dashboard to.
+    inc: [{eid: 'snr*', chems: all, v_node: m_chmprtnrm}]
+    exc: [{v_varname: abserr}]
+
+  #########################################################
+  ############# Pre-Processed Maginutde Bars ##############
+  #########################################################
+  # The Pre-Processed Maginutde Bar Plots
+  stckbar6/ref: frames/stckbar1
+  stckbar6/def:
+    # The frame title
+    title: X2 (PP Magnitude)
+    # The set of evaluations to restrict the dashboard to.
+    inc: [{eid: 'snr*', chems: all, v_node: l06_norm}]
+    exc: [{v_varname: abserr}]
+    # The translation of `v_repr` field to `glyph_name` for this particular frame
+    vrepr2glyph: {pnts: vbs2}
+    figkwa/x_range: [All Dimensions]
+    figkwa/x_label: Variable
+    figkwa/hue_label: Bar
+    figkwa/y_label: PP Magnitude
+    figkwa/x_range_padding: 0.1
+    figkwa/x_tick_frmtr: null
+    figkwa/y_tick_frmtr: null
+    figkwa/width: 300
+    figkwa/height: 600
+  stckbar6/pop:
+    - figkwa/x_axis_type
+
+  # The Pre-Processed Maginutde Bar Plots
+  stckbar7/ref: frames/stckbar6
+  stckbar7/def:
+    # The frame title
+    title: X3 (PP Magnitude)
+    # The set of evaluations to restrict the dashboard to.
+    inc: [{eid: 'snr*', chems: all, v_node: l07_normtns}]
+
+  # The Pre-Processed Maginutde Bar Plots
+  stckbar8/ref: frames/stckbar6
+  stckbar8/def:
+    # The frame title
+    title: X4 (PP Magnitude)
+    # The set of evaluations to restrict the dashboard to.
+    inc: [{eid: 'snr*', chems: all, v_node: m_prthstmag}]
+    figkwa/y_range: [-2.0, 2.0]
+
+  #########################################################
+  ############## Chemical Species Bar Plots ###############
+  #########################################################
+  chembars/ref: frames/stckbar1
+  chembars/def:
+    # The frame title
+    title: Chemical Species Bar Plots
+    fig_vizcols: [chems, v_split, v_varname, v_repr]
+    fig_namfmt: '{frame_name}/{v_varname}/{chems}'
+    fig_ttlfmt: '{chems}, {v_varname}'
+    inc: [{eid: 'snr*', v_node: m_chmhst}]
+    exc: [{v_varname: abserr}, {chems: all}]
+    sharey: get_ychemgrp
+  
+  #################################################################################################
+  ############################################ Heatmps ############################################
+  #################################################################################################
+  
+  #########################################################
+  ################ Non-Processed Heatmaps #################
+  #########################################################
+  # The frame type
+  heatmap1/type: hmap
+  # The frame title
+  heatmap1/title: X0 (Non-Processed)
+  # The number of figure rows in the frame
+  heatmap1/nrows: null
+  # The number of figure columns in the frame
+  heatmap1/ncols: 6
+  # Whether to share the x axis among frame figures
+  heatmap1/sharex: all
+  # Whether to share the y axis among frame figures
+  heatmap1/sharey: all
+  # The columns responsible for color divisions
+  heatmap1/hue_vizcols: []
+  # The columns responsible for figure divisions
+  heatmap1/fig_vizcols: [v_split, v_varname, v_repr]
+  # The set of evaluations to restrict the dashboard to.
+  heatmap1/inc: [{eid: 'snr*', chems: all, v_node: m_chmhst}]
+  heatmap1/exc: null
+  # The string formatter for the internal figure names/ids
+  heatmap1/fig_namfmt: '{frame_name}/{v_varname}'
+  # The string formatter for the formal figure titles
+  heatmap1/fig_ttlfmt: '{v_varname}'
+  # The translation of `v_repr` field to `glyph_name` for this particular frame
+  heatmap1/vrepr2glyph: {pnts: hm1}
+  # The x axis type for the figures of the frame
+  heatmap1/figkwa/x_axis_type: log
+  # The y range of values on the figures
+  heatmap1/figkwa/y_range: chem_names
+  # The x range of values on the figures
+  heatmap1/figkwa/x_range: '[min(x_histbins), max(x_histbins)]'
+  # The x axis label of the figures
+  heatmap1/figkwa/x_label: Diameter
+  # The y axis label of the figures
+  heatmap1/figkwa/y_label: Chemicals
+  # The hue label of the figures
+  heatmap1/figkwa/hue_label: Mass
+  # The x axis tick formatter
+  heatmap1/figkwa/x_tick_frmtr: diam
+  # The y axis tick formatter
+  heatmap1/figkwa/y_tick_frmtr: null
+  # The hue values formatter
+  heatmap1/figkwa/hue_tick_frmtr: mass
+
+  #########################################################
+  ######### Pre-Processed Normalization Heatmaps ##########
+  #########################################################
+  # Here's the translation mapping
+  # x_0: m_chmprthst or m_chmhst
+  # x_1: l02_nonzero
+  # x_2: l06_norm
+  # x_3: l07_normtns
+  # x_4: m_prthstmag
+  # x_5: l03_nrmlzd
+  # x_6: l04_nrmlzd
+  # x_7: m_chmprtnrm
+
+  # The Pre-Processed Normalization Heatmaps
+  heatmap2/ref: frames/heatmap1
+  heatmap2/def:
+    title: X1 (PP Normalization)
+    inc: [{eid: 'snr*', chems: all, v_node: l02_nonzero}]
+    figkwa/hue_tick_frmtr: null
+  
+  # The Pre-Processed Normalization Heatmaps
+  heatmap3/ref: frames/heatmap1
+  heatmap3/def:
+    title: X5 (PP Normalization)
+    inc: [{eid: 'snr*', chems: all, v_node: l03_nrmlzd}]
+    # exc: [{v_varname: abserr}]
+    figkwa/hue_tick_frmtr: null
+  
+  # # The Pre-Processed Normalization Heatmaps
+  # heatmap4/ref: frames/heatmap1
+  # heatmap4/def:
+  #   title: X6 (PP Normalization)
+  #   inc: [{eid: 'snr*', chems: all, v_node: l04_nrmlzd}]
+  #   exc: [{v_varname: abserr}]
+  #   figkwa/hue_tick_frmtr: null
+  
+  heatmap5/ref: frames/heatmap1
+  heatmap5/def:
+    title: X7 (PP Normalization)
+    inc: [{eid: 'snr*', chems: all, v_node: m_chmprtnrm}]
+    # exc: [{v_varname: abserr}]
+    figkwa/hue_tick_frmtr: null
+
+  #################################################################################################
+  ####################################### MDS Scatter Plots #######################################
+  #################################################################################################
+  # The frame type
+  sctrplts/type: scatter
+  # The frame title
+  sctrplts/title: MDS Scatter Plot
+  # The number of figure rows in the frame
+  sctrplts/nrows: null
+  # The number of figure columns in the frame
+  sctrplts/ncols: 1
+  # Whether to share the x axis among frame figures
+  sctrplts/sharex: all
+  # Whether to share the y axis among frame figures
+  sctrplts/sharey: all
+  # The columns responsible for color divisions
+  sctrplts/hue_vizcols: [v_split, v_varname, v_repr]
+  # The columns responsible for figure divisions
+  sctrplts/fig_vizcols: []
+  # The set of evaluations to restrict the dashboard to.
+  sctrplts/inc: [{eid: identity}]
+  sctrplts/exc: null,
+  # The string formatter for the internal figure names/ids
+  sctrplts/fig_namfmt: mainsct
+  # The string formatter for the formal figure titles
+  sctrplts/fig_ttlfmt: Scatter Points
+  # The translation of `v_repr` field to `glyph_name` for this particular frame
+  sctrplts/vrepr2glyph: {pnts: sctr, mu: blob, sig: blob, phi: blob}
+  # The x axis type for the figures of the frame
+  sctrplts/figkwa/x_axis_type: linear
+  # The x axis label of the figures
+  sctrplts/figkwa/x_label: MDS1
+  # The y axis label of the figures
+  sctrplts/figkwa/y_label: MDS2
+  # The hue label of the figures
+  sctrplts/figkwa/hue_label: Data Split
+
+color/spec:
+  blue: '#001c7f'
+  orange: '#b1400d'
+  green: '#12711c'
+  red: '#8c0800'
+  purple: '#591e71'
+  brown: '#592f0d'
+  pink: '#a23582'
+  gray: '#3c3c3c'
+  yellow: '#b8850a'
+  cyan: '#006374'
+  black: '#000000'
+  bluelite: '#001c7f'
+  orangelite: '#b1400d'
+  greenlite: '#12711c'
+  redlite: '#8c0800'
+  purplelite: '#591e71'
+  brownlite: '#592f0d'
+  pinklite: '#a23582'
+  graylite: '#3c3c3c'
+  yellowlite: '#b8850a'
+  cyanlite: '#006374'
+  blacklite: '#000000'
+
+color/defaults:
+  train/orig: blue
+  train/rcnst: cyan
+  test/orig: red
+  test/rcnst: pink
+  normal/genr: green
+  train/ltnt: blue
+  test/ltnt: red
+  normal/ltnt: green
+  train/blob: blue
+  test/blob: red
+  SO4: bluelite
+  NO3: orange
+  Cl: green
+  NH4: redlite
+  MSA: purple
+  ARO1: brown
+  ARO2: pink
+  ALK1: graylite
+  OLE1: yellow
+  API1: cyan
+  API2: black
+  LIM1: cyanlite
+  LIM2: orangelite
+  CO3: green
+  Na: brownlite
+  Ca: purplelite
+  OIN: red
+  OC: pinklite
+  BC: gray
+  MOC: yellowlite
+  H2O: blue
+
+renames:
+  cri/kl/w: KL Weight
+  cri/kl/mu/w: KL Weight (Mu)
+  cri/kl/sig/w: KL Weight (Sigma)
+  nn/ltnt/dim: Latent Dimension
+  vid: Visualization
+  i_seed: Seed
+  i_time: Time
+  1x1xtsne: X TSNE
+  1x1ztsne: Z TSNE
+  1x1zpcalr: Z PCA
+  train/orig: Train Original
+  train/rcnst: Train Reconstruction
+  test/orig: Test Original
+  test/rcnst: Test Reconstruction
+  normal/genr: Normal Generated
+  train/ltnt: Train Latent
+  test/ltnt: Test Latent
+  normal/ltnt: Normal Latent
+  train/blob: Train Blob
+  test/blob: Test Blob
+  normal/blob: Normal Blob
+  i_epoch: Training Epoch
+  orig: Original
+  rcnst: Reconstruction
+  01_bar: '1'
+  02_bar: '2'
+  03_bar: '3'
+  04_bar: '4'
+  05_bar: '5'
+  ppidfake: PP Exponent
+  ms/1.0: 1/1
+  ms/0.5: 1/2
+  ms/0.25: 1/4
+  ms/0.125: 1/8
+  abserr: Absolute Error

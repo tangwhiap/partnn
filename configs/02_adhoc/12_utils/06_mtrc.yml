@@ -1,0 +1,191 @@
+metrics:
+  # Point-to-Point Metrics
+  sqerr:
+    type: pnorm
+    pnorm/p: 2
+    pnorm/exp: 2
+    pnorm/rdc: mean
+
+  abserr:
+    type: pnorm
+    pnorm/p: 1
+    pnorm/exp: 1
+    pnorm/rdc: mean
+  
+  relerr:
+    type: rel
+    pnorm/p: 2
+
+  # Point-to-Blob Metrics
+  mahalanobis:
+    type: mahalanobis
+    pnorm/p: 2
+    pnorm/exp: [1, 2]
+    pnorm/rdc: mean
+    name/fmt: mahal:{exp}
+
+  # Blob-to-Blob Metrics
+  tvaprx:
+    type: tv
+    # The approximation method for the TV distance
+    approx: is
+    # The number of slices to sample
+    n: 1024
+    # The mini-batch of points that fit in the memory at one time
+    mb: 32
+  
+  wass:
+    type: wass
+    pnorm/p: 2
+    pnorm/exp: [1, 2]
+    pnorm/rdc: mean
+    name/fmt: wass:{p},{exp}
+  
+  hellinger:
+    type: hellinger
+    vars: [bc, h1, h2, tv]
+    name/fmt: hlngr:{var}
+  
+  kl:
+    type: kl
+    dir: [fwd, inv]
+    name/fmt: kl:{dir}
+  
+  icc:
+    # The intra-class correlation coefficient
+    # https://www.itl.nist.gov/div898/software/dataplot/refman2/auxillar/icc.htm
+    # https://en.wikipedia.org/wiki/Correlation_ratio
+    type: icc
+    exp: [1, 0.5]
+    name/fmt: icc:{exp}
+  
+  # Points Set to Points Set Metrics
+  uslcwass:
+    type: slcdwass
+    # The p-norm to apply after sorting the data and finding the data errors.
+    # These p-norm options are data-specific.
+    pnorm/p: 1
+    pnorm/exp: [1, 2]
+    # The slices are sampled from the normal distribution
+    slc/dstr: normal
+    # The slicing covariance should either be `identity`, `src`, or `trg`.
+    slc/cov/type: identity
+    # The slice vectors are nromalized after sampling w.r.t. a pnorm.
+    slc/pnorm: 2
+    # The number of slices to sample
+    slc/n: 1024
+    # The mini-batch of slices that fit in the memory at one time
+    slc/mb: 32
+    # The naming format
+    name/fmt: uslcwass:{pnorm_exp}
+
+  wslcwass1:
+    ref: metrics/uslcwass
+    def:
+      # The slicing covariance should either be `identity`, `src`, or `trg`.
+      slc/cov/type: trg
+      # The approximations for the slice sampling covariance
+      slc/cov/approx: exact
+      # The subsampling size of the covariance matrix data just for 
+      # estimating the slicing directions. A null value will default to using the 
+      # entire covariance data for the related computations.
+      slc/cov/nsamp: null
+      # The naming format
+      name/fmt: wslcwass1:{pnorm_exp}
+
+  wslcwass2:
+    ref: metrics/uslcwass
+    def:
+      # The slicing covariance should either be `identity`, `src`, or `trg`.
+      slc/cov/type: trg
+      # The approximations for the slice sampling covariance
+      slc/cov/approx: pcalr
+      # The covariance exponent, i.e., the singular values exponent, defaults to 1.
+      slc/cov/exp: [-1.0, -0.5, 0.0, 0.5, 1.0]
+      # The subsampling size of the covariance matrix data just for 
+      # estimating the slicing directions. A null value will default to using the 
+      # entire covariance data for the related computations.
+      slc/cov/nsamp: null
+      # With a non-unit covariance exponent, we have to use a low-rank pca.
+      slc/cov/pcalr/niter: 2
+      # The slightly over-estimated rank of the covariance data
+      slc/cov/pcalr/q: 20
+      # The naming format
+      name/fmt: wslcwass2:{pnorm_exp},{cov_exp}
+  
+  # Trajectory curvature 
+  menger:
+    type: menger
+    vars: [theta, curve]
+    name/fmt: menger:{var}
+
+  # the aerosol ccn (cloud condensation nuclei) spectrum error
+  aeroccn:
+    type: aeroccn
+    # The minimum epsilon value for the CDF interval.
+    aeroccn/eps_histmin: 1e-3
+    # The maximum epsilon value for the CDF interval.
+    aeroccn/eps_histmax: 1e-1
+    # The number of bins to divide the log-epsilon interval into.
+    aeroccn/n_epshist: 100
+    # The temperature used to compute the critical relative humidity values; 
+    # the `A` factor in the computation relies on this temperature.
+    aeroccn/tmprtr_sclr: 287.0
+    # The number of newtonian root finding iterations to compute the critical diameters.
+    aeroccn/void_kappa: 0.0
+    # The number of newtonian root finding iterations to compute the critical diameters.
+    aeroccn/n_rfiters: 150
+    # The relative update size stopping threshold for the newtonian root finder.
+    aeroccn/e_rfiters: 1e-10
+    # The evaluation mini-batch size for computing the metric
+    eval/bs: 512
+    # The metric variables to output
+    vars: [ccn_err]
+    # The name format of the metric variables
+    name/fmt: '{var}'
+
+  # the aerosol optical error
+  aeroopt:
+    type: aeroopt
+    # The optical wave length for measuring the optical efficiency properties.
+    aeroopt/wave_length: 550e-9
+    # The number of iterations needed for the mie sequence summations to converge.
+    aeroopt/n_max: 120
+    # The optical refraction coefficient for particles with zero volume.
+    aeroopt/void_refr: '1.5+0.0j'
+    # The evaluation mini-batch size for computing the metric
+    eval/bs: 512
+    # The metric variables to output
+    vars: [opt_err, qs_relerr, qa_relerr]
+    # The name format of the metric variables
+    name/fmt: '{var}'
+  
+  # the aerosol inp (ice nucleation particles) error
+  aeroinp:
+    type: aeroinp
+    # The lower end of the the temperature range in Celsius.
+    # Usually, this value should be around -40 degrees.
+    aeroinp/tmprtr_inpmin: -40.0
+    # The higher end of the the temperature range in Celsius.
+    # Usually, this value should be around 0 degrees.
+    aeroinp/tmprtr_inpmax: 0.0
+    # The number of temperature bins.
+    aeroinp/n_tmprtr: 100
+    # The evaluation mini-batch size for computing the metric
+    eval/bs: 512
+    # The metric variables to output
+    vars: [inp_err, loginp_err]
+    # The name format of the metric variables
+    name/fmt: '{var}'
+  
+  # the aerosol relative vector errors
+  aerorel:
+    type: aerorel
+    # The p-norm of the relative error metric
+    aerorel/pnorm: 2
+    # The evaluation mini-batch size for computing the metric
+    eval/bs: 512
+    # The metric variables to output
+    vars: [n_relerr, m_chmrelerr, m_relerr, m_perchmrelerr]
+    # The name format of the metric variables
+    name/fmt: '{var}'

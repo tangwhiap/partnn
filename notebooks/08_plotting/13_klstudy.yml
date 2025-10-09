@@ -1,0 +1,123 @@
+figures:
+  alldims:
+    name: All Dimensions
+
+    klw:
+      name: KL Weight
+      columns: '*'
+
+drop:
+  columns: [eval/underscale/*]
+
+rename:
+  columns:
+    epoch: Epoch
+  colrplc:
+    perf: Performance
+    loss: Loss
+    mse: MSE
+    mae: MAE
+    total: Total
+    net: Total
+    rcnst: Reconstruction
+    ltnt: Latent
+    kl: KL
+    train: Train
+    test: Test
+    mu: Mu
+    sig: Sigma
+    underscale: Under-Scaled
+    mediumscale: Medium-Scaled
+    overscale: Over-Scaled
+    m_chmprtnrm: Speciated Normalized Mass
+    m_prthstmag: Speciated Mass Magnitude
+    l2d: L2-Distance
+    l1d: L1-Distance
+    l2sq: L2-Squared
+    l2: L2
+    l1: L2
+
+    reconstruction: Reconstruction
+    realism: Realism
+    proximity: Proximity
+    congestion: Congestion
+    curvature: Curvature
+
+    sqerr: Sq. Error
+    abserr: Abs. Error
+
+    mean: Mean
+    min: Min
+    median: Median
+    max: Max
+    q5: 5th Percentile
+    q10: 10th Percentile
+    q25: 25th Percentile
+    q75: 75th Percentile
+    q90: 90th Percentile
+    q95: 95th Percentile
+
+    '1': 1st Neighbor
+    '2': 2nd Neighbor
+    '3': 3rd Neighbor
+
+    tvaprx: TV
+    wass:2,1: Wass (L2)
+    wass:2,2: Wass (L2-Squared)
+    hlngr:bc: Bhattacharya
+    hlngr:h1: Hellinger
+    hlngr:h2: Hellinger-Squared
+    hlngr:tv: Hellinger TV-Approx
+    kl:fwd: KL (Forward)
+    kl:inv: KL (Reverse)
+
+    menger:theta: Menger Angle
+    menger:curve: Menger Curve
+
+    icc:0.5: ICC-Sqrt
+    icc:1: ICC
+    uslcwass: Uniform Slices
+    wslcwass1: SVD Slices
+    wslcwass2:0.0: SVD-0.0 Slices
+    wslcwass2:0.5: SVD-0.5 Slices
+    wslcwass2:1.0: SVD-1.0 Slices
+
+data/global:
+  smry/idxcol: [__ovatcol__, nn/latent/dim]
+  smry/selcol: loss/net/mean
+  smry/selcri: min
+
+bokeh/global:
+  kind: line
+  xcol: __ovatcol__
+  ycol: loss/net
+  huecol: nn/latent/dim
+  frame_width: 600
+  frame_height: 460
+  fig_title: 'Ablation: {ablname}'
+  tooltip: [y/mean]
+  x_axis_type: log
+  x_tick_fmt:
+  x_tick_lbls:
+  y_axis_type: log
+  y_tick_fmt:
+  y_tick_lbls:
+  marker/marker: star
+  marker/size: 10
+  marker/color: black
+  marker/hatch_color: white
+  marker/hatch_weight: 2.0
+
+dashboard:
+  header: The Histogram VAE Problem
+  menu_width: 150
+  majoridcol: fpidxgrp
+  minoridcol: fpidx
+  ncols: 3
+  sharex: false
+  sharey: true
+  colsep: /
+  color_reset: tab
+  colors: ['#001c7f', '#12711c', '#8c0800', '#b1400d', '#591e71', '#592f0d', '#a23582',
+    '#3c3c3c', '#b8850a', '#006374']
+

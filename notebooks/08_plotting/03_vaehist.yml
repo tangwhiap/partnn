@@ -1,0 +1,227 @@
+figures:
+  mlparch:
+    name: MLP Architecture
+
+    encdepth:
+      name: Encoder's Depth
+      columns:
+      - [nn/enc/depth]
+
+    decdepth:
+      name: Decoder's Depth
+      columns:
+      - [nn/dec/depth]
+
+    encwidth:
+      name: Encoder's Width
+      columns:
+      - [nn/enc/width]
+      bokeh/x_axis_type: log
+
+    decwidth:
+      name: Decoder's Width
+      columns:
+      - [nn/dec/width]
+      bokeh/x_axis_type: log
+
+    ltntdims:
+      name: Latent Dimensions
+      columns:
+      - [nn/dec/d_ltnt, nn/enc/d_ltnt, nn/ltnt/dim]
+
+    ppexp:
+      name: Pre-Processing Exponent
+      columns:
+      - [cri/rcnst/pp/exponent, nn/pp/exponent]
+      bokeh/x_axis_type: log
+
+    klwmu:
+      name: KL Weight (Mu)
+      columns:
+      - [cri/kl/mu/w]
+      bokeh/x_axis_type: log
+
+    klwsig:
+      name: KL Weight (Sigma)
+      columns:
+      - [cri/kl/sig/w]
+      bokeh/x_axis_type: log
+
+    nnact:
+      name: Neural Activation
+      columns:
+      - [nn/dec/act, nn/enc/act]
+      bokeh/kind: bar
+      bokeh/x_axis_type: auto
+
+    rcnstmtrc:
+      name: Reconstruction Metric
+      columns:
+      - [cri/rcnst/metric]
+      bokeh/kind: bar
+      bokeh/x_axis_type: auto
+
+  cnnarch:
+    name: CNN Architecture
+
+    encconvdepth:
+      name: Encoder's Convolutional Depth
+      columns:
+      - [nn/enc/depth_cnn]
+
+    decconvdepth:
+      name: Decoder's Convolutional Depth
+      columns:
+      - [nn/dec/depth_cnn]
+
+    encconvchnls:
+      name: Encoder's Convolutional Channels
+      columns:
+      - [nn/enc/nchnls_cnn]
+      bokeh/x_axis_type: log
+
+    decconvchnls:
+      name: Decoder's Convolutional Channels
+      columns:
+      - [nn/dec/nchnls_cnn]
+      bokeh/x_axis_type: log
+
+    enckrnlsize:
+      name: Encoder's Kernel Size
+      columns:
+      - [nn/enc/krnlsz_cnn]
+
+    deckrnlsize:
+      name: Decoder's Kernel Size
+      columns:
+      - [nn/dec/krnlsz_cnn]
+
+    encmlpdepth:
+      name: Encoder's MLP Depth
+      columns:
+      - [nn/enc/depth_mlp]
+
+    decmlpdepth:
+      name: Decoder's MLP Depth
+      columns:
+      - [nn/dec/depth_mlp]
+
+    encmlpwidth:
+      name: Encoder's MLP Width
+      columns:
+      - [nn/enc/width_mlp]
+      bokeh/x_axis_type: log
+
+    decmlpwidth:
+      name: Decoder's MLP Width
+      columns:
+      - [nn/dec/width_mlp]
+      bokeh/x_axis_type: log
+
+    ltntdims:
+      name: Latent Dimensions
+      columns:
+      - [nn/dec/d_ltnt, nn/enc/d_ltnt, nn/ltnt/dim]
+
+    ppexp:
+      name: Pre-Processing Exponent
+      columns:
+      - [cri/rcnst/pp/exponent, nn/pp/exponent]
+      bokeh/x_axis_type: log
+
+    klwmu:
+      name: KL Weight (Mu)
+      columns:
+      - [cri/kl/mu/w]
+      bokeh/x_axis_type: log
+
+    klwsig:
+      name: KL Weight (Sigma)
+      columns:
+      - [cri/kl/sig/w]
+      bokeh/x_axis_type: log
+
+    nnact:
+      name: Neural Activation
+      columns:
+      - [nn/dec/act, nn/enc/act]
+      bokeh/kind: bar
+      bokeh/x_axis_type: auto
+
+    rcnstmtrc:
+      name: Reconstruction Metric
+      columns:
+      - [cri/rcnst/metric]
+      bokeh/kind: bar
+      bokeh/x_axis_type: auto
+
+drop:
+  columns: []
+
+rename:
+  columns:
+    epoch: Epoch
+  colrplc:
+    perf: Performance
+    loss: Loss
+    mse: MSE
+    mae: MAE
+    total: Total
+    net: Total
+    rcnst: Reconstruction
+    ltnt: Latent
+    kl: KL
+    train: Train
+    test: Test
+    mu: Mu
+    sig: Sigma
+    underscale: Under-Scaled
+    mediumscale: Medium-Scaled
+    overscale: Over-Scaled
+    m_chmprtnrm: Speciated Normalized Mass
+    m_prthstmag: Speciated Mass Magnitude
+    l2d: L2-Distance
+    l1d: L1-Distance
+    l2sq: L2-Squared
+    l2: L2
+    l1: L2
+
+data/global:
+  smry/idxcol: __ovatcol__
+  smry/selcol: Loss/Total/mean
+  smry/selcri: min
+
+bokeh/global:
+  kind: line
+  xcol: __ovatcol__
+  ycol: Loss/Total
+  huecol:
+  frame_width: 460
+  frame_height: 310
+  fig_title: 'Ablation: {ablname}'
+  tooltip: [y/mean]
+  x_axis_type: linear
+  x_tick_fmt:
+  x_tick_lbls:
+  y_axis_type: log
+  y_tick_fmt:
+  y_tick_lbls:
+  marker/marker: star
+  marker/size: 25
+  marker/color: black
+  marker/hatch_color: white
+  marker/hatch_weight: 2.0
+
+dashboard:
+  header: The Histogram VAE Problem
+  menu_width: 150
+  majoridcol: fpidxgrp
+  minoridcol: fpidx
+  ncols: 4
+  sharex: false
+  sharey: true
+  colsep: /
+  color_reset: tab
+  colors: ['#001c7f', '#12711c', '#8c0800', '#b1400d', '#591e71', '#592f0d', '#a23582',
+    '#3c3c3c', '#b8850a', '#006374']
+

@@ -1,0 +1,303 @@
+desc: 
+  - This file defines the main VAE experiments for the CNN architecture. 
+  - This file is repeating 11_mlphist.yml, except it uses a CNN architecture.
+date: February 26, 2025
+
+rng_seed/range: [0, 16000, 1000]
+problem: vaehist
+
+###################### Optimization #######################
+# The optimizer type
+opt/type: adam
+# The optimization learning rate
+opt/lr: 0.001
+# The number of training iterations
+opt/epoch: 10000
+# The mini-batch size
+opt/mb/n: 64
+# The randomization of the indices ('none', 'shuffle', or 'iid')
+opt/rndmztn: shuffle
+
+########################## Data ###########################
+# The data tree to load
+data/tree: 02_masshist/03_bwchisamp.nc
+
+################ Train and Test Splitting #################
+split/vars: [snr,t]
+split/snr/shuffle: true
+split/snr/low: 0
+split/snr/high: 0.8
+split/t/shuffle: false
+split/t/low: 0
+split/t/high: 1
+
+################## Function Approximation #################
+
+############ Free Options ############
+# The encoder architecture
+nn/enc/type: cnnenc
+# The depth of the convolutional part
+nn/enc/depth_cnn/list: [3, 4, 2]
+# The number of hidden channels within the convolutional part
+nn/enc/nchnls_cnn/list: [64, 32, 128]
+# The convolutional kernel size
+nn/enc/krnlsz_cnn/list: [3, 4, 5]
+# The depth of the trailing MLP
+nn/enc/depth_mlp/list: [1, 2, 3]
+# The width of the trailing MLP
+nn/enc/width_mlp/list: [128, 64, 32]
+# The encoder activation
+nn/enc/act/list: [relu, tanh, silu]
+# The encoder's *-normalization (none, batch, layer, group)
+nn/enc/norm/list: [none, batch]
+
+# The decoder architecture
+nn/dec/type: cnndec
+# The depth of the convolutional part
+nn/dec/depth_cnn/list: [3, 4, 2]
+# The number of hidden channels within the convolutional part
+nn/dec/nchnls_cnn/list: [64, 32, 128]
+# The convolutional kernel size
+nn/dec/krnlsz_cnn/list: [3, 4, 5]
+# The depth of the trailing MLP
+nn/dec/depth_mlp/list: [1, 2, 3]
+# The width of the trailing MLP
+nn/dec/width_mlp/list: [128, 64, 32]
+
+########## Dependent Options ##########
+# The following are settings that need to be referred back to the 
+# preceeding free hyper-parameters.
+# The encoder input's number of channels for the normalized mass
+nn/enc/n_chnlsnrm: n_chem
+# The encoder input's signal length for the normalized mass
+nn/enc/n_lennrm: n_bins
+# The encoder input's number of channels for the mass magnitude
+nn/enc/n_chnlsmag:
+  def: '{"n_chnls": "n_chem", "n_len": 1, "one": 1}[config["nn/pp/magdim"]]'
+# The encoder input's signal length for the mass magnitude
+nn/enc/n_lenmag: 
+  def: '{"n_chnls": 1, "n_len": "n_bins", "one": 1}[config["nn/pp/magdim"]]'
+# The encoder input's number of channels for the particle counts
+nn/enc/n_chnlscnt: 1
+# The encoder input's signal length for the particle counts
+nn/enc/n_lencnt: n_bins
+# The encoder's output, i.e., the latent, dimension
+nn/enc/d_ltnt/ref: nn/ltnt/dim
+
+# The decoder activation
+nn/dec/act/ref: nn/enc/act
+# The decoder's output, i.e., the latent, dimension
+nn/dec/d_ltnt/ref: nn/ltnt/dim
+# The decoder's number of channels for the normalized mass
+nn/dec/n_chnlsnrm: n_chem
+# The decoder's signal length for the normalized mass
+nn/dec/n_lennrm: n_bins
+# The decoder's number of channels for the mass magnitude
+nn/dec/n_chnlsmag/ref: nn/enc/n_chnlsmag
+# The decoder's signal length for the mass magnitude
+nn/dec/n_lenmag/ref: nn/enc/n_lenmag
+# The decoder's number of channels for the particle counts
+nn/dec/n_chnlscnt: 1
+# The decoder's signal length for the particle counts
+nn/dec/n_lencnt: n_bins
+# The decoder's *-normalization (none, batch, layer, group)
+nn/dec/norm/ref: nn/enc/norm
+
+# The latent dimension
+nn/ltnt/dim/list: [10, 9, 8, 7, 6, 5, 4, 3, 2]
+# The encoder output to latent sigma transformation; one of 'exp' and 'explin'.
+nn/ltnt/sig/tnsfm/list: [explin, exp]
+
+############## Pre-Processing Specifications ##############
+# The pre-processing transformations applied 
+# before the encoder and (inversely) after the decoder
+nn/pp/type: polyhst
+
+#### Mass Related Hyper-Parameters ####
+# The epsilon added initially to the mass data 
+nn/pp/nrmeps/list: [1e-100, 1e-75, 1e-50, 1e-25]
+# The magnitude dimensionality; one of `'n_chnls', 'n_len', 'one'`.
+nn/pp/magdim/list: [n_len, n_chnls, one]
+# The magnitude normalization norm
+nn/pp/magpnrm/list: [l1, l2]
+# The magnitude exponent
+nn/pp/magexp/list: [0.3, 0.2, 0.1, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+# Whether to subtract mu3
+nn/pp/magshft/list: ['on', 'off']
+# Whether to scale sig4
+nn/pp/magscl/list: ['on', 'off']
+# The constant epsilon added to the sig04
+nn/pp/magscleps/list: [0.0, 1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1e0]
+# The normalized image exponent
+nn/pp/nrmexp/list: [0.5, 0.4, 0.3, 0.2, 0.1, 0.6, 0.7, 0.8, 0.9, 1.0]
+# Whether to subtract mu7
+nn/pp/nrmshft/list: ['on', 'off']
+# Whether to scale sig8
+nn/pp/nrmscl/list: ['on', 'off']
+# The constant epsilon added to the sig04
+nn/pp/nrmscleps/list: [0.0, 1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1e0]
+# The mu7 and sig8 dimensionality; one of `'n_chnls', 'n_len', 'one', 'n_chnls, n_len'`.
+nn/pp/nrmscldim/list: ['n_chnls, n_len', n_len, n_chnls, one]
+
+#### Count Related Hyper-Parameters ###
+# The epsilon added to the particle counts
+nn/pp/cnteps/list: [1000, 10000, 100000]
+# The counts exponent
+nn/pp/cntexp/list: [0.5, 0.4, 0.3, 0.2, 0.1, 0.6, 0.7, 0.8, 0.9, 1.0]
+# Whether to subtract mu2 for the counts
+nn/pp/cntshft/list: ['on', 'off']
+# Whether to scale by sig3 for the counts
+nn/pp/cntscl/list: ['on', 'off']
+# The constant epsilon added to the sig04
+nn/pp/cntscleps/list: [0.0, 1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1e0]
+# The mu3 and sig3 dimensionality; one of `'n_len', 'one'`.
+nn/pp/cntscldim/list: [n_len, one]
+
+#################### Training Criteria ####################
+# The kl term weight for the latent means
+cri/kl/mu/w/list: [0.001, 0.0003, 0.0001, 0.00003, 0.00001, 0.000003, 0.000001, 0.003, 0.01, 0.03, 0.1]
+# The kl term weight for the latent stds
+cri/kl/sig/w/list: [0.001, 0.0003, 0.0001, 0.00003, 0.00001, 0.000003, 0.000001, 0.003, 0.01, 0.03, 0.1]
+# The metric for training criterion
+cri/rcnst/metric: mse
+# The reconstruction pp input space ('x' or 'u')
+cri/rcnst/ppinp/space: u
+# Whether the original x inputs should go through the nn pre-prcessor's forward/inverse round trip.
+cri/rcnst/ppinp/rndtrp: false
+# The transformations applied before applying the metric
+cri/rcnst/pp/type: uidentity
+
+################### Performance Metrics ###################
+################ Reconstruction Performance ###############
+# This measure how well the train and test points are 
+# reconstructed.
+perf/reconstruction:
+  srctrg: 
+    - polyhst/train/orig:://rcnst
+    - polyhst/test/orig:://rcnst
+    - polyhstnoisy/train/orig:://rcnst
+    - polyhstnoisy/test/orig:://rcnst
+  asgn: same/0
+  node: [x/m_chmprtnrm, x/m_prthstmag, x/n_prthstnrm]
+  metric: [sqerr, abserr]
+  stat: [mean, min, q25, median, q75, max, Q100]
+
+################### Realism Performance ###################
+# This measure how close the normally generated points are 
+# to the test distribution in the original x space.
+
+# The u-space (i.e., pre-processed) realism
+perf/urealism:
+  srctrg: urealsim/normal/genr::/test/orig
+  asgn: same/0
+  node: [x/m_chmprtnrm, x/m_prthstmag, x/n_prthstnrm]
+  metric: [uslcwass, wslcwass1, wslcwass2]
+  stat: [mean, min, q25, median, q75, max, Q100]
+
+# The x-space (i.e., non-preprocessed) realism
+perf/xrealism:
+  srctrg: xrealsim/normal/genr::/test/orig
+  asgn: same/0
+  node: [x/m_chmprthst, x/n_prthst]
+  metric: [uslcwass, wslcwass1, wslcwass2]
+  stat: [mean, min, q25, median, q75, max, Q100]
+
+################## Proximity Performance ##################
+# This measure how close the normally generated points are 
+# to the train blobs in the latent z space.
+perf/proximity:
+  srctrg: polyhst/normal/ltnt::/train/blob
+  asgn: z2mu/0
+  node: z/z
+  metric: mahalanobis
+  stat: [mean, min, q25, median, q75, max, Q100]
+
+################## Congestion Performance #################
+# This measure how overlapping the training blobs are in 
+# the latent space.
+perf/congestion:
+  srctrg: polyhst/train/blob:://
+  asgn: [mu2mu/1, mu2mu/2, mu2mu/10, mu2mu/100]
+  node: z/z
+  metric: [tvaprx, wass, hellinger, kl, icc]
+  stat: [mean, min, q5, q10, q25, median, q75, q90, q95, max, Q100]
+
+################## Smoothness Performance #################
+# This measure whether the points in the trajectory are smooth.
+perf/curvature:
+  srctrg: [trajs/train/ltnt:://, trajs/test/ltnt:://]
+  asgn: same/0
+  node: z/z
+  metric: menger
+  stat: [mean, min, q5, q10, q25, median, q75, q90, q95, max, Q20]
+
+############ Aerosl Physical Metric Performance ###########
+# This measure whether aerosol ccn, inp, and optical metrics are preserved.
+perf/aerosol:
+  srctrg: [xaero/train/orig:://rcnst, xaero/test/orig:://rcnst]
+  asgn: same/0
+  node: x/m_chmprthst,x/n_prthst
+  metric: [aeroccn, aeroopt, aeroinp, aerorel]
+  stat: [mean, min, q5, q10, q25, median, q75, q90, q95, max, Q20]
+
+###################### I/O Logistics ######################
+io/tch/dtype: float64
+io/eval/bs/pp: 4096
+io/eval/enbl: true
+io/avg/frq: 100
+io/flush/frq: 0
+io/ckpt/frq: 2500
+io/mon/frq: 1000
+io/cmprssn_lvl: 0
+io/strg/logtb: false
+io/strg/profile: false
+io/strg/savefigs: false
+
+###################### Long Templates #####################
+pp/modules/ref: ./11_utils/02_pp.yml -> ppmodules
+nn/modules/ref: ./10_utils/03_nn.yml -> nnmodules
+eval/ref: ./11_utils/04_eval.yml -> eval
+asgn/modules/ref: ./10_utils/05_asgn.yml -> assgnmnts
+metric/modules/ref: ./10_utils/06_mtrc.yml -> metrics
+viz/ref: ./10_utils/07_viz.yml -> viz
+
+mplopts/sct1x1/ref: ./10_utils/08_plt.yml -> mplopts/sct/1x1/dark
+mplopts/sct2x2/ref: ./10_utils/08_plt.yml -> mplopts/sct/2x2/dark
+mplopts/sct5x5/ref: ./10_utils/08_plt.yml -> mplopts/sct/5x5/dark
+mplopts/mbar5x5/ref: ./10_utils/08_plt.yml -> mplopts/mbar/5x5/dark
+mplopts/mbar5x5i/ref: ./10_utils/08_plt.yml -> mplopts/mbar/5x5i/dark
+mplopts/nbar5x5/ref: ./10_utils/08_plt.yml -> mplopts/nbar/5x5/dark
+mplopts/nbar5x5i/ref: ./10_utils/08_plt.yml -> mplopts/nbar/5x5i/dark
+mplopts/blb1x1/ref: ./10_utils/08_plt.yml -> mplopts/blb/1x1/dark
+
+######################### Looping #########################
+looping/exec/lines:
+  - looper = ovat(aslist('rng_seed'), 'rest')
+
+###############################################################################
+################################# References ##################################
+###############################################################################
+refs:
+  cst:
+    evlfrq/def: min(config['opt/epoch'], max(config['opt/epoch'] // 100,   500))
+    vizfrq/def: min(config['opt/epoch'], max(config['opt/epoch'] //   4, 10000))
+
+# Some eval pp and frq references to avoid having `04_eval.yml` refer to this file.
+eval/polyhst/frq/ref: refs/cst/evlfrq
+eval/polyhstnoisy/frq/ref: refs/cst/evlfrq
+eval/trajs/frq/ref: refs/cst/evlfrq
+eval/xrealsim/frq/ref: refs/cst/evlfrq
+eval/urealsim/frq/ref: refs/cst/evlfrq
+eval/xaero/frq/ref: refs/cst/evlfrq
+eval/yaero/frq/ref: refs/cst/vizfrq
+eval/identity/frq/ref: refs/cst/vizfrq
+eval/snr0/frq/ref: refs/cst/vizfrq
+eval/snr1/frq/ref: refs/cst/vizfrq
+eval/snr2/frq/ref: refs/cst/vizfrq
+eval/snr3/frq/ref: refs/cst/vizfrq
+eval/snr4/frq/ref: refs/cst/vizfrq
+eval/randgen0/frq/ref: refs/cst/vizfrq
+eval/randgen1/frq/ref: refs/cst/vizfrq
+eval/randgen2/frq/ref: refs/cst/vizfrq
+eval/randgen3/frq/ref: refs/cst/vizfrq
+eval/randgen4/frq/ref: refs/cst/vizfrq

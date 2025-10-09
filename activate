@@ -1,0 +1,26 @@
+#!/bin/bash
+
+################################################################################
+########################### ENVIRONMENT Activation #############################
+################################################################################
+#  Note:
+#    Here you can add your own environment activation commands whether you're
+#    using conda, virtualenv, etc.
+SCRIPTDIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+
+if [[ $1 == "venv" || $1 == "" ]]; then
+  [[ ! -f ${SCRIPTDIR}/venv/bin/activate ]] && echo "venv does not exist" && return 1;
+  source ${SCRIPTDIR}/venv/bin/activate
+elif [[ $1 == "mamba" ]]; then
+  [[ ! -f ${SCRIPTDIR}/mamba/bin/micromamba ]] && echo "mamba does not exist" && return 1;
+  export MAMBA_ROOT_PREFIX=${SCRIPTDIR}/mamba
+  eval "$(${SCRIPTDIR}/mamba/bin/micromamba shell hook -s posix)"
+  micromamba activate partnn
+  alias mamba="micromamba"
+  
+  # # Only activate the following if you have installed tensorflow
+  # CUDNN_PATH=$(dirname $(python -c "import nvidia.cudnn;print(nvidia.cudnn.__file__)"))
+  # export LD_LIBRARY_PATH=${CONDA_PREFIX}/lib/:${CUDNN_PATH}/lib:${LD_LIBRARY_PATH}
+  # module load cuda/11.7.0
+  # export XLA_FLAGS=--xla_gpu_cuda_data_dir=/sw/spack/delta-2022-03/apps/cuda/11.7.0-gcc-11.2.0-jam2sie/
+fi

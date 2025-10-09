@@ -1,0 +1,302 @@
+###################### Visualization ######################
+################## Identity Scatter Plots #################
+# TSNE plot in the x space (1x1)
+viz/1x1xtsne:
+  eval: identity
+  ref: vizprofs/1x1/xtsne
+# TSNE plot in the z space (1x1)
+viz/1x1ztsne:
+  eval: identity
+  ref: vizprofs/1x1/ztsne 
+# Low-Rank PCA plot in the z space (1x1)
+viz/1x1zpcalr:
+  eval: identity
+  ref: vizprofs/1x1/zpcalr
+# Low-Rank PCA plot in the z space (1x1)
+viz/1x1zraw:
+  eval: identity
+  ref: vizprofs/1x1/zraw
+
+# TSNE plot in the x space (2x2)
+viz/2x2xtsne:
+  eval: identity
+  ref: vizprofs/2x2/xtsne 
+# TSNE plot in the z space (2x2)
+viz/2x2ztsne:
+  eval: identity
+  ref: vizprofs/2x2/ztsne 
+# Low-Rank PCA plot in the z space (2x2)
+viz/2x2zpcalr:
+  eval: identity
+  ref: vizprofs/2x2/zpcalr
+
+# TSNE plot in the x space (5x5)
+viz/5x5xtsne:
+  eval: identity
+  ref: vizprofs/5x5/xtsne 
+# TSNE plot in the z space (5x5)
+viz/5x5ztsne:
+  eval: identity
+  ref: vizprofs/5x5/ztsne 
+# Low-Rank PCA plot in the z space (5x5)
+viz/5x5zpcalr:
+  eval: identity
+  ref: vizprofs/5x5/zpcalr
+
+############### Pre-Processed Scatter Plots ###############
+# # TSNE plot in the u space (1x1)
+# viz/1x1utsne:
+#   ref: vizprofs/1x1/xtsne
+#   def:
+#     eval: polyhstbal
+#     node: m_chmprtnrm
+
+###### Scenario Mass Reconstruction Stacked Bar Plots #####
+# Stacked bar plot in the x space (seed 0, scenario 0)
+viz/01_mbar:
+  eval: snr0
+  ref: vizprofs/5x5/mbar
+# Stacked bar plot in the x space (seed 0, scenario 1)
+viz/02_mbar:
+  eval: snr1
+  ref: vizprofs/5x5/mbar
+# Stacked bar plot in the x space (seed 0, scenario 2)
+viz/03_mbar:
+  eval: snr2
+  ref: vizprofs/5x5/mbar
+# Stacked bar plot in the x space (seed 0, scenario 3)
+viz/04_mbar:
+  eval: snr3
+  ref: vizprofs/5x5/mbar
+# Stacked bar plot in the x space (seed 0, scenario 4)
+viz/05_mbar:
+  eval: snr4
+  ref: vizprofs/5x5/mbar
+
+########### Random Sample Mass Stacked Bar Plots ##########
+# Generating Random Samples (Set 0)
+viz/06_mbar:
+  eval: randgen0
+  ref: vizprofs/5x5/imbar
+# Generating Random Samples (Set 1)
+viz/07_mbar:
+  eval: randgen1
+  ref: vizprofs/5x5/imbar
+# Generating Random Samples (Set 2)
+viz/08_mbar:
+  eval: randgen2
+  ref: vizprofs/5x5/imbar
+# Generating Random Samples (Set 3)
+viz/09_mbar:
+  eval: randgen3
+  ref: vizprofs/5x5/imbar
+# Generating Random Samples (Set 4)
+viz/10_mbar:
+  eval: randgen4
+  ref: vizprofs/5x5/imbar
+
+##### Scenario Count Reconstruction Stacked Bar Plots #####
+# Stacked bar plot in the x space (seed 0, scenario 0)
+viz/01_nbar:
+  eval: snr0
+  ref: vizprofs/5x5/nbar
+# Stacked bar plot in the x space (seed 0, scenario 1)
+viz/02_nbar:
+  eval: snr1
+  ref: vizprofs/5x5/nbar
+# Stacked bar plot in the x space (seed 0, scenario 2)
+viz/03_nbar:
+  eval: snr2
+  ref: vizprofs/5x5/nbar
+# Stacked bar plot in the x space (seed 0, scenario 3)
+viz/04_nbar:
+  eval: snr3
+  ref: vizprofs/5x5/nbar
+# Stacked bar plot in the x space (seed 0, scenario 4)
+viz/05_nbar:
+  eval: snr4
+  ref: vizprofs/5x5/nbar
+
+########## Random Sample Count Stacked Bar Plots ##########
+# Generating Random Samples (Set 0)
+viz/06_nbar:
+  eval: randgen0
+  ref: vizprofs/5x5/inbar
+# Generating Random Samples (Set 1)
+viz/07_nbar:
+  eval: randgen1
+  ref: vizprofs/5x5/inbar
+# Generating Random Samples (Set 2)
+viz/08_nbar:
+  eval: randgen2
+  ref: vizprofs/5x5/inbar
+# Generating Random Samples (Set 3)
+viz/09_nbar:
+  eval: randgen3
+  ref: vizprofs/5x5/inbar
+# Generating Random Samples (Set 4)
+viz/10_nbar:
+  eval: randgen4
+  ref: vizprofs/5x5/inbar
+
+# For performance reasons, we will disable the 
+# 1x1 and 2x2 visualizations. If you need them, 
+# please comment the following line.
+viz/pop: [1x1zraw, 5x5xtsne, 5x5ztsne, 5x5zpcalr, 
+  2x2xtsne, 2x2ztsne, 2x2zpcalr]
+
+################# Visualization Profiles ##################
+vizprofs:
+  # 1x1 seed plots
+  1x1:
+    # TSNE plot in the x space
+    xtsne:
+      type: scatter
+      eval: identity
+      mds: tsne
+      device: cuda
+      space: x
+      node: m_chmprthst
+      mplopts/plan: sct1x1
+      seeds: 1
+      store: true
+      splits: 
+        - '*'
+        - 'train/*'
+        - 'test/*'
+        - 'normal/*'
+        - ['train/*', 'test/*']
+        - ['train/*', 'normal/*']
+
+    # Scatter plot in the z space with raw variables (only works in 2-d)
+    zraw:
+      ref: vizprofs/1x1/xtsne
+      def:
+        space: z
+        mds: none
+        mplopts/plan: blb1x1
+        splits: 
+          - ['*/blob/*', 'normal/*']
+          - '*/blob/*'
+          - 'train/blob/*'
+          - 'test/blob/*'
+          - '*'
+      pop: [node, device]
+    
+    # TSNE plot in the z space
+    ztsne:
+      ref: vizprofs/1x1/xtsne
+      def/space: z
+      pop: [node] 
+    
+    # PCA plot in the z space
+    zpca:
+      type: scatter
+      eval: identity
+      mds: pca
+      space: z
+      mplopts/plan: sct1x1
+      seeds: 1
+      store: true
+      splits/ref: vizprofs/1x1/xtsne/splits
+    
+    # Low-rank PCA plot in the z space
+    zpcalr:
+      ref: vizprofs/1x1/zpca
+      def:
+        mds: pcalr
+        niter: 2
+        q: null
+        mplopts/plan: blb1x1
+        splits: 
+          - ['*/blob/*', '*/mu', '*/sig', '*/phi', 'normal/*']
+          - ['*/blob/*', '*/mu', '*/sig', '*/phi']
+          - ['train/blob/*', 'train/*/mu', 'train/*/sig', 'train/*/phi']
+          - ['test/blob/*', 'test/*/mu', 'test/*/sig', 'test/*/phi']
+          - '*'
+
+  # 2x2 seed plots
+  2x2:
+    # TSNE plot in the x space
+    xtsne:
+      ref: vizprofs/1x1/xtsne
+      mplopts/plan/def: sct2x2
+      seeds/def: 4
+    
+    # TSNE plot in the z space
+    ztsne:
+      ref: vizprofs/1x1/ztsne
+      mplopts/plan/def: sct2x2
+      seeds/def: 4
+    
+    # Low-rank PCA plot in the z space
+    zpcalr:
+      ref: vizprofs/1x1/zpcalr
+      mplopts/plan/def: sct2x2
+      seeds/def: 4
+    
+    # PCA plot in the z space
+    zpca:
+      ref: vizprofs/1x1/zpca
+      mplopts/plan/def: sct2x2
+      seeds/def: 4
+
+  # 5x5 seed plots
+  5x5:
+    # TSNE plot in the x space
+    xtsne:
+      ref: vizprofs/1x1/xtsne
+      mplopts/plan/def: sct5x5
+      seeds/def: 25
+      splits/def/crd: '*'
+    
+    # TSNE plot in the z space
+    ztsne:
+      ref: vizprofs/1x1/ztsne
+      mplopts/plan/def: sct5x5
+      seeds/def: 25
+      splits/def/crd: '*'
+    
+    # Low-rank PCA plot in the z space
+    zpcalr:
+      ref: vizprofs/1x1/zpcalr
+      mplopts/plan/def: sct5x5
+      seeds/def: 25
+      splits/def/crd: '*'
+    
+    # PCA plot in the z space
+    zpca:
+      ref: vizprofs/1x1/zpcalr
+      mplopts/plan/def: sct5x5
+      seeds/def: 25
+      splits/def/crd: '*'
+
+    # Stacked bar plot of mass in the x space
+    mbar:
+      type: bar
+      space: x
+      node: m_chmprthst
+      chnlnames: chem_species
+      mplopts/plan: mbar5x5
+      seeds: 1
+      store: true
+    
+    # Stacked bar plot of mass in the x space (independently scaled)
+    imbar:
+      ref: vizprofs/5x5/mbar
+      def/mplopts/plan: mbar5x5i
+
+    # Stacked bar plot of counts in the x space
+    nbar:
+      type: bar
+      space: x
+      node: n_prthst
+      chnlnames: [total number]
+      mplopts/plan: nbar5x5
+      seeds: 1
+      store: true
+
+    # Stacked bar plot of counts in the x space (independently scaled)
+    inbar:
+      ref: vizprofs/5x5/nbar
+      def/mplopts/plan: nbar5x5i

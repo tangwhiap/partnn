@@ -1,0 +1,45 @@
+schdlr/sgd:
+  opt/schdlr/type: reducelronplateau
+  opt/schdlr/mode: min
+  opt/schdlr/factor: 0.5
+  opt/schdlr/patience: 1000
+  opt/schdlr/threshold: 0.0001
+  opt/schdlr/threshold_mode: rel
+  opt/schdlr/cooldown: 0
+  opt/schdlr/min_lr: 1e-03
+  opt/schdlr/eps: 1e-08
+
+splits/mixed:
+  # Mixing the scenario and time dimensions before sampling
+  split/vars: [snr+t]
+  split/snr+t/shuffle: true
+  split/snr+t/low: 0
+  split/snr+t/high: 0.5
+
+handy:
+  cnnopts: 
+    # The encoder architecture
+    nn/enc/type: cnnenc
+    # The depth of the convolutional part
+    nn/enc/depth_cnn/list: [3, 4, 2]
+    # The number of hidden channels within the convolutional part
+    nn/enc/nchnls_cnn/list: [64, 32, 128]
+    # The convolutional kernel size
+    nn/enc/krnlsz_cnn/list: [5, 4, 3]
+    # The depth of the trailing MLP
+    nn/enc/depth_mlp/list: [2, 1, 3]
+    # The width of the trailing MLP
+    nn/enc/width_mlp/list: [64, 32, 128]
+
+    # The decoder architecture
+    nn/dec/type: cnndec
+    # The depth of the convolutional part
+    nn/dec/depth_cnn/list: [3, 4, 2]
+    # The number of hidden channels within the convolutional part
+    nn/dec/nchnls_cnn/list: [64, 32, 128]
+    # The convolutional kernel size
+    nn/dec/krnlsz_cnn/list: [5, 4, 3]
+    # The depth of the trailing MLP
+    nn/dec/depth_mlp/list: [2, 1, 3]
+    # The width of the trailing MLP
+    nn/dec/width_mlp/list: [64, 32, 128]

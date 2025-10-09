@@ -1,0 +1,277 @@
+# This is the polynomial pre-processing frame work defined for the aerosol histogram data.
+ppmodules/polyhst:
+  input:
+    m_chmprthst: [n_seeds, n_mb, n_chem, n_bins]
+    n_prthst:    [n_seeds, n_mb, 1,      n_bins]
+
+  output: 
+    m_chmprtnrm: m09
+    m_prthstmag: m05
+    n_prthstnrm: n04
+
+  hparams:
+    ####################### Mass Related Hyper-Parameters #######################
+    # The epsilon added initially to the mass data 
+    eps: 1e-100 
+    # The magnitude dimensionality; one of `'n_chem', 'n_bins', 'one'`.
+    magdim: null
+    # The magnitude normalization norm
+    magpnrm: null
+    # The magnitude exponent
+    magexp: null
+    # Whether to subtract mu3
+    magshft: null
+    # Whether to scale sig4
+    magscl: null
+    # The normalized image exponent
+    nrmexp: null
+    # Whether to subtract mu7
+    nrmshft: null
+    # Whether to scale sig8
+    nrmscl: null
+    # The mu7 and sig8 dimensionality; one of `'n_chem', 'n_bins', 'one', 'n_chem, n_bins'`.
+    nrmscldim: null
+    ####################### Count Related Hyper-Parameters ######################
+    # The epsilon added to the particle counts
+    cnteps: 1000
+    # The counts exponent
+    cntexp: null
+    # Whether to subtract mu2 for the counts
+    cntshft: null
+    # Whether to scale by sig3 for the counts
+    cntscl: null
+    # The mu3 and sig3 dimensionality; one of `'n_bins', 'one'`.
+    cntscldim: null
+
+  defs:
+    # Translating 'on' or 'off' boolean options to True or False
+    onoff_dict: {'on': true, 'off': false, true: true, false: false}
+    magshft: onoff_dict[magshft]
+    magscl: onoff_dict[magscl]
+    nrmshft: onoff_dict[nrmshft]
+    nrmscl: onoff_dict[nrmscl]
+    cntshft: onoff_dict[cntshft]
+    cntscl: onoff_dict[cntscl]
+
+    # Translating l1 or l2 to 1 or 2 for the pnorms
+    tnsltn_dict1: {1: 1, 2: 2, 'l1': 1, 'l2': 2}
+    magpnrm: tnsltn_dict1[magpnrm]
+
+    # The magnitude reduction dimensions
+    tnsltn_dict2: {n_chem: [-1], n_chnls: [-1], n_bins: [-2], n_len: [-2], one: [-1, -2]}
+    mag_rdcdims: tnsltn_dict2[magdim]
+
+    # The magnitude reduction dimensions
+    tnsltn_dict4:  {n_chem: [-1], n_chnls: [-1], n_bins: [-2], n_len: [-2], 
+      one: [-1, -2], 'n_chem, n_bins': [], 'n_chnls, n_len': []}
+    mu7sig8_rdcdims: tnsltn_dict4[nrmscldim]
+
+    # The counts reduction dimensions
+    tnsltn_dict5: {n_bins: [], n_len: [], one: [-1]}
+    cnt_rdcdims: tnsltn_dict5[cntscldim]
+
+  layers:
+    #######################################
+    ######## M1: Adding an Epsilon ########
+    #######################################
+    # M1 = m0 + eps
+    m01:
+      type: add
+      value: eps
+      input: m_chmprthst
+      shape: [n_seeds, n_mb, n_chem, n_bins]
+
+    ############################################################
+    ################## Part I: The Magnitude ###################
+    ############################################################
+
+    #######################################
+    #### M2: Taking the Lp-Norm of X1 #####
+    #######################################
+    # M2 = \| M1 \| 
+    m02:
+      type: pnorm
+      dim: mag_rdcdims
+      pnorm: magpnrm
+      shape: [n_seeds, n_mb, n_chnlsmag, n_binsmag]
+
+    #######################################
+    ## M3: Exponentiating the magnitude ###
+    #######################################
+    # M3 = M2 ^ alpha
+    m03:
+      type: sgnpow
+      exponent: magexp
+      shape: [n_seeds, n_mb, n_chnlsmag, n_binsmag]
+
+    #######################################
+    ###### M4: Subtracting the Mean #######
+    #######################################
+    # magshft = True -> M4 = M3 - mu3
+    m04shftd:
+      type: shift
+      dim: mag_rdcdims
+      enable: magshft
+      shape: [n_seeds, n_mb, n_chnlsmag, n_binsmag]
+    
+    # magshft = False -> M4 = M3
+    m04:
+      type: pipe
+      input: '"m04shftd" if magshft else "m03"'
+      shape: [n_seeds, n_mb, n_chnlsmag, n_binsmag]
+
+    #######################################
+    ####### M5: Dividing the Scale ########
+    #######################################
+    # magscl = True: M5 = M4 / sigma4
+    m05scld:
+      type: scale
+      dim: mag_rdcdims
+      enable: magscl
+      shape: [n_seeds, n_mb, n_chnlsmag, n_binsmag]
+
+    # magscl = False -> M5 = M4
+    m05:
+      type: pipe
+      input: '"m05scld" if magscl else "m04"'
+      shape: [n_seeds, n_mb, n_chnlsmag, n_binsmag]
+
+    ############################################################
+    ################ Part II: The Normalization ################
+    ############################################################
+
+    #######################################
+    ######### M6: Normalization ###########
+    #######################################
+    # M6 = M1 / M2
+    m06:
+      type: normalize
+      dim: mag_rdcdims
+      pnorm: magpnrm
+      input: m01
+      shape: [n_seeds, n_mb, n_chem, n_bins]
+
+    #######################################
+    ## M7: Exponentiating the normalztn ###
+    #######################################
+    # M7 = M6 ^ alpha
+    m07:
+      type: sgnpow
+      exponent: nrmexp
+      shape: [n_seeds, n_mb, n_chem, n_bins]
+
+    #######################################
+    ###### M8: Subtracting the Mean #######
+    #######################################
+    # nrmshft = True -> M8 = M7 - mu7
+    m08shftd:
+      type: shift
+      dim: mu7sig8_rdcdims
+      enable: nrmshft
+      shape: [n_seeds, n_mb, n_chem, n_bins]
+
+    # nrmshft = False -> M8 = M7
+    m08:
+      type: pipe
+      input: '"m08shftd" if nrmshft else "m07"'
+      shape: [n_seeds, n_mb, n_chem, n_bins]
+
+    #######################################
+    ####### M9: Dividing the Scale ########
+    #######################################
+    # nrmscl = True -> M9 = M8 / sig8
+    m09scld:
+      type: scale
+      dim: mu7sig8_rdcdims
+      enable: nrmscl
+      shape: [n_seeds, n_mb, n_chem, n_bins]
+
+    # nrmscl = False -> M9 = M8
+    m09:
+      type: pipe
+      input: '"m09scld" if nrmscl else "m08"'
+      shape: [n_seeds, n_mb, n_chem, n_bins]
+
+    ############################################################
+    ################### Part III: The Count ####################
+    ############################################################
+
+    #######################################
+    ######## N1: Adding an Epsilon ########
+    #######################################
+    # n1 = n0 + cnteps
+    n01:
+      type: add
+      input: n_prthst
+      value: cnteps
+      shape: [n_seeds, n_mb, 1, n_bins]
+
+    #######################################
+    ## N2: Exponentiating the magnitude ###
+    #######################################
+    # N2 = N1 ^ alpha
+    n02:
+      type: sgnpow
+      exponent: cntexp
+      shape: [n_seeds, n_mb, 1, n_bins]
+
+    #######################################
+    ###### N3: Subtracting the Mean #######
+    #######################################
+    # cntshft = True -> N3 = N2 - mu2
+    n03shftd:
+      type: shift
+      dim: cnt_rdcdims
+      enable: cntshft
+      shape: [n_seeds, n_mb, 1, n_bins]
+
+    # cntshft = False -> N3 = N2
+    n03:
+      type: pipe
+      input: '"n03shftd" if cntshft else "n02"'
+      shape: [n_seeds, n_mb, 1, n_bins]
+    
+    #######################################
+    ####### N4: Dividing the Scale ########
+    #######################################
+    # cntscl = True -> N4 = N3 / sigma3
+    n04scld:
+      type: scale
+      dim: cnt_rdcdims
+      enable: cntscl
+      shape: [n_seeds, n_mb, 1, n_bins]
+
+    # cntscl = False -> N4 = N3
+    n04:
+      type: pipe
+      input: '"n04scld" if cntscl else "n03"'
+      shape: [n_seeds, n_mb, 1, n_bins]
+
+# A simple identity preprocessor for the x variables
+ppmodules/xidentity:
+  input: 
+    m_chmprthst: [n_seeds, n_mb, n_chem, n_bins]
+    n_prthst:    [n_seeds, n_mb, 1,      n_bins]
+  # The outputs are already defined in the layers.
+  output: '{}'
+  layers:
+    m_chmprthstcp: {type: output, input: m_chmprthst, 
+      shape: [n_seeds, n_mb, n_chem, n_bins], rename: m_chmprthst}
+    n_prthstcp: {type: output, input: n_prthst, 
+      shape: [n_seeds, n_mb, 1, n_bins], rename: n_prthst}
+
+# A simple identity preprocessor for the u variables
+ppmodules/uidentity:
+  input: 
+    m_chmprtnrm: [n_seeds, n_mb, n_chem,     n_bins   ]
+    m_prthstmag: [n_seeds, n_mb, n_chnlsmag, n_binsmag]
+    n_prthstnrm: [n_seeds, n_mb, 1,          n_bins   ]
+  # The outputs are already defined in the layers.
+  output: '{}'
+  layers: 
+    m_chmprtnrmcp: {type: output, input: m_chmprtnrm, 
+      shape: [n_seeds, n_mb, n_chem, n_bins], rename: m_chmprtnrm}
+    m_prthstmagcp: {type: output, input: m_prthstmag, 
+      shape: [n_seeds, n_mb, n_chnlsmag, n_binsmag], rename: m_prthstmag}
+    n_prthstnrmcp: {type: output, input: n_prthstnrm, 
+      shape: [n_seeds, n_mb, 1, n_bins], rename: n_prthstnrm}

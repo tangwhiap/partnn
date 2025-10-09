@@ -1,0 +1,1053 @@
+# This is the polynomial pre-processing frame work defined for the aerosol histogram data.
+ppmodules/polyhst:
+  input:
+    m_chmprthst: [n_seeds, n_mb, n_chem, n_bins]
+    n_prthst:    [n_seeds, n_mb, 1,      n_bins]
+
+  output: 
+    m_chmprtnrm: m09
+    m_prthstmag: m05
+    n_prthstnrm: n04
+
+  hparams:
+    ####################### Mass Related Hyper-Parameters #######################
+    # The epsilon added initially to the mass data 
+    nrmeps: 1e-100
+    # The magnitude dimensionality; one of `'n_chnls', 'n_len', 'one'`.
+    magdim: null
+    # The magnitude normalization norm
+    magpnrm: null
+    # The magnitude exponent
+    magexp: null
+    # Whether to subtract mu3
+    magshft: null
+    # Whether to scale sig4
+    magscl: null
+    # The constant epsilon added to the sig04
+    magscleps: null
+    # The normalized image exponent
+    nrmexp: null
+    # Whether to subtract mu7
+    nrmshft: null
+    # Whether to scale sig8
+    nrmscl: null
+    # The constant epsilon added to the sig08
+    nrmscleps: null
+    # The mu7 and sig8 dimensionality; one of `'n_chnls', 'n_len', 'one', 'n_chnls, n_len'`.
+    nrmscldim: null
+    ####################### Count Related Hyper-Parameters ######################
+    # The epsilon added to the particle counts
+    cnteps: 1000
+    # The counts exponent
+    cntexp: null
+    # Whether to subtract mu2 for the counts
+    cntshft: null
+    # Whether to scale by sig3 for the counts
+    cntscl: null
+    # The constant epsilon added to the sig03
+    cntscleps: null
+    # The mu3 and sig3 dimensionality; one of `'n_len', 'one'`.
+    cntscldim: null
+
+  defs:
+    # Translating 'on' or 'off' boolean options to True or False
+    onoff_dict: {'on': true, 'off': false, true: true, false: false}
+    magshft: onoff_dict[magshft]
+    magscl: onoff_dict[magscl]
+    nrmshft: onoff_dict[nrmshft]
+    nrmscl: onoff_dict[nrmscl]
+    cntshft: onoff_dict[cntshft]
+    cntscl: onoff_dict[cntscl]
+
+    # Translating l1 or l2 to 1 or 2 for the pnorms
+    tnsltn_dict1: {1: 1, 2: 2, 'l1': 1, 'l2': 2}
+    magpnrm: tnsltn_dict1[magpnrm]
+
+    # The magnitude reduction dimensions
+    tnsltn_dict2: {n_chem: [-1], n_chnls: [-1], n_bins: [-2], n_len: [-2], one: [-1, -2]}
+    mag_rdcdims: tnsltn_dict2[magdim]
+
+    # The magnitude reduction dimensions
+    tnsltn_dict4:  {n_chem: [-1], n_chnls: [-1], n_bins: [-2], n_len: [-2], 
+      one: [-1, -2], 'n_chem, n_bins': [], 'n_chnls, n_len': []}
+    mu7sig8_rdcdims: tnsltn_dict4[nrmscldim]
+
+    # The counts reduction dimensions
+    tnsltn_dict5: {n_bins: [], n_len: [], one: [-1]}
+    cnt_rdcdims: tnsltn_dict5[cntscldim]
+
+  layers:
+    #######################################
+    ######## M1: Adding an Epsilon ########
+    #######################################
+    # M1 = m0 + nrmeps
+    m01:
+      type: add
+      value: nrmeps
+      input: m_chmprthst
+      shape: [n_seeds, n_mb, n_chem, n_bins]
+
+    ############################################################
+    ################## Part I: The Magnitude ###################
+    ############################################################
+
+    #######################################
+    #### M2: Taking the Lp-Norm of X1 #####
+    #######################################
+    # M2 = \| M1 \| 
+    m02:
+      type: pnorm
+      dim: mag_rdcdims
+      pnorm: magpnrm
+      shape: [n_seeds, n_mb, n_chnlsmag, n_binsmag]
+
+    #######################################
+    ## M3: Exponentiating the magnitude ###
+    #######################################
+    # M3 = M2 ^ alpha
+    m03:
+      type: sgnpow
+      exponent: magexp
+      shape: [n_seeds, n_mb, n_chnlsmag, n_binsmag]
+
+    #######################################
+    ###### M4: Subtracting the Mean #######
+    #######################################
+    # magshft = True -> M4 = M3 - mu3
+    m04shftd:
+      type: shift
+      dim: mag_rdcdims
+      enable: magshft
+      shape: [n_seeds, n_mb, n_chnlsmag, n_binsmag]
+    
+    # magshft = False -> M4 = M3
+    m04:
+      type: pipe
+      input: '"m04shftd" if magshft else "m03"'
+      shape: [n_seeds, n_mb, n_chnlsmag, n_binsmag]
+
+    #######################################
+    ####### M5: Dividing the Scale ########
+    #######################################
+    # magscl = True: M5 = M4 / sigma4
+    m05scld:
+      type: scale
+      dim: mag_rdcdims
+      eps: magscleps
+      enable: magscl
+      shape: [n_seeds, n_mb, n_chnlsmag, n_binsmag]
+
+    # magscl = False -> M5 = M4
+    m05:
+      type: pipe
+      input: '"m05scld" if magscl else "m04"'
+      shape: [n_seeds, n_mb, n_chnlsmag, n_binsmag]
+
+    ############################################################
+    ################ Part II: The Normalization ################
+    ############################################################
+
+    #######################################
+    ######### M6: Normalization ###########
+    #######################################
+    # M6 = M1 / M2
+    m06:
+      type: normalize
+      dim: mag_rdcdims
+      pnorm: magpnrm
+      input: m01
+      shape: [n_seeds, n_mb, n_chem, n_bins]
+
+    #######################################
+    ## M7: Exponentiating the normalztn ###
+    #######################################
+    # M7 = M6 ^ alpha
+    m07:
+      type: sgnpow
+      exponent: nrmexp
+      shape: [n_seeds, n_mb, n_chem, n_bins]
+
+    #######################################
+    ###### M8: Subtracting the Mean #######
+    #######################################
+    # nrmshft = True -> M8 = M7 - mu7
+    m08shftd:
+      type: shift
+      dim: mu7sig8_rdcdims
+      enable: nrmshft
+      shape: [n_seeds, n_mb, n_chem, n_bins]
+
+    # nrmshft = False -> M8 = M7
+    m08:
+      type: pipe
+      input: '"m08shftd" if nrmshft else "m07"'
+      shape: [n_seeds, n_mb, n_chem, n_bins]
+
+    #######################################
+    ####### M9: Dividing the Scale ########
+    #######################################
+    # nrmscl = True -> M9 = M8 / sig8
+    m09scld:
+      type: scale
+      dim: mu7sig8_rdcdims
+      eps: nrmscleps
+      enable: nrmscl
+      shape: [n_seeds, n_mb, n_chem, n_bins]
+
+    # nrmscl = False -> M9 = M8
+    m09:
+      type: pipe
+      input: '"m09scld" if nrmscl else "m08"'
+      shape: [n_seeds, n_mb, n_chem, n_bins]
+
+    ############################################################
+    ################### Part III: The Count ####################
+    ############################################################
+
+    #######################################
+    ######## N1: Adding an Epsilon ########
+    #######################################
+    # n1 = n0 + cnteps
+    n01:
+      type: add
+      input: n_prthst
+      value: cnteps
+      shape: [n_seeds, n_mb, 1, n_bins]
+
+    #######################################
+    ## N2: Exponentiating the magnitude ###
+    #######################################
+    # N2 = N1 ^ alpha
+    n02:
+      type: sgnpow
+      exponent: cntexp
+      shape: [n_seeds, n_mb, 1, n_bins]
+
+    #######################################
+    ###### N3: Subtracting the Mean #######
+    #######################################
+    # cntshft = True -> N3 = N2 - mu2
+    n03shftd:
+      type: shift
+      dim: cnt_rdcdims
+      enable: cntshft
+      shape: [n_seeds, n_mb, 1, n_bins]
+
+    # cntshft = False -> N3 = N2
+    n03:
+      type: pipe
+      input: '"n03shftd" if cntshft else "n02"'
+      shape: [n_seeds, n_mb, 1, n_bins]
+    
+    #######################################
+    ####### N4: Dividing the Scale ########
+    #######################################
+    # cntscl = True -> N4 = N3 / sigma3
+    n04scld:
+      type: scale
+      dim: cnt_rdcdims
+      eps: cntscleps
+      enable: cntscl
+      shape: [n_seeds, n_mb, 1, n_bins]
+
+    # cntscl = False -> N4 = N3
+    n04:
+      type: pipe
+      input: '"n04scld" if cntscl else "n03"'
+      shape: [n_seeds, n_mb, 1, n_bins]
+
+# A simple identity preprocessor for the x variables
+ppmodules/xidentity:
+  input: 
+    m_chmprthst: [n_seeds, n_mb, n_chem, n_bins]
+    n_prthst:    [n_seeds, n_mb, 1,      n_bins]
+  # The outputs are already defined in the layers.
+  output: '{}'
+  layers:
+    m_chmprthstcp: {type: output, input: m_chmprthst, 
+      shape: [n_seeds, n_mb, n_chem, n_bins], rename: m_chmprthst}
+    n_prthstcp: {type: output, input: n_prthst, 
+      shape: [n_seeds, n_mb, 1, n_bins], rename: n_prthst}
+
+# A simple identity preprocessor for the u variables
+ppmodules/uidentity:
+  input: 
+    m_chmprtnrm: [n_seeds, n_mb, n_chem,     n_bins   ]
+    m_prthstmag: [n_seeds, n_mb, n_chnlsmag, n_binsmag]
+    n_prthstnrm: [n_seeds, n_mb, 1,          n_bins   ]
+  # The outputs are already defined in the layers.
+  output: '{}'
+  layers: 
+    m_chmprtnrmcp: {type: output, input: m_chmprtnrm, 
+      shape: [n_seeds, n_mb, n_chem, n_bins], rename: m_chmprtnrm}
+    m_prthstmagcp: {type: output, input: m_prthstmag, 
+      shape: [n_seeds, n_mb, n_chnlsmag, n_binsmag], rename: m_prthstmag}
+    n_prthstnrmcp: {type: output, input: n_prthstnrm, 
+      shape: [n_seeds, n_mb, 1, n_bins], rename: n_prthstnrm}
+
+# A simple identity preprocessor for the u variables in the y encoders
+ppmodules/yuidentity:
+  input: 
+    yvec: [n_seeds, n_mb, n_chnls, n_len]
+  # The outputs are already defined in the layers.
+  output: '{}'
+  layers: 
+    yveccp: 
+      type: output
+      input: yvec
+      shape: [n_seeds, n_mb, n_chnls, n_len]
+      rename: yvec
+
+# A label pre-processor to assign OIN "mass fraction" quantile classes for conditional vae.
+ppmodules/mfracqntl:
+  input:
+    m_chmprthst: [n_seeds, n_mb, n_chem, n_bins]
+    
+  output:
+    yvec: l12_qdeschm
+  
+  hparams:
+    # The list of chemical species names
+    chem_names: chem_species
+    # The mass fraction chemical
+    chem_name: OIN
+    # The exact number of label classes in the output.
+    #   Note: The labels will be imbalanced with non-zero `cdf_low`.
+    n_lbls: 4
+    # The minimum lowest bin cdf. The bins before the lowest bin will be merged.
+    cdf_low: 0.39
+    # The output dtype
+    dtype: float64
+  
+  defs:
+    # The desired chemical index
+    i_chem: chem_names.index(chem_name)
+
+    # Finding the number of bins for the cdf layer. 
+    b1: math.ceil((n_lbls - 1) / (1 - cdf_low))
+    b2: math.ceil(n_lbls / (1 - cdf_low)) + 1
+    cri: >-
+      [(abs(math.floor((1 - cdf_low) * ii) + 
+        (cdf_low > 0) - n_lbls), ii) 
+        for ii in range(b1, b2)]
+    
+    # The number of bins for the cdf layer
+    n_cdfbins: min(cri)[1]
+    
+    # The number of initial (left) bins which will be merged together
+    n_mrgdbins: n_cdfbins - n_lbls
+
+  layers:
+    l00_mchmprt:
+      type: torch.sum
+      input: m_chmprthst
+      dim: -1
+      keepdim: true
+      shape: [n_seeds, n_mb, n_chem, 1]
+    
+    l01_mfracprt:
+      type: normalize
+      dim: [-2]
+      pnorm: 1
+      shape: [n_seeds, n_mb, n_chem, 1]
+    
+    l02_mdeschm:
+      type: select
+      dim: -2
+      index: i_chem
+      shape: [n_seeds, n_mb, 1]
+    
+    l03_mdeschm:
+      type: unsqueeze
+      dim: -1
+      shape: [n_seeds, n_mb, 1, 1]
+    
+    l04_qdeschm:
+      type: cdf
+      dim: []
+      bins: n_cdfbins
+      frame: data
+      domain: [-0.01, 1.01]
+      shape: [n_seeds, n_mb, 1, 1]
+    
+    l05_qdeschm:
+      type: mul
+      value: n_cdfbins
+      shape: [n_seeds, n_mb, 1, 1]
+    
+    l06_qdeschm:
+      type: floor
+      shape: [n_seeds, n_mb, 1, 1]
+    
+    l07_qdeschm:
+      type: clamp
+      min: n_mrgdbins
+      max: n_cdfbins - 1
+      shape: [n_seeds, n_mb, 1, 1]
+
+    l08_qdeschm:
+      type: add
+      value: -n_mrgdbins
+      shape: [n_seeds, n_mb, 1, 1]
+
+    l09_qdeschm:
+      type: astype
+      dtype: long
+      shape: [n_seeds, n_mb, 1, 1]
+
+    l10_qdeschm:
+      type: torch.nn.functional.one_hot
+      num_classes: n_lbls
+      shape: [n_seeds, n_mb, 1, 1, n_lbls]
+
+    l11_qdeschm:
+      type: astype
+      dtype: dtype
+      shape: [n_seeds, n_mb, 1, 1, n_lbls]
+
+    l12_qdeschm:
+      type: squeeze
+      dim: -2
+      shape: [n_seeds, n_mb, 1, n_lbls]
+
+# A label pre-processor to assign OIN "absolute mass" quantile classes for conditional vae.
+ppmodules/mabsqntl:
+  ref: ppmodules/mfracqntl
+  def:
+    layers/l04_qdeschm/domain: [-1e-9, 1e-4]
+  pop: layers/l01_mfracprt
+
+# A label pre-processor to output some physical measurement profiles for conditional vae.
+ppmodules/chmhstspecs:
+  input:
+    m_chmprthst: [n_seeds, n_mb, n_chem, n_bins]
+    n_prthst:    [n_seeds, n_mb, 1,      n_bins]
+
+  output:
+    yvec: outvec
+
+  hparams:
+    # The epsilon added initially to the mass data
+    msseps: 1e-100
+    # The speciated mass exponent
+    mchmexp: null
+    # The binned mass exponent
+    mhstexp: null
+    # The epsilon added to the particle counts
+    cnteps: 1000
+    # The counts exponent
+    cntexp: null
+    # The mass scale epsilon
+    mssscleps: null
+    # The count scale epsilon
+    cntscleps: null
+    # The conditional variables to be included in the output
+    yvars: [mchm, mhst, cnt]
+  
+  defs:
+    en_mchm: "'mchm' in yvars"
+    en_mhst: "'mhst' in yvars"
+    en_cnt: "'cnt' in yvars"
+    en_m01: en_mchm or en_mhst
+    outcatinps: "['m09'] * en_mhst + ['m05trnspsd'] * en_mchm + ['n04'] * en_cnt"
+
+  layers:
+    #######################################
+    ######## M1: Adding an Epsilon ########
+    #######################################
+    # M1 = m0 + nrmeps
+    m01:
+      type: add
+      value: msseps
+      input: m_chmprthst
+      enable: en_m01
+      shape: [n_seeds, n_mb, n_chem, n_bins]
+
+    ############################################################
+    ################# Part I: Per-Species Mass #################
+    ############################################################
+
+    #######################################
+    ##### M2: Total Mass Per Species ######
+    #######################################
+    # M2 = M1.sum(dim=-1, keepdim=True)
+    m02:
+      type: torch.sum
+      input: m01
+      dim: -1
+      keepdim: true
+      enable: en_mchm
+      shape: [n_seeds, n_mb, n_chem, 1]
+
+    #######################################
+    ## M3: Exponentiating the magnitude ###
+    #######################################
+    # M3 = M2 ^ alpha
+    m03:
+      type: sgnpow
+      exponent: mchmexp
+      enable: en_mchm
+      shape: [n_seeds, n_mb, n_chem, 1]
+
+    #######################################
+    ###### M4: Subtracting the Mean #######
+    #######################################
+    # M4 = M3 - mu3
+    m04:
+      type: shift
+      dim: []
+      enable: en_mchm
+      shape: [n_seeds, n_mb, n_chem, 1]
+
+    #######################################
+    ####### M5: Dividing the Scale ########
+    #######################################
+    # M5 = M4 / sigma4
+    m05:
+      type: scale
+      dim: []
+      eps: mssscleps
+      enable: en_mchm
+      shape: [n_seeds, n_mb, n_chem, 1]
+
+    ############################################################
+    ################## Part II: Per-Bin Mass ###################
+    ############################################################
+
+    #######################################
+    ####### M6: Total Mass Per Bin ########
+    #######################################
+    # M6 = M1.sum(dim=-2, keepdim=True)
+    m06:
+      type: torch.sum
+      input: m01
+      dim: -2
+      keepdim: true
+      enable: en_mhst
+      shape: [n_seeds, n_mb, 1, n_bins]
+
+    #######################################
+    ##### M7: Exponentiating the Mass #####
+    #######################################
+    # M7 = M6 ^ alpha
+    m07:
+      type: sgnpow
+      exponent: mhstexp
+      enable: en_mhst
+      shape: [n_seeds, n_mb, 1, n_bins]
+
+    #######################################
+    ###### M8: Subtracting the Mean #######
+    #######################################
+    # M8 = M7 - mu7
+    m08:
+      type: shift
+      dim: []
+      enable: en_mhst
+      shape: [n_seeds, n_mb, 1, n_bins]
+
+    #######################################
+    ####### M9: Dividing the Scale ########
+    #######################################
+    # M9 = M8 / sigma8
+    m09:
+      type: scale
+      dim: []
+      eps: mssscleps
+      enable: en_mhst
+      shape: [n_seeds, n_mb, 1, n_bins]
+
+    ############################################################
+    ################ Part III: Particle Counts #################
+    ############################################################
+
+    #######################################
+    ######## N1: Adding an Epsilon ########
+    #######################################
+    # n1 = n0 + cnteps
+    n01:
+      type: add
+      input: n_prthst
+      value: cnteps
+      enable: en_cnt
+      shape: [n_seeds, n_mb, 1, n_bins]
+
+    #######################################
+    ## N2: Exponentiating the magnitude ###
+    #######################################
+    # N2 = N1 ^ alpha
+    n02:
+      type: sgnpow
+      exponent: cntexp
+      enable: en_cnt
+      shape: [n_seeds, n_mb, 1, n_bins]
+
+    #######################################
+    ###### N3: Subtracting the Mean #######
+    #######################################
+    # N3 = N2 - mu2
+    n03:
+      type: shift
+      dim: []
+      enable: en_cnt
+      shape: [n_seeds, n_mb, 1, n_bins]
+
+    #######################################
+    ####### N4: Dividing the Scale ########
+    #######################################
+    # N4 = N3 / sigma3
+    n04:
+      type: scale
+      dim: []
+      eps: cntscleps
+      enable: en_cnt
+      shape: [n_seeds, n_mb, 1, n_bins]
+
+    ############################################################
+    ################# Part IV: Concatenations ##################
+    ############################################################
+    m05flt:
+      type: squeeze
+      input: m05
+      dim: -1
+      enable: en_mchm
+      shape: [n_seeds, n_mb, n_chem]
+
+    m05trnspsd:
+      type: unsqueeze
+      dim: -2
+      enable: en_mchm
+      shape: [n_seeds, n_mb, 1, n_chem]
+
+    outvec:
+      type: cat
+      input: outcatinps
+      dim: -1
+      shape: [n_seeds, n_mb, 1, "(n_chem if en_mchm else 0) + (n_bins if en_mhst else 0) + (n_bins if en_cnt else 0)"]
+
+# A label pre-processor to output some physical measurement profiles for conditional vae.
+ppmodules/chmhstspecspln:
+  ref: ppmodules/chmhstspecs
+  def:
+    output/m_ychm: m09
+    output/m_yhst: m05
+    output/n_yhst: n04
+  pop:
+    - output/yvec
+    - layers/m05flt
+    - layers/m05trnspsd
+    - layers/outvec
+
+# A label pre-processor to output some physical measurement profiles for conditional vae.
+ppmodules/brfspecs:
+  input:
+    m_chmprthst: [n_seeds, n_mb, n_chem, n_bins]
+    n_prthst:    [n_seeds, n_mb, 1,      n_bins]
+
+  output:
+    yvec: outvec
+
+  hparams:
+    # The epsilon added initially to the mass data
+    msseps: 1e-100
+    # The speciated mass exponent
+    mchmexp: null
+    # The binned mass exponent
+    mhstexp: null
+    # The epsilon added to the particle counts
+    cnteps: 1000
+    # The counts exponent
+    cntexp: null
+    # The mass scale epsilon
+    mssscleps: null
+    # The count scale epsilon
+    cntscleps: null
+    # The list of all chemical species names
+    chem_names: chem_species
+    # The list of chemical species whose total mass will be included in y
+    ychms: [OIN, SO4]  
+  
+  defs:
+    n_ychms: len(ychms)
+    i_ychms: "[chem_names.index(chm) for chm in ychms]"
+
+  layers:
+    #######################################
+    ######## M1: Adding an Epsilon ########
+    #######################################
+    # M1 = m0 + nrmeps
+    m01:
+      type: add
+      value: msseps
+      input: m_chmprthst
+      shape: [n_seeds, n_mb, n_chem, n_bins]
+
+    ############################################################
+    ################# Part I: Per-Species Mass #################
+    ############################################################
+
+    #######################################
+    ##### M2: Total Mass Per Species ######
+    #######################################
+    # M2 = M1.sum(dim=-1, keepdim=True)
+    m02:
+      type: torch.sum
+      input: m01
+      dim: [-1, -2]
+      keepdim: true
+      shape: [n_seeds, n_mb, 1, 1]
+
+    #######################################
+    ## M3: Exponentiating the magnitude ###
+    #######################################
+    # M3 = M2 ^ alpha
+    m03:
+      type: sgnpow
+      exponent: mchmexp
+      shape: [n_seeds, n_mb, 1, 1]
+
+    #######################################
+    ###### M4: Subtracting the Mean #######
+    #######################################
+    # M4 = M3 - mu3
+    m04:
+      type: shift
+      dim: []
+      shape: [n_seeds, n_mb, 1, 1]
+
+    #######################################
+    ####### M5: Dividing the Scale ########
+    #######################################
+    # M5 = M4 / sigma4
+    m05:
+      type: scale
+      dim: []
+      eps: mssscleps
+      shape: [n_seeds, n_mb, 1, 1]
+
+    ############################################################
+    ################## Part II: Per-Bin Mass ###################
+    ############################################################
+
+    #######################################
+    ####### M6: Total Mass Per Bin ########
+    #######################################
+    # M6 = M1.sum(dim=-2, keepdim=True)
+    m06:
+      type: torch.sum
+      input: m01
+      dim: -1
+      keepdim: true
+      shape: [n_seeds, n_mb, n_chem, 1]
+
+    #######################################
+    ##### M7: Exponentiating the Mass #####
+    #######################################
+    # M7 = M6 ^ alpha
+    m07:
+      type: sgnpow
+      exponent: mhstexp
+      shape: [n_seeds, n_mb, n_chem, 1]
+
+    #######################################
+    ###### M8: Subtracting the Mean #######
+    #######################################
+    # M8 = M7 - mu7
+    m08:
+      type: shift
+      dim: []
+      shape: [n_seeds, n_mb, n_chem, 1]
+
+    #######################################
+    ####### M9: Dividing the Scale ########
+    #######################################
+    # M9 = M8 / sigma8
+    m09:
+      type: scale
+      dim: []
+      eps: mssscleps
+      shape: [n_seeds, n_mb, n_chem, 1]
+    
+    m10:
+      type: index_select
+      dim: -2
+      index: i_ychms
+      shape: [n_seeds, n_mb, n_ychms, 1]
+
+    m11:
+      type: squeeze
+      dim: -1
+      shape: [n_seeds, n_mb, n_ychms]
+
+    m12:
+      type: unsqueeze
+      dim: -2
+      shape: [n_seeds, n_mb, 1, n_ychms]
+
+    ############################################################
+    ################ Part III: Particle Counts #################
+    ############################################################
+
+    #######################################
+    ######## N1: Adding an Epsilon ########
+    #######################################
+    # n1 = n0 + cnteps
+    n01:
+      type: add
+      input: n_prthst
+      value: cnteps
+      shape: [n_seeds, n_mb, 1, n_bins]
+
+    n01b:
+      type: torch.sum
+      dim: [-1]
+      keepdim: true
+      shape: [n_seeds, n_mb, 1, 1]
+
+
+    #######################################
+    ## N2: Exponentiating the magnitude ###
+    #######################################
+    # N2 = N1 ^ alpha
+    n02:
+      type: sgnpow
+      exponent: cntexp
+      shape: [n_seeds, n_mb, 1, 1]
+
+    #######################################
+    ###### N3: Subtracting the Mean #######
+    #######################################
+    # N3 = N2 - mu2
+    n03:
+      type: shift
+      dim: []
+      shape: [n_seeds, n_mb, 1, 1]
+
+    #######################################
+    ####### N4: Dividing the Scale ########
+    #######################################
+    # N4 = N3 / sigma3
+    n04:
+      type: scale
+      dim: []
+      eps: cntscleps
+      shape: [n_seeds, n_mb, 1, 1]
+
+    ############################################################
+    ################# Part IV: Concatenations ##################
+    ############################################################
+    outvec:
+      type: cat
+      input: [m05, n04, m12]
+      dim: -1
+      shape: [n_seeds, n_mb, 1, n_ychms + 2]
+
+# A label pre-processor to output some physical measurement profiles for conditional vae.
+ppmodules/ylowrestrn:
+  input:
+    m_chmprthst: [n_seeds, n_mb, n_chem, n_bins]
+    n_prthst:    [n_seeds, n_mb, 1,      n_bins]
+
+  output:
+    yvec: outvec
+
+  hparams:
+    # The epsilon added to the mass data
+    mssexp: null
+    # The epsilon added to the particle counts
+    cntexp: null
+    # The list of all chemical species names
+    chem_names: chem_species
+    # The list of inorganic chemical species whose individual masses will be included in y
+    ychmsinorg: [SO4, NO3, NH4]
+    # The list of organic chemical species whose combined mass will be included in y
+    ychmsorgnc: [OC, MOC, ARO1, ARO2, ALK1, OLE1, API1]
+    # The number of diameter bins in the output lower-resolution count vector
+    n_binslow: null
+    # The number of left padding bins of diameter bins for the count
+    n_padleft: null
+    # The number of right padding bins of diameter bins for the count
+    n_padright: null
+    # The starting diameter bin index of the SMPS, corresponding to 10nm.
+    i1_binsmps: null
+    # The ending diameter bin index of the SMPS, corresponding to 560nm.
+    i2_binsmps: null
+    # The epsilon added to the mass scaling layer
+    mssscleps: 0.0
+    # The epsilon added to the count scaling layer
+    cntscleps: 0.0
+  
+  defs:
+    n_ychmsinorg: len(ychmsinorg)
+    n_ychmsorgnc: len(ychmsorgnc)
+    n_ychms: n_ychmsinorg + 1
+    i_ychmsinorg: "[chem_names.index(chm) for chm in ychmsinorg]"
+    i_ychmsorgnc: "[chem_names.index(chm) for chm in ychmsorgnc]"
+    pad_bins: "[n_padleft, n_padright]"
+    n_pad: n_padleft + n_padright
+    n_binssmps: i2_binsmps - i1_binsmps
+
+  layers:
+    ############################################################
+    ################# Part I: Per-Species Mass #################
+    ############################################################
+
+    #######################################
+    ######### M0: Non-Negativity ##########
+    #######################################
+    m00:
+      type: torch.clamp
+      min: 0
+      max: null
+      input: m_chmprthst
+      shape: [n_seeds, n_mb, n_chem, n_bins]
+
+    #######################################
+    ####### M1: Total Species Mass ########
+    #######################################
+    m01:
+      type: torch.sum
+      dim: -1
+      keepdim: true
+      shape: [n_seeds, n_mb, n_chem, 1]
+
+    #######################################
+    #### M2: Individual Chem Selection ####
+    #######################################
+    m02:
+      type: index_select
+      dim: -2
+      index: i_ychmsinorg
+      shape: [n_seeds, n_mb, n_ychmsinorg, 1]
+
+    #######################################
+    ####### M4: Total Organic Mass ########
+    #######################################
+    m03:
+      type: index_select
+      input: m01
+      dim: -2
+      index: i_ychmsorgnc
+      shape: [n_seeds, n_mb, n_ychmsorgnc, 1]
+
+    m04:
+      type: torch.sum
+      dim: -2
+      keepdim: true
+      shape: [n_seeds, n_mb, 1, 1]
+
+    #######################################
+    ######## M5: ACSM Measurements ########
+    #######################################
+    m05:
+      type: cat
+      input: [m02, m04]
+      dim: -2
+      shape: [n_seeds, n_mb, n_ychms, 1]
+
+    #######################################
+    ######## M12: Shift and Scales ########
+    #######################################
+    m06:
+      type: sgnpow
+      exponent: mssexp
+      shape: [n_seeds, n_mb, n_ychms, 1]
+
+    m07:
+      type: shift
+      dim: []
+      shape: [n_seeds, n_mb, n_ychms, 1]
+
+    m08:
+      type: scale
+      dim: []
+      eps: mssscleps
+      shape: [n_seeds, n_mb, n_ychms, 1]
+
+    m09:
+      type: reshape
+      shape: [n_seeds, n_mb, 1, n_ychms]
+
+    ############################################################
+    ################ Part III: Particle Counts #################
+    ############################################################
+
+    #######################################
+    ######### N0: Non-Negativity ##########
+    #######################################
+    n00:
+      type: torch.clamp
+      min: 0
+      max: null
+      input: n_prthst
+      shape: [n_seeds, n_mb, 1, n_bins]
+
+    #######################################
+    ###### N1: Slicing to SMPS Range ######
+    #######################################
+    n01:
+      type: slice
+      dim: -1
+      start: i1_binsmps
+      end: i2_binsmps
+      shape: [n_seeds, n_mb, 1, n_binssmps]
+
+    #######################################
+    ####### N2: Padding with Zeros ########
+    #######################################
+    n02:
+      type: torch.nn.functional.pad
+      pad: pad_bins
+      mode: constant
+      value: 0
+      shape: [n_seeds, n_mb, 1, n_binssmps + n_pad]
+    
+    #######################################
+    ## N4: Lowering Diameter Resolution ###
+    #######################################
+    n03:
+      type: reshape
+      shape: [n_seeds, n_mb, 1, n_binslow, (n_binssmps + n_pad) // n_binslow]
+
+    n04:
+      type: torch.sum
+      dim: -1
+      shape: [n_seeds, n_mb, 1, n_binslow]
+
+    #######################################
+    ######## M12: Shift and Scales ########
+    #######################################
+    n05:
+      type: sgnpow
+      exponent: cntexp
+      shape: [n_seeds, n_mb, 1, n_binslow]
+
+    n06:
+      type: shift
+      dim: []
+      shape: [n_seeds, n_mb, 1, n_binslow]
+
+    n07:
+      type: scale
+      dim: []
+      eps: cntscleps
+      shape: [n_seeds, n_mb, 1, n_binslow]
+
+    ############################################################
+    ################# Part IV: Concatenations ##################
+    ############################################################
+    outvec:
+      type: cat
+      input: [m09, n07]
+      dim: -1
+      shape: [n_seeds, n_mb, 1, n_ychms + n_binslow]
+
+# A label pre-processor to output some physical measurement profiles for conditional vae.
+ppmodules/ylowrespln:
+  ref: ppmodules/ylowrestrn
+  def:
+    output/m_ychm: m09
+    output/n_yhst: n07
+  pop:
+    - output/yvec
+    - layers/outvec

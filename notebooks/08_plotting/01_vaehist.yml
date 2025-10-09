@@ -1,0 +1,173 @@
+figures:
+  mlparch:
+    name: MLP Architecture
+
+    encdepth:
+      name: Encoder's Depth
+      columns:
+      - [nn/enc/depth]
+    decdepth:
+      name: Decoder's Depth
+      columns:
+      - [nn/dec/depth]
+    encwidth:
+      name: Encoder's Width
+      columns:
+      - [nn/enc/width]
+    decwidth:
+      name: Decoder's Width
+      columns:
+      - [nn/dec/width]
+    ltntdims:
+      name: Latent Dimensions
+      columns:
+      - [nn/dec/d_ltnt, nn/enc/d_ltnt, nn/ltnt/dim]
+    ppexp:
+      name: Pre-Processing Exponent
+      columns:
+      - [cri/rcnst/pp/exponent, nn/pp/exponent]
+    klwmu:
+      name: KL Weight (Mu)
+      columns:
+      - [cri/kl/mu/w]
+    klwsig:
+      name: KL Weight (Sigma)
+      columns:
+      - [cri/kl/sig/w]
+    nnact:
+      name: Neural Activation
+      columns:
+      - [nn/dec/act, nn/enc/act]
+    rcnstmtrc:
+      name: Reconstruction Metric
+      columns:
+      - [cri/rcnst/metric]
+
+  cnnarch:
+    name: CNN Architecture
+
+    encconvdepth:
+      name: Encoder's Convolutional Depth
+      columns:
+      - [nn/enc/depth_cnn]
+    decconvdepth:
+      name: Decoder's Convolutional Depth
+      columns:
+      - [nn/dec/depth_cnn]
+    encconvchnls:
+      name: Encoder's Convolutional Channels
+      columns:
+      - [nn/enc/nchnls_cnn]
+    decconvchnls:
+      name: Decoder's Convolutional Channels
+      columns:
+      - [nn/dec/nchnls_cnn]
+    enckrnlsize:
+      name: Encoder's Kernel Size
+      columns:
+      - [nn/enc/krnlsz_cnn]
+    deckrnlsize:
+      name: Decoder's Kernel Size
+      columns:
+      - [nn/dec/krnlsz_cnn]
+    encmlpdepth:
+      name: Encoder's MLP Depth
+      columns:
+      - [nn/enc/depth_mlp]
+    decmlpdepth:
+      name: Decoder's MLP Depth
+      columns:
+      - [nn/dec/depth_mlp]
+    encmlpwidth:
+      name: Encoder's MLP Width
+      columns:
+      - [nn/enc/width_mlp]
+    decmlpwidth:
+      name: Decoder's MLP Width
+      columns:
+      - [nn/dec/width_mlp]
+    ltntdims:
+      name: Latent Dimensions
+      columns:
+      - [nn/dec/d_ltnt, nn/enc/d_ltnt, nn/ltnt/dim]
+    ppexp:
+      name: Pre-Processing Exponent
+      columns:
+      - [cri/rcnst/pp/exponent, nn/pp/exponent]
+    klwmu:
+      name: KL Weight (Mu)
+      columns:
+      - [cri/kl/mu/w]
+    klwsig:
+      name: KL Weight (Sigma)
+      columns:
+      - [cri/kl/sig/w]
+    nnact:
+      name: Neural Activation
+      columns:
+      - [nn/dec/act, nn/enc/act]
+    rcnstmtrc:
+      name: Reconstruction Metric
+      columns:
+      - [cri/rcnst/metric]
+
+drop:
+  columns: []
+
+rename:
+  columns:
+    epoch: Epoch
+  colrplc:
+    perf: Performance
+    loss: Loss
+    mse: MSE
+    mae: MAE
+    total: Total
+    net: Total
+    rcnst: Reconstruction
+    ltnt: Latent
+    kl: KL
+    train: Train
+    test: Test
+    mu: Mu
+    sig: Sigma
+    underscale: Under-Scaled
+    mediumscale: Medium-Scaled
+    overscale: Over-Scaled
+    m_chmprtnrm: Speciated Normalized Mass
+    m_prthstmag: Speciated Mass Magnitude
+    l2d: L2-Distance
+    l1d: L1-Distance
+    l2sq: L2-Squared
+    l2: L2
+    l1: L2
+
+bokeh/global:
+  kind: line
+  xcol: Epoch
+  ycol: Loss/Total
+  huecol: fpidxgrp
+  frame_width: 460
+  frame_height: 310
+  fig_title: 'Ablation: {ablname}'
+  tooltip: [y/mean]
+  x_axis_type: linear
+  x_tick_fmt: eng
+  x_tick_lbls: [0, 5000, 10000, 15000, 20000, 25000, 30000]
+  y_axis_type: log
+  y_tick_fmt:
+  y_tick_lbls:
+
+dashboard:
+  header: The Histogram VAE Problem
+  menu_width: 150
+  majoridcol: fpidxgrp
+  minoridcol: fpidx
+  ncols: 4
+  sharex: true
+  sharey: all
+  colsep: /
+  color_reset: tab
+  colors: ['#001c7f', '#12711c', '#8c0800', '#b1400d', '#591e71', '#592f0d', '#a23582',
+    '#3c3c3c', '#b8850a', '#006374']
+

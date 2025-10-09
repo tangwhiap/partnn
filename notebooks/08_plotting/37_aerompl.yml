@@ -1,0 +1,3455 @@
+################ General ##############
+
+colorspec: 
+  blue: [0.0, 0.11, 0.498, 1.0]
+  orange: [0.694, 0.251, 0.051, 1.0]
+  green: [0.071, 0.443, 0.11, 1.0]
+  red: [0.549, 0.031, 0.0, 1.0]
+  purple: [0.349, 0.118, 0.443, 1.0]
+  brown: [0.349, 0.184, 0.051, 1.0]
+  pink: [0.635, 0.208, 0.51, 1.0]
+  gray: [0.235, 0.235, 0.235, 1.0]
+  yellow: [0.722, 0.522, 0.039, 1.0]
+  cyan: [0.0, 0.388, 0.455, 1.0]
+  black: [0.0, 0.0, 0.0, 1.0]
+  bluelite: [0.0, 0.11, 0.498, 0.5]
+  orangelite: [0.694, 0.251, 0.051, 0.5]
+  greenlite: [0.071, 0.443, 0.11, 0.5]
+  redlite: [0.549, 0.031, 0.0, 0.5]
+  purplelite: [0.349, 0.118, 0.443, 0.5]
+  brownlite: [0.349, 0.184, 0.051, 0.5]
+  pinklite: [0.635, 0.208, 0.51, 0.5]
+  graylite: [0.235, 0.235, 0.235, 0.5]
+  yellowlite: [0.722, 0.522, 0.039, 0.5]
+  cyanlite: [0.0, 0.388, 0.455, 0.5]
+  blacklite: [0.0, 0.0, 0.0, 0.5]
+
+  bluebright: [0.008, 0.243, 1.0, 1.0]
+  orangebright: [1.0, 0.486, 0.0, 1.0]
+  greenbright: [0.102, 0.788, 0.22, 1.0]
+  redbright: [0.91, 0.0, 0.043, 1.0]
+  purplebright: [0.545, 0.169, 0.886, 1.0]
+  brownbright: [0.624, 0.282, 0.0, 1.0]
+  pinkbright: [0.945, 0.298, 0.757, 1.0]
+  graybright: [0.639, 0.639, 0.639, 1.0]
+  yellowbright: [1.0, 0.769, 0.0, 1.0]
+  cyanbright: [0.0, 0.843, 1.0, 1.0]
+  blackbright: [0.0, 0.0, 0.0, 1.0]
+
+  blue.tab20: [0.122, 0.467, 0.706, 1.0]
+  bluebright.tab20: [0.682, 0.78, 0.91, 1.0]
+  orange.tab20: [1.0, 0.498, 0.055, 1.0]
+  orangebright.tab20: [1.0, 0.733, 0.471, 1.0]
+  green.tab20: [0.173, 0.627, 0.173, 1.0]
+  greenbright1.tab20: [0.596, 0.875, 0.541, 1.00]
+  greenbright2.tab20: [0.596, 0.875, 0.541, 0.83]
+  greenbright3.tab20: [0.596, 0.875, 0.541, 0.66]
+  greenbright4.tab20: [0.596, 0.875, 0.541, 0.49]
+  greenbright5.tab20: [0.596, 0.875, 0.541, 0.32]
+
+  red.tab20: [0.839, 0.153, 0.157, 1.0]
+  redbright.tab20: [1.0, 0.596, 0.588, 1.0]
+  purple.tab20: [0.58, 0.404, 0.741, 1.0]
+  purplebright.tab20: [0.773, 0.69, 0.835, 1.0]
+  brown.tab20: [0.549, 0.337, 0.294, 1.0]
+  brownbright.tab20: [0.769, 0.612, 0.58, 1.0]
+  pink.tab20: [0.89, 0.467, 0.761, 1.0]
+  pinkbright.tab20: [0.969, 0.714, 0.824, 1.0]
+  gray.tab20: [0.498, 0.498, 0.498, 1.0]
+  graybright.tab20: [0.78, 0.78, 0.78, 1.0]
+  olive.tab20: [0.737, 0.741, 0.133, 1.0]
+  olivebright.tab20: [0.859, 0.859, 0.553, 1.0]
+  cyan.tab20: [0.09, 0.745, 0.812, 1.0]
+  cyanbright.tab20: [0.62, 0.855, 0.898, 1.0]
+  
+colors:
+  orig: blue
+  rcnst: redbright
+  genr: black
+  gaus: black
+  cndrcn: black
+  cndgen: blue
+  znrm: redbright
+  
+  tuned: redbright
+  plain: green
+
+  total number: blue
+  total mass: blue
+  
+  train/orig: blue
+  train/rcnst: cyanbright
+  test/orig: red
+  test/rcnst: pinkbright
+  normal/genr: green
+  normal/gaus: green
+  train/ltnt: blue
+  test/ltnt: red
+  normal/ltnt: green
+  train/blob: blue
+  test/blob: red
+
+  train/class/0: blue
+  train/class/1: green
+  train/class/2: orange
+  train/class/3: red
+
+  genr0: blue
+  genr1: green
+  genr2: orange
+  genr3: red
+
+  gaus0: blue
+  gaus1: green
+  gaus2: orange
+  gaus3: red
+
+  test/class/ref: colors/train/class
+  normal/class/ref: colors/train/class
+
+  # SO4: bluebright
+  # NO3: orange
+  # Cl: green
+  # NH4: redbright
+  # MSA: purple
+  # ARO1: brown
+  # ARO2: pink
+  # ALK1: graybright
+  # OLE1: yellow
+  # API1: cyan
+  # API2: black
+  # LIM1: cyanbright
+  # LIM2: orangebright
+  # CO3: green
+  # Na: brownbright
+  # Ca: purplebright
+  # OIN: red
+  # OC: pinkbright
+  # BC: gray
+  # MOC: yellowbright
+  # H2O: blue
+
+  SO4: red.tab20
+  NO3: blue.tab20
+  Cl: purple.tab20
+  NH4: orange.tab20
+  API1: greenbright1.tab20
+  ARO1: greenbright2.tab20
+  ARO2: greenbright3.tab20
+  ALK1: greenbright4.tab20
+  OLE1: greenbright5.tab20
+  Na: olive.tab20
+  OIN: brown.tab20
+  Dust/ref: colors/OIN
+  OC: green.tab20
+  POA/ref: colors/OC
+  BC: black
+  MOC: purple.tab20
+  H2O: bluebright.tab20
+  OGN: green.tab20
+  OA: green.tab20
+
+  MSA: redbright.tab20
+  API2: orangebright.tab20
+  LIM1: purplebright.tab20
+  LIM2: cyanbright.tab20
+  CO3: brownbright.tab20
+  Ca: gray.tab20
+
+  cnn: blue
+  mlp: redbright
+
+rc_context:
+  figure.max_open_warning: 0
+  font.family: serif
+  mathtext.fontset: dejavuserif
+  text.usetex: True
+  text.latex.preamble: \usepackage{amsmath} \usepackage{amssymb}
+  axes.autolimit_mode: round_numbers
+
+###########################################################
+###### Single Population Reconstruction Diagnostics #######
+###########################################################
+
+m_chmprthst.orig:
+  type: bar
+  ######## The x-Axis Parameters ########
+  xlbl/xlabel: Diameter ${\rm (\mu m)}$
+  xlbl/labelpad: null
+  xlbl/share: false
+  xscale/value: log
+  xlim: [0.001, 17]
+  xticks/ticks: [1e-3, 1e-2, 1e-1, 1e0, 1e1]
+  xticklabeler/type: sci 
+  xticklabeler/precision: 3
+  xticklabeler/n_maxprez: 5
+  xticklabeler/force_exp: true
+
+  ######## The y-Axis Parameters ########
+  ylbl/ylabel: $dM/d \log_{10}D$ ${\rm (\mu g / m^3)}$
+  ylbl/labelpad: null
+  ylbl/share: false
+  ybound: [0, null]
+  yscale/value: linear
+
+  # The y tick formatter
+  ytickformatter/type: sci 
+  ytickformatter/precision: 3
+  ytickformatter/n_maxprez: 5
+  ytickformatter/force_exp: false
+
+  ########## Figure Generation ##########
+  plt.subplots/nrows: 2
+  plt.subplots/ncols: 4
+  plt.subplots/squeeze: false
+  plt.subplots/sharex: false
+  plt.subplots/sharey: false
+  plt.subplots/dpi: 100
+  plt.subplots/axsize: [2.4, 2.3]
+
+  ######### Layout Adjustments #########
+  layout/layout: tight
+  layout/w_pad: 0.0
+  layout/h_pad: 0.0
+  layout/rect: [0, 0.1, 1.0, 1.0]
+
+  ########## ax.bar Arguments ##########
+  # Note: 
+  #     The 'bar' method is inefficient, however, 
+  #     it allows you to see the dividers between bars.
+  #     Uncomment the following two ines, and comment 
+  #     the 'fill_between' method to use the 'bar' method.
+  # ax.bar/method: bar
+  # ax.bar/align: edge
+  ax.bar/method: fill_between
+  ax.bar/edgecolor: black
+  ax.bar/lw: 0.7
+  ax.bar/stack: true
+  
+  ################ Legend ###############
+  leg/loc: lower center
+  leg/bbox_to_anchor: [0.45, 0.01]
+  leg/edgecolor: black
+  leg/ncol: 8
+
+  leglbls/orig: Original
+  leglbls/rcnst: Reconst
+
+  ################ General ##############
+  style: default
+  rc_context/ref: rc_context
+  tckprms/colors: black
+  xlbl/color: black
+  ylbl/color: black
+  colorspec/ref: colorspec
+  colors/ref: colors
+  
+m_chmprthst.rcnst:
+  ref: m_chmprthst.orig
+  def:
+    ylbl/ylabel: $dM/d \log_{10}D$ ${\rm (\mu g / m^3)}$
+  pop: [leg]
+
+m_prthst:
+  ref: m_chmprthst.orig
+  def:
+    ylbl/ylabel: $dM/d \log_{10}D$ ${\rm (\mu g / m^3)}$
+    ax.bar/stack: false
+    ax.bar/lw: 1.5
+    ax.bar/rcnst/ls: --
+    ax.bar/rcnst/lw: 1.75
+    ax.bar/bottom: -0.1
+  pop: [leg]
+
+n_prthst:
+  ref: m_prthst
+  def:
+    ylbl/ylabel: $dN/d \log_{10}D$ ${\rm (\# / cm^3)}$
+    ytickformatter/precision: 4
+    ax.bar/bottom: -10
+    
+ccn_cdf:
+  ref: m_prthst
+  def:
+    xlbl/xlabel: Super-Saturation
+    xlbl/labelpad: null
+    xscale/value: log
+    xlim: null
+    xticks/ticks: [1e-3, 1e-2, 1e-1]
+    xticklabeler/type: sci 
+    xticklabeler/precision: 3
+    xticklabeler/n_maxprez: 5
+    xticklabeler/force_exp: true
+
+    ylbl/ylabel: CCN Fraction
+    ylim: [0.0, 1.02]
+    yticks/ticks: [0.0, 0.2, 0.4, 0.6, 0.8, 1.0]
+    yticklabels: ['$0$', '$0.2$', '$0.4$', '$0.6$', '$0.8$', '$1$']
+
+frznfrac_tmp:
+  ref: m_prthst
+  def:
+    xlbl/xlabel: Temperature ${\rm (^{\circ} C)}$
+    xlbl/labelpad: null
+    xscale/value: linear
+    xlim: null
+    xticks/ticks: [-40, -30, -20, -10, 0]
+    xticklabeler/type: sci 
+    xticklabeler/precision: 3
+    xticklabeler/n_maxprez: 5
+    xticklabeler/force_exp: false
+
+    ylbl/ylabel: Frozen Fraction
+    ylim: [0, 1]
+    yscale/value: symlog
+    yscale/linthresh: 1e-14
+    yticks/ticks: [0, 1e-14, 1e-10, 1e-6, 1e-2, 1e0]
+    yticklabeler/type: sci 
+    yticklabeler/precision: 3
+    yticklabeler/n_maxprez: 5
+    yticklabeler/force_exp: true
+
+qs_pop:
+  ref: m_prthst
+  def:
+    type: plot
+    ########## ax.plot Arguments ##########
+    ax.plot/lw: 1.5
+    ax.plot/marker: '*'
+    ax.plot/markersize: 6
+    ax.plot/rcnst/ls: --
+    ax.plot/rcnst/lw: 1.75
+
+    ######## The x-Axis Parameters ########
+    xlbl/xlabel: Wave-Length ${\rm (\mu m)}$
+    xlbl/labelpad: null
+    xlbl/share: false
+    xscale/value: linear
+    xlim: [0.25, 1.05]
+    xticks/ticks: [0.3, 0.5, 0.7, 0.9, 1.0]
+    xticklabeler/type: sci 
+    xticklabeler/precision: 3
+    xticklabeler/n_maxprez: 5
+    xticklabeler/force_exp: false
+    
+    ######## The y-Axis Parameters ########
+    ylbl/ylabel: Vol Scat Coef ${\rm (1/Mm)}$
+    ylim: [0, 1e3]
+    yscale/value: symlog
+    yscale/linthresh: 1e-1
+    yticks/ticks: [0, 1e-1, 1e0, 1e1, 1e2, 1e3]
+    yticklabels: ['$0$', '$0.1$', $1$, $10$, $100$, $1000$]
+    yticklabeler/type: sci 
+    yticklabeler/precision: 4
+    yticklabeler/n_maxprez: 5
+    yticklabeler/force_exp: true
+
+    ################ Legend ###############
+    leg/loc: lower center
+    leg/bbox_to_anchor: [0.9, 0.01]
+    leg/ncol: 1
+
+    leglbls/orig: Original
+    leglbls/rcnst: Reconst
+  
+  pop: [ax.bar]
+
+qa_pop:
+  ref: qs_pop
+  def: 
+    ylbl/ylabel: Vol Abs Coef ${\rm (1/Mm)}$
+  pop: [leg]
+
+qscs_prt:
+  ref: m_prthst
+  def:
+    ylbl/ylabel: Vol Scat Coef ${\rm (1/Mm)}$
+    ylbl/share: true
+    xlbl/share: true
+
+    ylim: [0, 1e3]
+    yscale/value: symlog
+    yscale/linthresh: 1e-1
+    yticks/ticks: [0, 1e-1, 1e0, 1e1, 1e2, 1e3]
+    yticklabels: null
+    yticklabeler/type: sci 
+    yticklabeler/precision: 3
+    yticklabeler/n_maxprez: 5
+    yticklabeler/force_exp: true
+
+    ########## Figure Generation ##########
+    plt.subplots/nrows: 2
+    plt.subplots/ncols: 4
+    plt.subplots/squeeze: false
+    plt.subplots/sharex: true
+    plt.subplots/sharey: true
+    plt.subplots/dpi: 120
+    plt.subplots/layout: tight
+    plt.subplots/axsize: [2.4, 2.0]
+
+    ######### Layout Adjustments #########
+    layout/layout: tight
+    layout/w_pad: 0.0
+    layout/h_pad: 0.0
+    layout/rect: [0, 0.1, 1.0, 1.0]
+
+qacs_prt:
+  ref: qscs_prt
+  def: 
+    ylbl/ylabel: Vol Abs Coef ${\rm (1/Mm)}$
+
+m_chmhst1:
+  ref: m_prthst
+  def:
+    ylbl/ylabel: $dM/d \log_{10}D$ ${\rm (\mu g / m^3)}$
+    ylbl/share: true
+    xlbl/share: true
+
+    ybound: [0, null]
+    yticklabeler/type: sci 
+    yticklabeler/precision: 3
+    yticklabeler/n_maxprez: 5
+    yticklabeler/force_exp: false
+
+    ########## Figure Generation ##########
+    plt.subplots/nrows: 3
+    plt.subplots/ncols: 5
+    plt.subplots/squeeze: false
+    plt.subplots/sharex: true
+    plt.subplots/sharey: true
+    plt.subplots/dpi: 120
+    plt.subplots/layout: tight
+    plt.subplots/axsize: [1.92, 1.9]
+
+    ######### Layout Adjustments #########
+    layout/layout: tight
+    layout/w_pad: 0.3
+    layout/h_pad: 0.3
+    layout/rect: [0, 0.1, 1.0, 1.0]
+
+m_chmhst2:
+  ref: m_chmhst1
+  def: 
+    plt.subplots/sharey: false
+    tckprms/axis: y
+    tckprms/labelsize: 9
+    ax.bar/bottom: 0
+
+###########################################################
+############ Generated Population Diagnostics #############
+###########################################################
+
+m_chmprthst.genr:
+  ref: m_chmprthst.orig
+  def:
+    ######## The y-Axis Parameters ########
+    ylbl/ylabel: $dM/d \log_{10}D$ ${\rm (\mu g / m^3)}$
+    ylbl/share: true
+
+    ########## Figure Generation ##########
+    plt.subplots/nrows: 6
+    plt.subplots/ncols: 4
+    plt.subplots/squeeze: false
+    plt.subplots/sharex: false
+    plt.subplots/sharey: false
+    plt.subplots/dpi: 100
+    plt.subplots/axsize: [2.12, 2.0]
+
+    ######### Layout Adjustments #########
+    layout/layout: tight
+    layout/w_pad: 0.5
+    layout/h_pad: 0.0
+    layout/rect: [0, 0.1, 1.0, 1.0]
+
+    ################ Legend ###############
+    leg/bbox_to_anchor: [0.5, 0.06]
+
+n_prthst.genr:
+  ref: n_prthst
+  def:
+    ylbl/share: true
+    layout/w_pad: 0.5
+
+ccn_cdf.genr:
+  ref: ccn_cdf
+  def:
+    ylbl/share: true
+    layout/w_pad: 0.5
+
+frznfrac_tmp.genr:
+  ref: frznfrac_tmp
+  def:
+    ylbl/share: true
+    layout/w_pad: 0.5
+
+    ylbl/ylabel: Frozen Fraction
+    ylim: [0, 1]
+    yscale/value: symlog
+    yscale/linthresh: 1e-14
+    yticks/ticks: [0, 1e-12, 1e-8, 1e-4, 1e0]
+    yticklabeler/type: sci 
+    yticklabeler/precision: 3
+    yticklabeler/n_maxprez: 5
+    yticklabeler/force_exp: true
+
+qs_pop.genr:
+  ref: qs_pop
+  def:
+    ylbl/share: true
+    layout/w_pad: 0.5
+  pop: [leg]
+
+qa_pop.genr:
+  ref: qa_pop
+  def:
+    ylbl/share: true
+    layout/w_pad: 0.5
+
+###########################################################
+######### Conditional Reconstruction Diagnostics ##########
+###########################################################
+
+m_chmprthst.cndrcn:
+  ref: m_chmprthst.genr
+  def:
+    ########## Figure Generation ##########
+    plt.subplots/ncols: 6
+    plt.subplots/sharey: row # (i_row, max(i_col, 3))
+    plt.subplots/sharex: row # (i_row, max(i_col, 3))
+
+n_prthst.cndrcn/ref: n_prthst.genr
+
+ccn_cdf.cndrcn/ref: ccn_cdf.genr
+
+frznfrac_tmp.cndrcn/ref: frznfrac_tmp.genr
+
+qs_pop.cndrcn/ref: qs_pop.genr
+
+qa_pop.cndrcn/ref: qa_pop.genr
+
+###########################################################
+############ Conditional Tri Label Diagnostics ############
+###########################################################
+
+#######################################
+####### Input Label Line Plots ########
+#######################################
+
+m_prthst.cndlbl:
+  ref: m_prthst
+  def:
+    ########## Figure Generation ##########
+    plt.subplots/nrows: 1
+    plt.subplots/ncols: 3
+    plt.subplots/squeeze: false
+    plt.subplots/sharex: false
+    plt.subplots/sharey: false
+    plt.subplots/dpi: 100
+    plt.subplots/axsize: [2.3, 2.5]
+
+    ########## ax.bar Arguments ##########
+    ax.bar/method: fill_between
+    ax.bar/edgecolor: black
+    ax.bar/lw: 1.5
+    ax.bar/orig/ls: '--'
+    ax.bar/orig/lw: 1.75
+    ax.bar/stack: false
+    ax.bar/bottom: -1
+
+m_chmprt.cndlbl:
+  ref: m_acsm.cndlbl
+  def:
+    ########## Figure Generation ##########
+    plt.subplots/nrows: 1
+    plt.subplots/ncols: 3
+    plt.subplots/squeeze: false
+    plt.subplots/sharex: false
+    plt.subplots/sharey: false
+    plt.subplots/dpi: 100
+    plt.subplots/axsize: [2.3, 2.5]
+
+    ########## ax.bar Arguments ##########
+    ax.bar/method: fill_between
+    ax.bar/edgecolor: black
+    ax.bar/lw: 1.5
+    ax.bar/orig/ls: '--'
+    ax.bar/orig/lw: 1.75
+    ax.bar/stack: false
+    ax.bar/bottom: -1
+
+    ######## The x-Axis Parameters ########
+    xlbl/xlabel: Chemical Species Index
+    xlim: [-0.5, 15.5]
+    xticks/ticks: "[ii+0.5 for ii in range(0, 15)]"
+    xticks/labels: "[f'${ii+1}$' if (ii % 2 == 0) else '' for ii in range(0, 15)]"
+
+n_prthst.cndlbl:
+  ref: n_prthst.cndinp
+  def:
+    ########## Figure Generation ##########
+    plt.subplots/nrows: 1
+    plt.subplots/ncols: 3
+    plt.subplots/squeeze: false
+    plt.subplots/sharex: false
+    plt.subplots/sharey: false
+    plt.subplots/dpi: 100
+    plt.subplots/axsize: [2.3, 2.5]
+
+    ######## The ax.bar Parameters ########
+    ax.bar/stack: false
+    ax.bar/lw: 1.5
+    ax.bar/orig/ls: '--'
+    ax.bar/orig/lw: 1.75
+    ax.bar/bottom: -10
+
+#######################################
+## The Generated Compliance Examples ##
+#######################################
+
+m_prthst.cndgen:
+  ref: n_prthst.cndlbl
+  def:
+    ########## ax.bar Arguments ##########    
+    ax.bar/rcnst/ls: '-'
+    ax.bar/rcnst/lw: 1.75
+
+m_chmprt.cndgen:
+  ref: m_chmprt.cndlbl
+  def:
+    ########## ax.bar Arguments ##########  
+    ax.bar/rcnst/ls: '-'
+    ax.bar/rcnst/lw: 1.75
+
+    ################ Legend ###############
+    leg/loc: lower center
+    leg/bbox_to_anchor: [0.92, 0.047]
+    leg/ncol: 1
+    leglbls/orig: Input
+    leglbls/rcnst: Generated
+    leg/edgecolor: black
+
+###########################################################
+############ Conditional ACSM/SMPS Diagnostics ############
+###########################################################
+
+#######################################
+### Input Mass and Number Examples ####
+#######################################
+
+m_chmprthst.cndinp:
+  ref: m_chmprthst.genr
+  def:
+    ########## Figure Generation ##########
+    plt.subplots/nrows: 1
+    plt.subplots/ncols: 2
+    plt.subplots/squeeze: false
+    plt.subplots/sharex: false
+    plt.subplots/sharey: false
+    plt.subplots/dpi: 100
+    plt.subplots/axsize: [2.3, 2.3]
+
+    ######## The y-Axis Parameters ########
+    ylbl/share: false
+
+    ################ Legend ###############
+    leg/loc: lower center
+    leg/bbox_to_anchor: [0.45, 0.045]
+    leg/edgecolor: black
+    leg/ncol: 8
+  pop: [leg]
+
+n_prthst.cndinp:
+  ref: n_prthst.cndrcn
+  def:
+    ########## Figure Generation ##########
+    plt.subplots/nrows: 1
+    plt.subplots/ncols: 2
+    plt.subplots/squeeze: false
+    plt.subplots/sharex: false
+    plt.subplots/sharey: false
+    plt.subplots/dpi: 100
+    plt.subplots/axsize: [2.3, 2.5]
+
+    ######## The y-Axis Parameters ########
+    ylbl/share: false
+
+    ######## The ax.bar Parameters ########
+    ax.bar/stack: false
+    ax.bar/lw: 1.5
+    ax.bar/rcnst/ls: '-'
+    ax.bar/rcnst/lw: 1.75
+    ax.bar/bottom: -20
+
+#######################################
+####### Input Label Line Plots ########
+#######################################
+
+n_smps.cndlbl:
+  ref: n_prthst.genr
+  def:
+    ########## Figure Generation ##########
+    plt.subplots/ncols: 2
+    plt.subplots/nrows: 1
+    plt.subplots/squeeze: false
+    plt.subplots/sharex: false
+    plt.subplots/sharey: false
+    plt.subplots/dpi: 100
+    plt.subplots/axsize: [2.3, 2.4]
+
+    ######## The y-Axis Parameters ########
+    ylbl/ylabel: $dN/d \log_{10}D$ ${\rm (\# / cm^3)}$
+    ytickformatter/precision: 4
+
+    ######## The ax.bar Parameters ########
+    ax.bar/stack: false
+    ax.bar/lw: 1.5
+    ax.bar/orig/ls: '--'
+    ax.bar/orig/lw: 1.75
+    ax.bar/bottom: -10
+
+    ######## The x-Axis Parameters ########
+    xlbl/xlabel: Diameter ${\rm (\mu m)}$
+    xlbl/labelpad: null
+    xlbl/share: false
+    xscale/value: log
+    xlim: [0.0056, 1.0]
+    xticks/ticks: [1e-2, 1e-1, 1e0]
+    xticklabeler/type: sci 
+    xticklabeler/precision: 3
+    xticklabeler/n_maxprez: 5
+    xticklabeler/force_exp: true
+
+m_acsm.cndlbl:
+  ref: m_chmprthst.cndrcn
+  def: 
+    ######## The y-Axis Parameters ########
+    ylbl/ylabel: $M$ ${\rm (\mu g / m^3)}$
+    ylbl/share: false
+
+    ########## ax.bar Arguments ##########
+    # Note: 
+    #     The 'bar' method is inefficient, however, 
+    #     it allows you to see the dividers between bars.
+    #     Uncomment the following two ines, and comment 
+    #     the 'fill_between' method to use the 'bar' method.
+    # ax.bar/method: bar
+    # ax.bar/align: edge
+    ax.bar/method: fill_between
+    ax.bar/edgecolor: black
+    ax.bar/lw: 1.5
+    ax.bar/orig/ls: '--'
+    ax.bar/orig/lw: 1.75
+    ax.bar/stack: false
+    ax.bar/bottom: -1
+    
+    ######## The x-Axis Parameters ########
+    xlbl/xlabel: Chemical Species
+    xlbl/labelpad: null
+    xlbl/share: false
+    xscale/value: linear
+    xlim: [-0.5, 4.5]
+    xticks/ticks: [0.5, 1.5, 2.5, 3.5]
+    xticks/labels: ['SO4', 'NO3', 'NH4', 'OA']
+  
+  pop: [leg]
+
+#######################################
+## The Generated Compliance Examples ##
+#######################################
+
+m_chmprthst.cndgen:
+  ref: m_chmprthst.genr
+  def:
+    ########## Figure Generation ##########
+    plt.subplots/nrows: 4
+    plt.subplots/ncols: 5
+    plt.subplots/sharey: row
+    plt.subplots/sharex: row
+    plt.subplots/dpi: 100
+    plt.subplots/axsize: [2.12, 2.1]
+
+    ################ Legend ###############
+    leg/loc: lower center
+    leg/bbox_to_anchor: [0.46, 0.045]
+    leg/edgecolor: black
+    leg/ncol: 8
+    leg/columnspacing: 1.2
+    leglbls/SO4: SO4(1)
+    leglbls/NO3: NO3(2)
+    leglbls/Cl: Cl(3)
+    leglbls/NH4: NH4(4)
+    leglbls/ARO1: ARO1(5)
+    leglbls/ARO2: ARO2(6)
+    leglbls/ALK1: ALK1(7)
+    leglbls/OLE1: OLE1(8)
+    leglbls/API1: API1(9)
+    leglbls/Na: Na(10)
+    leglbls/Dust: Dust(11)
+    leglbls/POA: POA(12)
+    leglbls/BC: BC(13)
+    leglbls/MOC: MOC(14)
+    leglbls/H2O: H2O(15)
+
+n_prthst.cndgen:
+  ref: n_prthst.cndrcn
+  def:
+    ######## The ax.bar Parameters ########
+    ax.bar/stack: false
+    ax.bar/lw: 1.5
+    ax.bar/rcnst/ls: '-'
+    ax.bar/rcnst/lw: 1.75
+    ax.bar/bottom: -20
+
+ccn_cdf.cndgen/ref: ccn_cdf.cndrcn
+
+frznfrac_tmp.cndgen/ref: frznfrac_tmp.cndrcn
+
+qs_pop.cndgen/ref: qs_pop.cndrcn
+
+qa_pop.cndgen/ref: qa_pop.cndrcn
+
+n_smps.cndgen: 
+  ref: n_smps.cndlbl
+  def:
+    ######## The ax.bar Parameters ########
+    ax.bar/orig/ls: --
+    ax.bar/rcnst/ls: '-'
+    ax.bar/rcnst/lw: 1.75
+
+    ################ Legend ###############
+    leg/loc: lower center
+    leg/bbox_to_anchor: [0.92, 0.047]
+    leg/ncol: 1
+    leglbls/orig: Input
+    leglbls/rcnst: Generated
+    leg/edgecolor: black
+
+m_acsm.cndgen:
+  ref: m_acsm.cndlbl
+  def: 
+    ######## The y-Axis Parameters ########
+    ylbl/share: true
+
+    ########## ax.bar Arguments ##########
+    ax.bar/orig/ls: --
+    ax.bar/orig/lw: 1.75
+    ax.bar/rcnst/ls: '-'
+    ax.bar/rcnst/lw: 1.75
+
+#######################################
+## The Generated Variation Examples ###
+#######################################
+
+m_chmprthst.cndvar:
+  ref: m_chmprthst.cndgen
+  def:
+    ylbl/share: false
+
+    ########## Figure Generation ##########
+    plt.subplots/nrows: 1
+    plt.subplots/ncols: 4
+    plt.subplots/sharey: (i_row * 4 + i_col) * (i_row > 0)
+    plt.subplots/sharex: false
+    plt.subplots/axsize: [2.42, 2.1]
+    plt.subplots/dpi: 100
+
+    ######### Layout Adjustments #########
+    layout/layout: tight
+    layout/w_pad: 0.01
+    layout/h_pad: 0.0
+    layout/rect: [0, 0.1, 1.0, 1.0]
+
+    ################ Legend ###############
+    leg/loc: lower center
+    leg/bbox_to_anchor: [0.5, 0.01]
+    leg/edgecolor: black
+    leg/ncol: 8
+
+n_prthst.cndvar:
+  ref: n_prthst.cndgen
+  def:
+    ylbl/share: false
+
+    ######## The ax.bar Parameters ########
+    ax.bar/orig/ls: --
+    ax.bar/orig/lw: 1.1
+
+    ########## Figure Generation ##########
+    plt.subplots/axsize: [2.02, 2.2]
+
+    ######### Layout Adjustments #########
+    layout/w_pad: 0.01
+
+ccn_cdf.cndvar:
+  ref: ccn_cdf.cndgen
+  def:
+    ylbl/share: false
+    layout/w_pad: 0.01
+    ax.bar/orig/ls: --
+    ax.bar/orig/lw: 1.1
+
+
+frznfrac_tmp.cndvar:
+  ref: frznfrac_tmp.cndgen
+  def:
+    ylbl/share: false
+    layout/w_pad: 0.01
+    ax.bar/orig/ls: --
+    ax.bar/orig/lw: 1.1
+
+qs_pop.cndvar:
+  ref: qs_pop.cndgen
+  def:
+    ylbl/share: false
+    layout/w_pad: 0.01
+    ax.plot/orig/ls: --
+    ax.plot/orig/lw: 1.1
+
+qa_pop.cndvar:
+  ref: qa_pop.cndgen
+  def:
+    ylbl/share: false
+    layout/w_pad: 0.01
+    ax.plot/orig/ls: --
+    ax.plot/orig/lw: 1.1
+
+#######################################
+##### Label Compliance Line Plots #####
+#######################################
+
+cmplnc.encd:
+  type: plot
+  ######## The x-Axis Parameters ########
+  xlbl/xlabel: Label Encoding Dimension
+  xlbl/labelpad: null
+  xlbl/share: true
+  xscale/value: log
+  xscale/base: 2
+  xlim: [1.5, 46]
+  xticks/ticks: [2, 4, 8, 16, 32]
+  xticklabeler/type: sci 
+  xticklabeler/precision: 3
+  xticklabeler/n_maxprez: 5
+  xticklabeler/force_exp: false
+
+  ######## The y-Axis Parameters ########
+  ylbl/ylabel: Enc Compliance Error
+  ylbl/labelpad: null
+  ylbl/share: false
+  ylim: [0, 0.6]
+  yscale/value: linear
+  yticks/ticks: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6]
+
+  # The y tick formatter
+  ytickformatter/type: sci 
+  ytickformatter/precision: 3
+  ytickformatter/n_maxprez: 5
+  ytickformatter/force_exp: false
+
+  ########## Figure Generation ##########
+  plt.subplots/nrows: 2
+  plt.subplots/ncols: 2
+  plt.subplots/squeeze: false
+  plt.subplots/sharex: true
+  plt.subplots/sharey: false
+  plt.subplots/dpi: 140
+  plt.subplots/axsize: [2.4, 2.2]
+
+  ######### Layout Adjustments #########
+  layout/layout: tight
+  layout/w_pad: 0.5
+  layout/h_pad: 0.0
+  layout/rect: [0, 0.1, 1.0, 1.0]
+
+  ########## ax.plot Arguments ##########
+  ax.plot/lw: 1.5
+  ax.plot/marker: '*'
+  ax.plot/markersize: 6
+
+  ################ General ##############
+  style: default
+  rc_context/ref: rc_context
+  tckprms/colors: black
+  xlbl/color: black
+  ylbl/color: black
+  colorspec/ref: colorspec
+  colors/ref: colors
+  colors/def:
+    100: blue.tab20
+    0: red.tab20
+
+cmplnc.znrm:
+  ref: cmplnc.encd
+  def:
+    ######## The y-Axis Parameters ########
+    ylbl/ylabel: Normal Compliance Error
+    ylim: [0, 0.6]
+    yticks/ticks: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6]
+
+cmplnc.yknn:
+  ref: cmplnc.encd
+  def:
+    ######## The y-Axis Parameters ########
+    ylbl/ylabel: 5-LNN Compliance Error
+    ylim: [0, 0.6]
+    yticks/ticks: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6]
+
+cmplnc.rcnst:
+  ref: cmplnc.encd
+  def:
+    ######## The y-Axis Parameters ########
+    ylbl/ylabel: Reconst Compliance Error
+    ylim: [0, 0.6]
+    yticks/ticks: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6]
+
+###########################################################
+########## The Sample Selection Error Histogram ###########
+###########################################################
+
+sm_relerrhist:
+  type: hist
+
+  ######## The x-Axis Parameters ########
+  xlbl/xlabel: Speciated Mass Relative Error
+  xlbl/labelpad: null
+  xscale/value: linear
+  xlim: [0.0, 1.5]
+  xticks/ticks: [0.0, 0.5, 1.0, 1.5]
+  xticks/labels: ['0', '0.5', '1.0', '1.5']
+
+  ######## The y-Axis Parameters ########
+  ylbl/ylabel: Density
+  ylbl/labelpad: null
+  yscale/value: linear
+  ylim: [0, 4]
+
+  ########## Figure Generation ##########
+  plt.subplots/nrows: 1
+  plt.subplots/ncols: 2
+  plt.subplots/squeeze: false
+  plt.subplots/sharex: false
+  plt.subplots/sharey: true
+  plt.subplots/dpi: 150
+  plt.subplots/axsize: [2.8, 2.5]
+
+  ######### Layout Adjustments #########
+  layout/layout: tight
+  layout/w_pad: 0.5
+  layout/h_pad: 0.5
+  layout/rect: [0, 0.1, 1.0, 1.0]
+
+  ########## ax.hist Arguments ##########
+  ax.hist/density: true
+  ax.hist/bins: 100
+  ax.hist/range: [0, 2]
+
+  ################ General ##############
+  style: default
+  rc_context/ref: rc_context
+  tckprms/colors: black
+  xlbl/color: black
+  ylbl/color: black
+
+  ################ Color ##############
+  colorspec/ref: colorspec
+  colors/sm_relerr: blue
+
+###########################################################
+########### Summary Plots Across All Scenarios ############
+###########################################################
+
+ccn_errhist:
+  type: hist
+
+  ########## Figure Generation ##########
+  plt.subplots/nrows: 4
+  plt.subplots/ncols: 3
+  plt.subplots/squeeze: false
+  plt.subplots/sharex: false
+  plt.subplots/sharey: false
+  plt.subplots/dpi: 120
+  plt.subplots/axsize: [2.4, 2.4]
+
+  ######### Layout Adjustments #########
+  layout/layout: tight
+  layout/w_pad: 0
+  layout/h_pad: 0.2
+  layout/rect: [0.0, 0.0, 1.0, 1.0]
+
+  ######## The x-Axis Parameters ########
+  xlbl/xlabel: CCN Spectrum Error
+  xlbl/labelpad: null
+  xlbl/share: false
+  xscale/value: linear
+  xlim: [-0.01, 0.21]
+  xticks/ticks: [0, 0.05, 0.1, 0.15, 0.2]
+  xticks/labels: ['0', '0.05', '0.1', '0.15', '0.2']
+
+  ######## The y-Axis Parameters ########
+  ylbl/ylabel: Density
+  ylbl/labelpad: null
+  ylbl/share: false
+  yscale/value: linear
+  ylim: [0, 30]
+  yticks/ticks: [0, 5, 10, 15, 20, 25, 30]
+  yticks/labels: ['0', '5', '10', '15', '20', '25', '30']
+
+  ########## ax.hist Arguments ##########
+  ax.hist/density: true
+  ax.hist/bins: 100
+
+  ################ General ##############
+  style: default
+  rc_context/ref: rc_context
+  tckprms/colors: black
+  xlbl/color: black
+  ylbl/color: black
+
+  ################ Color ##############
+  colorspec/ref: colorspec
+  colors/ccn_cdferr: blue
+
+ccn_sct1:
+  type: scatter
+  ########## Figure Generation ##########
+  plt.subplots/ref: ccn_errhist/plt.subplots
+
+  ######## The x-Axis Parameters ########
+  xlbl/xlabel: Original CCN Fraction
+  xlbl/labelpad: null
+  xlbl/share: false
+  xscale/value: linear
+  xlim: [0, 1]
+  xticks/ticks: [0, 0.2, 0.4, 0.6, 0.8, 1]
+  xticks/labels: ['0', '0.2', '0.4', '0.6', '0.8', '1']
+
+  ######## The y-Axis Parameters ########
+  ylbl/ylabel: Reconst CCN Fraction
+  ylbl/labelpad: null
+  ylbl/share: false
+  yscale/value: linear
+  ylim: [0, 1]
+  yticks/ticks: [0, 0.2, 0.4, 0.6, 0.8, 1]
+  yticks/labels: ['0', '0.2', '0.4', '0.6', '0.8', '1']
+
+  ########## ax.scatter Arguments ##########
+  ax.scatter/marker: o
+  ax.scatter/edgecolor: black
+  ax.scatter/lw: 0.1
+  ax.scatter/alpha: 0.2
+  ax.scatter/s: 1
+
+  ################ General ##############
+  style: default
+  rc_context/ref: rc_context
+  tckprms/colors: black
+  xlbl/color: black
+  ylbl/color: black
+
+  ################ Color ##############
+  colorspec/ref: colorspec
+  colors/ccn_cdf: blue
+
+ccn_sct2/ref: ccn_sct1
+
+ccn_sct3/ref: ccn_sct1
+
+qs_errhist:
+  type: hist
+
+  ########## Figure Generation ##########
+  plt.subplots/ref: ccn_errhist/plt.subplots
+
+  ######## The x-Axis Parameters ########
+  xlbl/xlabel: Scattering Log-Rel Error
+  xlbl/labelpad: null
+  xscale/value: linear
+  xlbl/share: false
+  xlim: [-0.01, 0.21]
+  xticks/ticks: [0, 0.05, 0.1, 0.15, 0.2]
+  xticks/labels: ['0', '0.05', '0.1', '0.15', '0.2']
+
+  ######## The y-Axis Parameters ########
+  ylbl/ylabel: Density
+  ylbl/labelpad: null
+  ylbl/share: false
+  yscale/value: linear
+  ylim: [0, 60]
+  yticks/ticks: [0, 10, 20, 30, 40, 50, 60]
+  yticks/labels: ['0', '10', '20', '30', '40', '50', '60']
+
+  ########## ax.hist Arguments ##########
+  ax.hist/density: true
+  ax.hist/bins: 100
+
+  ################ General ##############
+  style: default
+  rc_context/ref: rc_context
+  tckprms/colors: black
+  xlbl/color: black
+  ylbl/color: black
+
+  ################ Color ##############
+  colorspec/ref: colorspec
+  colors/qs_pop: blue
+
+qa_errhist:
+  ref: qs_errhist
+  def:
+    xlbl/xlabel: Absorption Log-Rel Error
+    ylim: [0, 6]
+    yticks/ticks: [0, 2, 4, 6, 8, 10]
+    yticks/labels: ['0', '2', '4', '6', '8', '10']
+    colors/qa_pop: blue
+
+    xlim: [-0.02, 1.02]
+    xticks/ticks: [0, 0.2, 0.4, 0.6, 0.8, 1]
+    xticks/labels: ['0', '0.2', '0.4', '0.6', '0.8', '1']
+
+
+qs_popsct:
+  type: scatter
+  
+  ########## Figure Generation ##########
+  plt.subplots/ref: ccn_errhist/plt.subplots
+
+  ######## The x-Axis Parameters ########
+  xlbl/xlabel: Orig Vol Scat Coef ${\rm (1/Mm)}$
+  xlbl/labelpad: null
+  xlbl/share: false
+
+  xlim: [0, 1e4]
+  xscale/value: symlog
+  xscale/linthresh: 1e0
+  xscale/linscale: 1
+  xticks/ticks: [0, 1e0, 1e1, 1e2, 1e3, 1e4]
+  xticklabels: null
+  xticklabeler/type: sci 
+  xticklabeler/precision: 3
+  xticklabeler/n_maxprez: 5
+  xticklabeler/force_exp: true
+
+  ######## The y-Axis Parameters ########
+  ylbl/ylabel: Rec Vol Scat Coef ${\rm (1/Mm)}$
+  ylbl/labelpad: null
+  ylbl/share: false
+
+  ylim: [0, 1e4]
+  yscale/value: symlog
+  yscale/linthresh: 1e0
+  yscale/linscale: 1
+  yticks/ticks: [0, 1e0, 1e1, 1e2, 1e3, 1e4]
+  yticklabels: null
+  yticklabeler/type: sci 
+  yticklabeler/precision: 3
+  yticklabeler/n_maxprez: 5
+  yticklabeler/force_exp: true
+
+  ######### Layout Adjustments #########
+  layout/h_pad: 0.4
+
+  ########## ax.scatter Arguments ##########
+  ax.scatter/marker: o
+  ax.scatter/edgecolor: black
+  ax.scatter/lw: 0.1
+  ax.scatter/alpha: 0.2
+  ax.scatter/s: 1
+
+  ################ General ##############
+  style: default
+  rc_context/ref: rc_context
+  tckprms/colors: black
+  xlbl/color: black
+  ylbl/color: black
+
+  ################ Color ##############
+  colorspec/ref: colorspec
+  colors/qs_pop: blue
+  tckprms/axis: both
+  tckprms/labelsize: 11
+
+qa_popsct:
+  ref: qs_popsct
+  def: 
+    xlbl/xlabel: Orig Vol Abs Coef ${\rm (1/Mm)}$
+    ylbl/ylabel: Rec Vol Abs Coef ${\rm (1/Mm)}$
+    colors/qa_pop: blue
+
+logfrznfrac_errhist:
+  type: hist
+  
+  ########## Figure Generation ##########
+  plt.subplots/ref: ccn_errhist/plt.subplots
+
+  ######## The x-Axis Parameters ########
+  xlbl/xlabel: Frozen Fraction Log-Rel Error
+  xlbl/labelpad: null
+  xlbl/share: false
+  xscale/value: linear
+  xlim: [-0.01, 0.41]
+  xticks/ticks: [0, 0.1, 0.2, 0.3, 0.4]
+  xticks/labels: ['0', '0.1', '0.2', '0.3', '0.4']
+
+  ######## The y-Axis Parameters ########
+  ylbl/ylabel: Density
+  ylbl/labelpad: null
+  ylbl/share: false
+  yscale/value: linear
+  ylim: [0, 60]
+  yticks/ticks: [0, 10, 20, 30, 40, 50, 60]
+  yticks/labels: ['0', '10', '20', '30', '40', '50', '60']
+
+  ########## ax.hist Arguments ##########
+  ax.hist/density: true
+  ax.hist/bins: 50
+
+  ################ General ##############
+  style: default
+  tckprms/colors: black
+  xlbl/color: black
+  ylbl/color: black
+
+  ################ Color ##############
+  colorspec/ref: colorspec
+  colors/logfrznfrac_tmp: blue
+
+frznfrac_sct1:
+  type: scatter
+  
+  ########## Figure Generation ##########
+  plt.subplots/ref: ccn_errhist/plt.subplots
+
+  ######## The x-Axis Parameters ########
+  xlbl/xlabel: Original Frozen Fraction
+  xlbl/labelpad: null
+  xlbl/share: false
+
+  xlim: [0, 1]
+  xscale/value: symlog
+  xscale/linthresh: 1e-15
+  xscale/linscale: 3
+  xticks/ticks: [0, 1e-15, 1e-10, 1e-5, 1e0]
+  xticklabeler/type: sci 
+  xticklabeler/precision: 3
+  xticklabeler/n_maxprez: 5
+  xticklabeler/force_exp: true
+
+  ######## The y-Axis Parameters ########
+  ylbl/ylabel: Reconst Frozen Fraction
+  ylbl/labelpad: null
+  ylbl/share: false
+
+  ylim: [0, 1]
+  yscale/value: symlog
+  yscale/linthresh: 1e-15
+  yscale/linscale: 3
+  yticks/ticks: [0, 1e-15, 1e-10, 1e-5, 1e0]
+  yticklabeler/type: sci 
+  yticklabeler/precision: 3
+  yticklabeler/n_maxprez: 5
+  yticklabeler/force_exp: true
+
+  ########## ax.scatter Arguments ##########
+  ax.scatter/marker: o
+  ax.scatter/edgecolor: black
+  ax.scatter/lw: 0.1
+  ax.scatter/alpha: 0.2
+  ax.scatter/s: 1
+
+  ################ General ##############
+  style: default
+  rc_context/ref: rc_context
+  tckprms/axis: both
+  tckprms/colors: black
+  tckprms/labelsize: 11
+  xlbl/color: black
+  ylbl/color: black
+
+  ################ Color ##############
+  colorspec/ref: colorspec
+  colors/frznfrac_tmp: blue
+
+frznfrac_sct2/ref: frznfrac_sct1
+
+frznfrac_sct3/ref: frznfrac_sct1
+
+###########################################################
+#### ACSM/SMPS and Tri-Label Collective Summary Plots #####
+###########################################################
+
+nsmps_errhist:
+  ref: ccn_errhist
+  def:
+    ########## Figure Generation ##########
+    plt.subplots/nrows: 3
+    plt.subplots/ncols: 3
+
+    ######### Layout Adjustments #########
+    layout/w_pad: 0
+    layout/h_pad: 0.2
+
+    ######## The x-Axis Parameters ########
+    xlbl/xlabel: Trunc Num Compl Rel Error
+    xlbl/labelpad: null
+    xlbl/share: false
+    xscale/value: linear
+    xlim: [-0.001, 0.101]
+    xticks/ticks: [0, 0.02, 0.04, 0.06, 0.08, 0.1]
+    xticks/labels: ['0', '0.02', '0.04', '0.06', '0.08', '0.1']
+
+    ######## The y-Axis Parameters ########
+    ylbl/ylabel: Density
+    ylbl/labelpad: null
+    ylbl/share: false
+    yscale/value: linear
+    ylim: [0, 120]
+    yticks/ticks: [0, 30, 60, 90, 120]
+    yticks/labels: ['0', '30', '60', '90', '120']
+
+    ########## ax.hist Arguments ##########
+    ax.hist/density: true
+    ax.hist/bins: 100
+
+    ################ General ##############
+    style: default
+    tckprms/colors: black
+    xlbl/color: black
+    ylbl/color: black
+
+    ################ Color ##############
+    colors/n_smpserr: blue
+    colors/m_acsmerr: blue
+
+macsm_errhist:
+  ref: nsmps_errhist
+  def:
+    ######## The x-Axis Parameters ########
+    xlbl/xlabel: Lim Spec Mass Compl Rel Error
+    xlim: [-0.01, 0.61]
+    xticks/ticks: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6]
+    xticks/labels: ['0', '0.1', '0.2', '0.3', '0.4', '0.5', '0.6']
+
+    ######## The y-Axis Parameters ########
+    ylim: [0, 10]
+    yticks/ticks: [0, 2, 4, 6, 8, 10]
+    yticks/labels: ['0', '2', '4', '6', '8', '10']
+
+ccn_sctcnd1:
+  ref: ccn_sct1
+  def:
+    ######## The y-Axis Parameters ########
+    ylbl/ylabel: Gen CCN Fraction
+
+ccn_sctcnd2/ref: ccn_sctcnd1
+ccn_sctcnd3/ref: ccn_sctcnd1
+
+qs_popsctcnd:
+  ref: qs_popsct
+  def:
+    ######## The y-Axis Parameters ########
+    ylbl/ylabel: Gen Vol Scat Coef ${\rm (1/Mm)}$
+
+qa_popsctcnd:
+  ref: qa_popsct
+  def:
+    ######## The y-Axis Parameters ########
+    ylbl/ylabel: Gen Vol Abs Coef ${\rm (1/Mm)}$
+
+frznfrac_sctcnd1:
+  ref: frznfrac_sct1
+  def:
+    ######## The y-Axis Parameters ########
+    ylbl/ylabel: Gen Frozen Fraction
+
+frznfrac_sctcnd2/ref: frznfrac_sctcnd1
+frznfrac_sctcnd3/ref: frznfrac_sctcnd1
+
+nprthst_errhist:
+  ref: ccn_errhist
+  def:
+    ########## Figure Generation ##########
+    plt.subplots/nrows: 3
+    plt.subplots/ncols: 3
+
+    ######### Layout Adjustments #########
+    layout/w_pad: 0
+    layout/h_pad: 0.2
+
+    ######## The x-Axis Parameters ########
+    xlbl/xlabel: Number Compl Rel Error
+    xlbl/labelpad: null
+    xlbl/share: false
+    xscale/value: linear
+    xlim: [-0.001, 0.101]
+    xticks/ticks: [0, 0.02, 0.04, 0.06, 0.08, 0.1]
+    xticks/labels: ['0', '0.02', '0.04', '0.06', '0.08', '0.1']
+
+    ######## The y-Axis Parameters ########
+    ylbl/ylabel: Density
+    ylbl/labelpad: null
+    ylbl/share: false
+    yscale/value: linear
+    ylim: [0, 200]
+    yticks/ticks: [0, 50, 100, 150, 200]
+    yticks/labels: ['0', '50', '100', '150', '200']
+
+    ########## ax.hist Arguments ##########
+    ax.hist/density: true
+    ax.hist/bins: 100
+
+    ################ General ##############
+    style: default
+    tckprms/colors: black
+    xlbl/color: black
+    ylbl/color: black
+
+    ################ Color ##############
+    colors/n_smpserr: blue
+    colors/m_acsmerr: blue
+
+mprthst_errhist:
+  ref: nprthst_errhist
+  def:
+    ######## The x-Axis Parameters ########
+    xlbl/xlabel: Total Mass Compl Rel Error
+    xlim: [-0.01, 0.41]
+    xticks/ticks: [0, 0.1, 0.2, 0.3, 0.4]
+    xticks/labels: ['0', '0.1', '0.2', '0.3', '0.4']
+
+    ######## The y-Axis Parameters ########
+    ylim: [0, 30]
+    yticks/ticks: [0, 5, 10, 15, 20, 25, 30]
+    yticks/labels: ['0', '5', '10', '15', '20', '25', '30']
+
+mchmprt_errhist:
+  ref: nprthst_errhist
+  def:
+    ######## The x-Axis Parameters ########
+    xlbl/xlabel: Species Mass Compl Rel Error
+    xlim: [-0.01, 0.41]
+    xticks/ticks: [0, 0.1, 0.2, 0.3, 0.4]
+    xticks/labels: ['0', '0.1', '0.2', '0.3', '0.4']
+
+    ######## The y-Axis Parameters ########
+    ylim: [0, 30]
+    yticks/ticks: [0, 5, 10, 15, 20, 25, 30]
+    yticks/labels: ['0', '5', '10', '15', '20', '25', '30']
+
+###########################################################
+########### ACSM/SMPS Collective Quantile Plots ###########
+###########################################################
+
+ccn_sctcndqnt1:
+  ref: ccn_sctcnd1
+  def:
+    ########## Figure Generation ##########
+    plt.subplots/nrows: 2
+    plt.subplots/ncols: 3
+    plt.subplots/squeeze: false
+    plt.subplots/sharex: false
+    plt.subplots/sharey: true
+    plt.subplots/dpi: 120
+    plt.subplots/axsize: [2.1, 2.6]
+
+    ######### Layout Adjustments #########
+    layout/layout: tight
+    layout/w_pad: 0.1
+    layout/h_pad: 0.0
+    layout/rect: [0, 0.0, 1.0, 1.0]
+
+    ########## ax.scatter Arguments ##########
+    ax.scatter/alpha: 0.6
+
+    ######## The y-Axis Parameters ########
+    xlbl/share: false
+    
+    ######## The y-Axis Parameters ########
+    ylbl/ylabel: Generation Quantile
+    ylbl/labelpad: null
+    ylbl/share: true
+    yscale/value: linear
+    ylim: [-0.01, 1.01]
+    yticks/ticks: [0, 0.2, 0.4, 0.6, 0.8, 1.0]
+    yticks/labels: ['0', '0.2', '0.4', '0.6', '0.8', '1']
+
+ccn_sctcndqnt2/ref: ccn_sctcndqnt1
+ccn_sctcndqnt3/ref: ccn_sctcndqnt1
+
+qs_popsctcndqnt:
+  ref: qs_popsct
+  def:
+    ######## The y-Axis Parameters ########
+    xlbl/share: false
+
+    ########## ax.scatter Arguments ##########
+    ax.scatter/alpha: 0.6
+
+    ######## The y-Axis Parameters ########
+    ylbl/ylabel: Generation Quantile
+    ylbl/labelpad: null
+    ylbl/share: true
+    yscale/value: linear
+    ylim: [0.0, 1.0]
+    yticks/ticks: [0, 0.2, 0.4, 0.6, 0.8, 1.0]
+    yticks/labels: ['0', '0.2', '0.4', '0.6', '0.8', '1']
+  pop: [yscale/linthresh, yscale/linscale]
+
+qa_popsctcndqnt:
+  ref: qa_popsct
+  def:
+    ######## The y-Axis Parameters ########
+    xlbl/share: false
+
+    ########## ax.scatter Arguments ##########
+    ax.scatter/alpha: 0.6
+
+    ######## The y-Axis Parameters ########
+    ylbl/ylabel: Generation Quantile
+    ylbl/labelpad: null
+    ylbl/share: true
+    yscale/value: linear
+    ylim: [0.0, 1.0]
+    yticks/ticks: [0, 0.2, 0.4, 0.6, 0.8, 1.0]
+    yticks/labels: ['0', '0.2', '0.4', '0.6', '0.8', '1']
+  pop: [yscale/linthresh, yscale/linscale]
+
+frznfrac_sctcndqnt1:
+  ref: frznfrac_sct1
+  def:
+    ######## The y-Axis Parameters ########
+    xlbl/share: false
+
+    ########## ax.scatter Arguments ##########
+    ax.scatter/alpha: 0.6
+
+    ######## The y-Axis Parameters ########
+    ylbl/ylabel: Generation Quantile
+    ylbl/labelpad: null
+    ylbl/share: true
+    yscale/value: linear
+    ylim: [0.0, 1.0]
+    yticks/ticks: [0, 0.2, 0.4, 0.6, 0.8, 1.0]
+    yticks/labels: ['0', '0.2', '0.4', '0.6', '0.8', '1']
+  pop: [yscale/linthresh, yscale/linscale]
+
+frznfrac_sctcndqnt2/ref: frznfrac_sctcndqnt1
+frznfrac_sctcndqnt3/ref: frznfrac_sctcndqnt1
+
+###########################################################
+############## Generation Calibration Plots ###############
+###########################################################
+
+ccn_hist1:
+  type: hist
+
+  ########## Figure Generation ##########
+  plt.subplots/nrows: 2
+  plt.subplots/ncols: 3
+  plt.subplots/squeeze: false
+  plt.subplots/sharex: false
+  plt.subplots/sharey: false
+  plt.subplots/dpi: 120
+  plt.subplots/axsize: [2.4, 2.4]
+
+  ######### Layout Adjustments #########
+  layout/layout: tight
+  layout/w_pad: 0
+  layout/h_pad: 0.2
+  layout/rect: [0.0, 0.0, 1.0, 1.0]
+
+  ######## The x-Axis Parameters ########
+  xlbl/xlabel: CCN Fraction
+  xlbl/labelpad: null
+  xlbl/share: false
+  xscale/value: linear
+  xlim: [0, 1]
+  xticks/ticks: [0, 0.2, 0.4, 0.6, 0.8, 1]
+  xticks/labels: ['0', '0.2', '0.4', '0.6', '0.8', '1']
+
+  ######## The y-Axis Parameters ########
+  ylbl/ylabel: Count
+  ylbl/labelpad: null
+  ylbl/share: true
+  yscale/value: linear
+  ylim: [0, 4000]
+  yticks/ticks: [0, 2000, 4000, 6000]
+  yticks/labels: ['0', '2000', '4000', '6000']
+
+  ########## ax.hist Arguments ##########
+  ax.hist/density: false
+  ax.hist/bins: 20
+  ax.hist/range: [0, 1]
+  ax.hist/lw: 1.5
+  ax.hist/normal/ls: --
+  ax.hist/normal/lw: 1.75
+  ax.hist/facecolor: none
+  ax.hist/test/edgecolor: blue
+  ax.hist/normal/edgecolor: red
+  ax.hist/histtype: step
+
+  ################ General ##############
+  style: default
+  rc_context/ref: rc_context
+  tckprms/colors: black
+  xlbl/color: black
+  ylbl/color: black
+
+  ################ Color ##############
+  colorspec/ref: colorspec
+  colors/test: blue
+  colors/normal: red
+
+ccn_hist2/ref: ccn_hist1
+
+qs_hist:
+  type: hist
+
+  ########## Figure Generation ##########
+  plt.subplots/ref: ccn_hist1/plt.subplots
+
+  ######## The x-Axis Parameters ########
+  xlbl/xlabel: Vol Scat Coef ${\rm (1/Mm)}$
+  xlbl/labelpad: null
+  xlbl/share: false
+
+  xlim: [0, 1e4]
+  xscale/value: symlog
+  xscale/linthresh: 1e0
+  xscale/linscale: 1
+  xticks/ticks: [0, 1e0, 1e1, 1e2, 1e3, 1e4]
+  xticklabels: null
+  xticklabeler/type: sci 
+  xticklabeler/precision: 3
+  xticklabeler/n_maxprez: 5
+  xticklabeler/force_exp: true
+
+  ######## The y-Axis Parameters ########
+  ylbl/ylabel: Count
+  ylbl/labelpad: null
+  ylbl/share: true
+  yscale/value: linear
+  ylim: [0, 5000]
+  yticks/ticks: [0, 1000, 2000, 3000, 4000, 5000]
+  yticks/labels: ['0', '1000', '2000', '3000', '4000', '5000']
+
+  ########## ax.hist Arguments ##########
+  ax.hist/density: false
+  ax.hist/bins/def: >
+      np.linspace( 0,      1,  4, endpoint=False).tolist() +
+      np.geomspace(1,    1e4, 16, endpoint=True).tolist()
+  ax.hist/lw: 1.5
+  ax.hist/normal/ls: --
+  ax.hist/normal/lw: 1.75
+  ax.hist/facecolor: none
+  ax.hist/test/edgecolor: blue
+  ax.hist/normal/edgecolor: red
+  ax.hist/histtype: step
+
+  ################ General ##############
+  style: default
+  rc_context/ref: rc_context
+  tckprms/colors: black
+  xlbl/color: black
+  ylbl/color: black
+
+  ################ Color ##############
+  colorspec/ref: colorspec
+  colors/test: blue
+  colors/normal: red
+
+qa_hist:
+  ref: qs_hist
+  def:
+    ######## The x-Axis Parameters ########
+    xlbl/xlabel: Vol Abs Coef ${\rm (1/Mm)}$
+
+frznfrac_hist1:
+  type: hist
+
+  ########## Figure Generation ##########
+  plt.subplots/ref: ccn_hist1/plt.subplots
+
+  ######## The x-Axis Parameters ########
+  xlbl/xlabel: Frozen Fraction
+  xlbl/labelpad: null
+  xlbl/share: false
+
+  xlim: [0, 1]
+  xscale/value: symlog
+  xscale/linthresh: 1e-15
+  xscale/linscale: 3
+  xticks/ticks: [0, 1e-15, 1e-10, 1e-5, 1e0]
+  xticklabeler/type: sci 
+  xticklabeler/precision: 3
+  xticklabeler/n_maxprez: 5
+  xticklabeler/force_exp: true
+
+  ######## The y-Axis Parameters ########
+  ylbl/ylabel: Count
+  ylbl/labelpad: null
+  ylbl/share: true
+  yscale/value: linear
+  ylim: [0, 8000]
+  yticks/ticks: [0, 2000, 4000, 6000, 8000]
+  yticks/labels: ['0', '2000', '4000', '6000', '8000']
+
+  ########## ax.hist Arguments ##########
+  ax.hist/density: false
+  ax.hist/bins/def: >
+      np.linspace( 0,     1e-15,  5, endpoint=False).tolist() +
+      np.geomspace(1e-15,     1, 15, endpoint=True).tolist()
+  ax.hist/lw: 1.5
+  ax.hist/normal/ls: --
+  ax.hist/normal/lw: 1.75
+  ax.hist/facecolor: none
+  ax.hist/test/edgecolor: blue
+  ax.hist/normal/edgecolor: red
+  ax.hist/histtype: step
+
+  ################ General ##############
+  style: default
+  rc_context/ref: rc_context
+  tckprms/colors: black
+  xlbl/color: black
+  ylbl/color: black
+
+  ################ Color ##############
+  colorspec/ref: colorspec
+  colors/test: blue
+  colors/normal: red
+
+frznfrac_hist2/ref: frznfrac_hist1
+
+###########################################################
+############## Non-Conditional Scatter Plots ##############
+###########################################################
+
+ztsne:
+  type: scatter
+
+  ######## The x-Axis Parameters ########
+  xlbl/xlabel: Latent t-SNE 1
+  xlbl/labelpad: null
+  xlbl/share: false
+  xscale/value: linear
+  xticks/ticks: []
+  xticks/labels: []
+
+  ######## The y-Axis Parameters ########
+  ylbl/ylabel: Latent t-SNE 2
+  ylbl/labelpad: null
+  ylbl/share: true
+  yscale/value: linear
+  yticks/ticks: []
+  yticks/labels: []
+
+  ########## Figure Generation ##########
+  plt.subplots/nrows: 3
+  plt.subplots/ncols: 4
+  plt.subplots/squeeze: false
+  plt.subplots/sharex: row
+  plt.subplots/sharey: row
+  plt.subplots/dpi: 180
+  plt.subplots/layout: tight
+  plt.subplots/axsize: [1.6, 2.2]
+
+  ######### Layout Adjustments #########
+  layout/layout: tight
+  layout/w_pad: 0.0
+  layout/h_pad: 0.5
+  layout/rect: [0, 0.1, 1.0, 1.0]
+
+  ######## ax.scatter Arguments ########
+  ax.scatter/marker: 'o'
+  ax.scatter/s: 0.5
+  ax.scatter/alpha: 1.0
+  ax.scatter/edgecolor: [1.0, 1.0, 1.0, 0.9]
+  ax.scatter/lw: 0.0
+
+  ################ General ##############
+  style: default
+  rc_context/ref: rc_context
+  tckprms/colors: black
+  xlbl/color: black
+  ylbl/color: black
+  colorspec/ref: colorspec
+  colors/ref: colors
+
+zpca:
+  ref: ztsne
+  def:
+    ######## The x-Axis Parameters ########
+    xlbl/xlabel: Latent PC 1
+    xlim: [-5.5, 5.5]
+
+    ######## The y-Axis Parameters ########
+    ylbl/ylabel: Latent PC 2
+    ylim: [-5.5, 5.5]
+
+    ######## ax.scatter Arguments ########
+    ax.scatter/s: 0.0
+    ax.scatter/alpha: 0.6
+    ax.scatter/normal/genr/s: 0.5
+    ax.scatter/normal/genr/alpha: 1.0
+    ax.scatter/normal/gaus/s: 0.5
+    ax.scatter/normal/gaus/alpha: 1.0
+
+xtsne:
+  ref: ztsne
+  def:
+    ######## The x-Axis Parameters ########
+    xlbl/xlabel: Mass t-SNE 1
+
+    ######## The y-Axis Parameters ########
+    ylbl/ylabel: Mass t-SNE 2
+
+    ######## ax.scatter Arguments ########
+    ax.scatter/train/rcnst/alpha: 0.3
+    ax.scatter/test/rcnst/alpha: 0.3
+
+    ################ Legend ###############
+    leg/loc: lower center
+    leg/bbox_to_anchor: [0.5, 0.07]
+    leg/ncol: 5
+    leg/markerscale: 10
+    leg/borderaxespad: 0.0
+    leg/handletextpad: -0.2
+    leg/columnspacing: 1.0
+    leg/edgecolor: black
+    leglbls/train/orig: Train Original
+    leglbls/train/rcnst: Train Reconst
+    leglbls/test/orig: Test Original
+    leglbls/test/rcnst: Test Reconst
+    leglbls/normal/genr: Generated
+    leglbls/normal/gaus: Generated
+    leglbls/train/ltnt: Train Latent
+    leglbls/test/ltnt: Test Latent
+    leglbls/normal/ltnt: Gen. Latent
+    leglbls/train/blob: Train Blobs
+    leglbls/test/blob: Test Blobs
+
+###########################################################
+##### Conditional Mass Quantile Generation Histograms #####
+###########################################################
+
+cond.mfrachist.legacy:
+  type: hist
+
+  ######## The x-Axis Parameters ########
+  xlbl/xlabel: Dust Mass Fraction
+  xlim: [-0.05, 1.05]
+  xlbl/labelpad: null
+  xscale/value: linear
+  xticks/ticks: [0, 0.2, 0.4, 0.6, 0.8, 1]
+  xticks/labels: ['$0$', '$0.2$', '$0.4$', '$0.6$', '$0.8$', '$1$']
+
+  ######## The y-Axis Parameters ########
+  ylbl/ylabel: Sample Count
+  ylbl/labelpad: null
+  # yscale/value: linear
+  # ylim: [0, 20]
+  # yticks/ticks: [0, 5, 10, 15, 20]
+  # yticks/labels: ['$0$', '$5$', '$10$', '$15$', '$20$']
+  yscale/value: symlog
+  yscale/linthresh: 1500
+  yscale/linscale: 2.5
+  yscale/base: 10
+  ylim: [0, 10000]
+  yticks/ticks: [0, 500, 1000, 1500, 10000]
+  yticks/labels: ['$0$', '$500$', '$1000$', '$1500$', '$10000$']
+  
+  ########## Figure Generation ##########
+  plt.subplots/nrows: 1
+  plt.subplots/ncols: 2
+  plt.subplots/squeeze: false
+  plt.subplots/sharex: false
+  plt.subplots/sharey: false
+  plt.subplots/dpi: 150
+  plt.subplots/axsize: [2.8, 2.5]
+
+  ######### Layout Adjustments #########
+  layout/layout: tight
+  layout/w_pad: 0.5
+  layout/h_pad: 0.5
+  layout/rect: [0, 0.1, 1.0, 1.0]
+
+  ########## ax.hist Arguments ##########
+  ax.hist/bins: 40
+  ax.hist/range: [0, 1]
+  ax.hist/density: false
+  ax.hist/lw: 2
+  ax.hist/histtype: step
+
+  ################ General ##############
+  style: default
+  rc_context/ref: rc_context
+  tckprms/colors: black
+  xlbl/color: black
+  ylbl/color: black
+
+  ################ Color ##############
+  colorspec/ref: colorspec
+  colors/ref: colors
+
+  ################ Legend ###############
+  leg/loc: lower center
+  leg/bbox_to_anchor: [0.52, 0.01]
+  leg/ncol: 4
+  leg/markerscale: 10
+  leg/handletextpad: 0.3
+  leg/columnspacing: 1.0
+  leg/edgecolor: black
+  leglbls/genr0: Low Dust
+  leglbls/genr1: Med-Low Dust
+  leglbls/genr2: Med-High Dust
+  leglbls/genr3: High Dust
+  leglbls/gaus0: Low Dust
+  leglbls/gaus1: Med-Low Dust
+  leglbls/gaus2: Med-High Dust
+  leglbls/gaus3: High Dust
+
+cond.mabshist.legacy:
+  ref: cond.mfrachist.legacy
+  def:
+    ######## The x-Axis Parameters ########
+    xlbl/xlabel: Dust Mass ${\rm (\mu g / m^3)}$
+    # xlim: [-10, 310]
+    # xticks/ticks: [0, 100, 200, 300]
+    # xticks/labels: ['0', '100', '200', '300']
+
+    xlim: [-0.1, 1200]
+    xticks/ticks: [0, 1, 10, 100, 1000]
+    xticks/labels: ['0', '1', '10', '100', '1000']
+    xscale/value: symlog
+    xscale/linthresh: 1
+    xscale/linscale: 1
+
+    ######## The y-Axis Parameters ########
+    # ylim: [0, 0.08]
+    # yticks/ticks: [0, 0.02, 0.04, 0.06, 0.08]
+    # yticks/labels: ['$0$', '$0.02$', '$0.04$', '$0.06$', '$0.08$']
+
+    ########## ax.hist Arguments ##########
+    ax.hist/bins: >
+      np.linspace( 0,      1, 10, endpoint=False).tolist() +
+      np.geomspace(1,     20, 10, endpoint=False).tolist() +
+      np.geomspace(20,   100, 10, endpoint=False).tolist() +
+      np.geomspace(100, 1000, 30, endpoint=True).tolist()
+    ax.hist/range: [0, 1000]
+    ax.hist/density: false
+    ax.hist/lw: 2
+    ax.hist/histtype: step
+  
+  pop: leg
+
+cond.mfrachist.cmprd:
+  ref: cond.mfrachist.legacy
+  def:
+    ########## Figure Generation ##########
+    plt.subplots/nrows: 1
+    plt.subplots/ncols: 2
+    plt.subplots/sharey: true
+    plt.subplots/axsize: [3.5, 3.2]
+
+cond.mabshist.cmprd:
+  ref: cond.mabshist.legacy
+  def:
+    ########## Figure Generation ##########
+    plt.subplots/nrows: 1
+    plt.subplots/ncols: 2
+    plt.subplots/sharey: true
+    plt.subplots/axsize: [3.5, 3.2]
+
+###########################################################
+###### Conditional Mass Quantile Generation Examples ######
+###########################################################
+
+m_chmprthst.genr.mqnt:
+  ref: m_chmprthst.genr
+  def:
+    ######## The y-Axis Parameters ########
+    ylbl/ylabel: $dM/d \log_{10}D$ ${\rm (\mu g / m^3)}$
+    ylbl/share: true
+
+    ########## Figure Generation ##########
+    plt.subplots/nrows: 2
+    plt.subplots/ncols: 4
+    plt.subplots/squeeze: false
+    plt.subplots/sharex: false
+    plt.subplots/sharey: false
+    plt.subplots/dpi: 100
+    plt.subplots/axsize: [2.12, 2.3]
+
+    ######### Layout Adjustments #########
+    layout/layout: tight
+    layout/w_pad: 0.5
+    layout/h_pad: 0.0
+    layout/rect: [0, 0.1, 1.0, 1.0]
+
+    ################ Legend ###############
+    leg/loc: lower center
+    leg/bbox_to_anchor: [0.5, -0.01]
+    leg/edgecolor: black
+    leg/ncol: 8
+    leg/columnspacing: 1.2
+    leglbls/SO4: SO4(1)
+    leglbls/NO3: NO3(2)
+    leglbls/Cl: Cl(3)
+    leglbls/NH4: NH4(4)
+    leglbls/ARO1: ARO1(5)
+    leglbls/ARO2: ARO2(6)
+    leglbls/ALK1: ALK1(7)
+    leglbls/OLE1: OLE1(8)
+    leglbls/API1: API1(9)
+    leglbls/Na: Na(10)
+    leglbls/Dust: Dust(11)
+    leglbls/POA: POA(12)
+    leglbls/BC: BC(13)
+    leglbls/MOC: MOC(14)
+    leglbls/H2O: H2O(15)
+
+n_prthst.genr.mqnt:
+  ref: n_prthst.genr
+
+###########################################################
+################ Conditional Scatter Plots ################
+###########################################################
+
+cond.ztsne:
+  ref: ztsne
+  def: 
+    ########## Figure Generation ##########
+    plt.subplots/nrows: 3
+    plt.subplots/ncols: 5
+
+    ######### Layout Adjustments #########
+    layout/layout: tight
+    layout/w_pad: 0.0
+    layout/h_pad: 0.5
+    layout/rect: [0, 0.1, 1.0, 1.0]
+
+cond.zpca:
+  ref: zpca
+  def:
+    ######## ax.scatter Arguments ########
+    ax.scatter/s: 0.0
+    ax.scatter/alpha: 0.4
+    ax.scatter/normal/class/0/s: 0.5
+    ax.scatter/normal/class/0/alpha: 1.0
+    ax.scatter/normal/class/1/s: 0.5
+    ax.scatter/normal/class/1/alpha: 1.0
+    ax.scatter/normal/class/2/s: 0.5
+    ax.scatter/normal/class/2/alpha: 1.0
+    ax.scatter/normal/class/3/s: 0.5
+    ax.scatter/normal/class/3/alpha: 1.0
+
+    ######### Layout Adjustments #########
+    layout/layout: tight
+    layout/w_pad: 0.0
+    layout/h_pad: 0.5
+    layout/rect: [0, 0.1, 1.0, 1.0]
+
+cond.xtsne:
+  ref: xtsne
+  def:
+    ######### Layout Adjustments #########
+    layout/layout: tight
+    layout/w_pad: 0.0
+    layout/h_pad: 0.5
+    layout/rect: [0, 0.1, 1.0, 1.0]
+  pop: leg
+
+###########################################################
+####################### Paper Plots #######################
+###########################################################
+
+#######################################
+###### Data Introduction Figure #######
+#######################################
+
+paper.intro.data.bar:
+  ref: m_chmprthst.orig
+  def:
+    ######## The y-Axis Parameters ########
+    ylbl/ylabel: $dM/d \log_{10}D$ ${\rm (\mu g / m^3)}$
+    ybound: [0, 60]
+
+    ########## Figure Generation ##########
+    plt.subplots/nrows: 1
+    plt.subplots/ncols: 3
+    plt.subplots/sharex: false
+    plt.subplots/sharey: false
+    plt.subplots/dpi: 120
+    plt.subplots/axsize: [3.2, 3.0]
+
+    ################ Legend ###############
+    leg/loc: lower center
+    leg/bbox_to_anchor: [0.5, -0.03]
+    leg/edgecolor: black
+    leg/ncol: 8
+
+paper.intro.data.hmap.specific:
+  type: pcolormesh
+
+  ######## The x-Axis Parameters ########
+  xlbl/xlabel: Diameter ${\rm (\mu m)}$
+  xlbl/labelpad: null
+  xlbl/share: false
+  xscale/value: log
+  xlim: [0.001, 17]
+  xticks/ticks: [1e-3, 1e-2, 1e-1, 1e0, 1e1]
+  xticklabeler/type: sci 
+  xticklabeler/precision: 3
+  xticklabeler/n_maxprez: 5
+  xticklabeler/force_exp: true
+
+  ######## The y-Axis Parameters ########
+  ylbl/ylabel: Chemical Species
+  ylbl/labelpad: null
+  ylbl/share: false
+  ylim: null
+  yscale/value: linear
+  yticks/ticks: null
+  yticks/labels: null
+
+  ######### Layout Adjustments #########
+  layout/layout: tight
+  layout/w_pad: 0.5
+  layout/h_pad: 0.0
+  layout/rect: [0, 0.1, 1.0, 1.0]
+
+  ########## ax.pcolormesh Arguments ##########
+  ax.pcolormesh/cmap: Reds
+
+  ax.pcolormesh/norm.type: symlog
+  ax.pcolormesh/norm.linthresh: 1e-4
+  ax.pcolormesh/norm.linscale: 1
+  ax.pcolormesh/norm.base: 10
+  ax.pcolormesh/norm.vmin: 0
+  ax.pcolormesh/norm.vmax: 100
+  ax.pcolormesh/vmin: null
+  ax.pcolormesh/vmax: null
+
+  ax.pcolormesh/shading: flat
+  ax.pcolormesh/linewidth: 0
+  ax.pcolormesh/rasterized: true
+
+  ################ General ##############
+  style: default
+  rc_context/ref: rc_context
+  tckprms/colors: black
+  xlbl/color: black
+  ylbl/color: black
+  colorspec/ref: colorspec
+  colors/ref: colors
+
+paper.intro.data.hmap.global:
+  ref: paper.intro.data.hmap.specific
+  def:
+    ######## The y-Axis Parameters ########
+    # The color tick formatter
+    ctickformatter/type: sci 
+    ctickformatter/precision: 3
+    ctickformatter/n_maxprez: 5
+    ctickformatter/force_exp: true
+
+    ########## ax.pcolormesh Arguments ##########
+    ax.pcolormesh/cax.position: right
+    ax.pcolormesh/cax.size: '5%'
+    ax.pcolormesh/cax.pad: 0.05
+
+    ax.pcolormesh/cbar.ticks: null
+    ax.pcolormesh/cbar.format: null
+    ax.pcolormesh/cbar.label: '$dM/d \log_{10}D$ ${\rm (\mu g / m^3)}$'
+
+paper.intro.diag.m_chmprthst:
+  ref: m_chmprthst.orig
+  def:
+    ######## The y-Axis Parameters ########
+    ylbl/ylabel: $dM/d \log_{10}D$ ${\rm (\mu g / m^3)}$
+    ybound: [0, 60]
+
+    ################ Legend ###############
+    leg/loc: lower center
+    leg/bbox_to_anchor: [0.5, 0.01]
+    leg/edgecolor: black
+    leg/ncol: 8
+
+#######################################
+###### Example Diagnostic Figure ######
+#######################################
+
+paper.intro.diag.m_prthst/ref: m_prthst
+paper.intro.diag.m_prthst/ybound/def: [0, 60]
+paper.intro.diag.n_prthst/ref: n_prthst
+paper.intro.diag.ccn_cdf/ref: ccn_cdf
+paper.intro.diag.frznfrac_tmp/ref: frznfrac_tmp
+paper.intro.diag.qs_pop/ref: qs_pop
+paper.intro.diag.qs_pop/pop: [leg]
+paper.intro.diag.qa_pop/ref: qa_pop
+paper.intro.diag.qscs_prt/ref: qscs_prt
+paper.intro.diag.qacs_prt/ref: qacs_prt
+paper.intro.diag.m_chmhst1/ref: m_chmhst1
+paper.intro.diag.m_chmhst2/ref: m_chmhst2
+
+#######################################
+######## PP Simulation Figures ########
+#######################################
+
+paper.ppsim.ccn_cdf.err:
+  ######### Figure Generation #########  
+  colorspec/ref: colorspec
+
+  ########## ax.bar Arguments #########
+  ax.bar/edgecolor: black
+  ax.bar/linewidth: 1
+  ax.bar/barswidth: 0.6
+  ax.bar/grpby: x
+  arrowprops/arrowstyle: "-|>"
+  ax.annotate/xycoords: axes fraction 
+  ax.annotate/textcoords: axes fraction
+
+  ######## Data Spec and Annots #######
+  elements:
+    Tuned:
+      include: [{pptype: Tuned}]
+      ax.plot/color: blue
+      ax.bar/color: blue
+    Plain:
+      include: [{pptype: Plain}]
+      ax.plot/color: redbright
+      ax.bar/color: redbright
+
+  smry/sel: null
+  smry/cri: null
+
+  ####### The x-Axis Parameters #######
+  xlabel: Preprocessing
+  xcol: pptype
+  kind: grpbar 
+
+  ####### The y-Axis Parameters #######
+  ycol: ccn_cdf.err
+  ylabel: CCN Spectrum Relative Error
+  ylim: [0.01, 1.0]
+  yticks: [0.01, 0.03, 0.1, 0.3, 1.0]
+  yticklabels: ['0.01', '0.03', '0.1', '0.3', '1']
+  ylabelpad: 1
+  yscale: log
+
+paper.ppsim.qs_pop.err:
+  ref: paper.ppsim.ccn_cdf.err
+  def:
+    ####### The y-Axis Parameters #######
+    ycol: qs_pop.err
+    ylabel: Scattering Relative Error
+    ylabelpad: 2
+
+paper.ppsim.qa_pop.err:
+  ref: paper.ppsim.ccn_cdf.err
+  def:
+    ####### The y-Axis Parameters #######
+    ycol: qa_pop.err
+    ylabel: Absorption Relative Error
+    ylabelpad: 2
+
+paper.ppsim.logfrznfrac_tmp.err:
+  ref: paper.ppsim.ccn_cdf.err
+  def:
+    ####### The y-Axis Parameters #######
+    ycol: logfrznfrac_tmp.err
+    ylabel: Log Frozen Fraction Relative Error
+    ylabelpad: 2
+
+paper.ppsim.m_chmprthst.err:
+  ref: paper.ppsim.ccn_cdf.err
+  def:
+    ####### The y-Axis Parameters #######
+    ycol: m_chmprthst.err
+    ylabel: Speciated Mass Relative Error
+    ylabelpad: 2
+
+paper.ppsim.m_prthst.err:
+  ref: paper.ppsim.ccn_cdf.err
+  def:
+    ####### The y-Axis Parameters #######
+    ycol: m_prthst.err
+    ylabel: Total Mass Relative Error
+    ylabelpad: 2
+
+paper.ppsim.n_prthst.err:
+  ref: paper.ppsim.ccn_cdf.err
+  def:
+    ####### The y-Axis Parameters #######
+    ycol: n_prthst.err
+    ylabel: Concentration Relative Error
+    ylabelpad: 2
+
+paper.ppsim.m_perchmhst.err:
+  ref: paper.ppsim.ccn_cdf.err
+  def:
+    ####### The y-Axis Parameters #######
+    ycol: m_perchmhst.err
+    ylabel: Per-Chem Mass Relative Error
+    ylabelpad: 2
+
+
+paper.ppsim.m_chmprthst.orig:
+  ref: m_chmprthst.orig
+  def:
+    ######## The y-Axis Parameters ########
+    ylbl/ylabel: $dM/d \log_{10}D$ ${\rm (\mu g / m^3)}$
+    
+    ######## The x-Axis Parameters ########
+    xlbl/share: true
+
+    ########## Figure Generation ##########
+    plt.subplots/nrows: 3
+    plt.subplots/ncols: 4
+    plt.subplots/squeeze: false
+    plt.subplots/sharex: true
+    plt.subplots/sharey: false
+    plt.subplots/dpi: 100
+    plt.subplots/axsize: [2.4, 2.3]
+
+    ######### Layout Adjustments #########
+    layout/w_pad: 0.5
+    layout/h_pad: 1.0
+
+    ################ Legend ###############
+    leg/loc: lower center
+    leg/bbox_to_anchor: [0.4, 0.04]
+    leg/edgecolor: black
+    leg/ncol: 8
+
+    leglbls/orig: Original
+    leglbls/plain: Plain
+    leglbls/tuned: Tuned
+
+paper.ppsim.m_chmprthst.plain:
+  ref: m_chmprthst.orig
+  def:
+    xlbl/share: true
+    layout/w_pad: 0.5
+    ylbl/ylabel: $dM/d \log_{10}D$ ${\rm (\mu g / m^3)}$
+  pop: [leg]
+
+paper.ppsim.m_chmprthst.tuned:
+  ref: m_chmprthst.orig
+  def:
+    xlbl/share: true
+    layout/w_pad: 0.5
+    ylbl/ylabel: $dM/d \log_{10}D$ ${\rm (\mu g / m^3)}$
+  pop: [leg]
+
+paper.ppsim.n_prthst:
+  ref: n_prthst
+  def:
+    xlbl/share: true
+
+    ######### ax.bar Adjustments #########
+    ax.bar/lw: 1.5
+    ax.bar/tuned/ls: --
+    ax.bar/tuned/lw: 1.75
+    ax.bar/plain/ls: --
+    ax.bar/plain/lw: 1.75
+    ax.bar/bottom: -0.1
+
+    ######### Layout Adjustments #########
+    layout/w_pad: 0.5
+    layout/h_pad: 1.0
+
+    ################ Legend ###############
+    leg/loc: lower center
+    leg/bbox_to_anchor: [0.9, 0.04]
+    leg/ncol: 2
+    leg/columnspacing: 1.0
+
+    leglbls/orig: Input
+    leglbls/tuned: With PP
+    leglbls/plain: WO PP
+
+
+paper.ppsim.grperr.vert.log:
+  ######### Figure Generation #########  
+  colorspec/ref: colorspec
+
+  ########## ax.bar Arguments #########
+  ax.bar/edgecolor: black
+  ax.bar/linewidth: 1
+  ax.bar/barswidth: 0.8
+  ax.bar/grpby: x
+  arrowprops/arrowstyle: "-|>"
+  ax.annotate/xycoords: axes fraction 
+  ax.annotate/textcoords: axes fraction
+
+  ######## Data Spec and Annots #######
+  elements:
+    Tuned:
+      include: [{pptype: Tuned}]
+      ax.plot/color: blue
+      ax.bar/color: blue
+      ax.annotate/text: "Sim\nwith PP"
+      ax.annotate/xytext: [0.02, 0.6]
+      bbox/pad: 90
+      bbox/facecolor: none
+      bbox/edgecolor: none
+      arrowprops/relpos: [0.55, 0.0]
+      arrowprops/connectionstyle: "arc3,rad=0.0"
+    Plain:
+      include: [{pptype: Plain}]
+      ax.plot/color: redbright
+      ax.bar/color: redbright
+      ax.annotate/text: "Sim\nwithout PP"
+      ax.annotate/xytext: [0.077, 0.92]
+      bbox/pad: 90
+      bbox/facecolor: none
+      bbox/edgecolor: none
+      arrowprops/relpos: [0.5, 0.0]
+      arrowprops/connectionstyle: "arc3,rad=0.0"
+
+  smry/sel: null
+  smry/cri: null
+
+  ####### The x-Axis Parameters #######
+  xlabel: null
+  xcol: metric
+  kind: grpbar 
+
+  ####### The y-Axis Parameters #######
+  ycol: err
+  ylabel: Error
+  ylim: [0.01, 1.0]
+  yticks: [0.01, 0.03, 0.1, 0.3, 1.0]
+  yticklabels: ['0.01', '0.03', '0.1', '0.3', '1']
+  ylabelpad: 1
+  yscale: log
+
+paper.ppsim.grperr.vert.lin:
+  ref: paper.ppsim.grperr.vert.log
+  def:
+    ####### The y-Axis Parameters #######
+    ylim: [0.0, 1.0]
+    yticks: [0.0, 0.2, 0.4, 0.6, 0.8, 1.0]
+    yticklabels: ['0', '0.2', '0.4', '0.6', '0.8', '1']
+    ylabelpad: 1
+    yscale: linear
+
+    elements:
+      Tuned:
+        ax.annotate/xytext: [0.01, 0.3]
+        arrowprops/relpos: [0.55, 0.0]
+      Plain:
+        ax.annotate/xytext: [0.057, 0.6]
+        arrowprops/relpos: [0.5, 0.0]
+
+
+paper.ppsim.grperr.horz.log.p1:
+  ######### Figure Generation #########  
+  colorspec/ref: colorspec
+
+  xcol: metric
+  kind: grpbarh
+  ycol: err
+
+  ########## ax.bar Arguments #########
+  ax.bar/edgecolor: black
+  ax.bar/linewidth: 1
+  ax.bar/barswidth: 0.8
+  ax.bar/grpby: x
+  arrowprops/arrowstyle: "-|>"
+  ax.annotate/xycoords: axes fraction 
+  ax.annotate/textcoords: axes fraction
+
+  ######## Data Spec and Annots #######
+  elements:
+    Tuned:
+      include: [{pptype: Tuned}]
+      ax.plot/color: blue
+      ax.bar/color: blue
+      ax.annotate/text: "\\textbf{With} Preproc"
+      ax.annotate/xytext: [0.59, 0.895]
+      bbox/pad: 0
+      bbox/facecolor: none
+      bbox/edgecolor: none
+      arrowprops/relpos: [0.0, 0.5]
+      arrowprops/connectionstyle: "arc3,rad=0.0"
+    Plain:
+      include: [{pptype: Plain}]
+      ax.plot/color: redbright
+      ax.bar/color: redbright
+      ax.annotate/text: "\\textbf{Without} Preproc"
+      ax.annotate/xytext: [0.865, 0.795]
+      bbox/pad: 0
+      bbox/facecolor: none
+      bbox/edgecolor: none
+      arrowprops/relpos: [0.0, 0.5]
+      arrowprops/connectionstyle: "arc3,rad=0.0"
+
+  smry/sel: null
+  smry/cri: null
+
+  ####### The x-Axis Parameters #######
+  ylabel: null
+
+  ####### The y-Axis Parameters #######
+  xlabel: Error
+  xlim: [0.01, 1.0]
+  xticks: [0.01, 0.03, 0.1, 0.3, 1.0]
+  xticklabels: ['0.01', '0.03', '0.1', '0.3', '1']
+  xlabelpad: 1
+  xscale: log
+
+paper.ppsim.grperr.horz.log.p2:
+  ref: paper.ppsim.grperr.horz.log.p1
+  def:
+    elements:
+      Tuned:
+        ax.annotate/text: null
+      Plain:
+        ax.annotate/text: null
+
+
+paper.ppsim.grperr.horz.lin.p1:
+  ref: paper.ppsim.grperr.horz.log.p1
+  def:
+    ####### The y-Axis Parameters #######
+    xlim: [0.0, 1.0]
+    xticks: [0.0, 0.2, 0.4, 0.6, 0.8, 1.0]
+    xticklabels: ['0', '0.2', '0.4', '0.6', '0.8', '1']
+    xlabelpad: 1
+    xscale: linear
+
+    elements:
+      Tuned:
+        ax.annotate/xytext: [0.27, 0.89]
+        arrowprops/relpos: [0.0, 0.5]
+      Plain:
+        ax.annotate/xytext: [0.52, 0.795]
+        arrowprops/relpos: [0.0, 0.5]
+
+paper.ppsim.grperr.horz.lin.p2:
+  ref: paper.ppsim.grperr.horz.lin.p1
+  def:
+    elements:
+      Tuned:
+        ax.annotate/text: null
+      Plain:
+        ax.annotate/text: null
+
+#######################################
+#### Supplementary Realism Figures ####
+#######################################
+
+paper.realism.klwsig.ldim:
+  kind: line
+  colorspec/ref: colorspec
+
+  ######## The x-Axis Parameters ########
+  xcol: cri/kl/sig/w
+  xlabel: KL-$\sigma$ Weight
+  xscale: log
+  xlim: [3e-7, 3e-1]
+  xticks: [1e-6, 1e-5, 1e-4, 1e-3, 1e-2, 1e-1]
+  xticklabels: ['$10^{-6}$', '$10^{-5}$', '$10^{-4}$', '$10^{-3}$', '$10^{-2}$', '$10^{-1}$']
+
+  ######## The y-Axis Parameters ########
+  yscale: log
+  ylim: [0.1, 10]
+  yticks: [0.1, 0.3, 1, 3, 10]
+  yticklabels: [$0.1$, $0.3$, $1$, $3$, $10$]
+  ylabelpad: 0
+
+  ######### Summary Parameters ##########
+  smry/sel: epoch
+  smry/cri: max
+
+  ######### ax.plot Parameters ##########
+  ax.plot/marker: '*'
+  ax.plot/lw: 2
+
+  ######## Annotation Parameters ########
+  arrowprops/arrowstyle: "-|>"
+  ax.annotate/xycoords: axes fraction 
+  ax.annotate/textcoords: axes fraction
+
+  ############ Line Elements ############
+  elements:
+    2D:
+      include: [{nn/ltnt/dim: 2}]
+      ax.plot/color: blue
+      ax.annotate/text: "2D"
+      ax.annotate/xytext: [0.05, 0.25]
+      ax.annotate/xy: [0.25, null]
+      bbox/pad: 90
+      bbox/facecolor: none
+      bbox/edgecolor: none
+      arrowprops/relpos: [1.0, 0.5]
+      arrowprops/connectionstyle: "arc3,rad=0.3"
+    3D:
+      include: [{nn/ltnt/dim: 3}]
+      ax.plot/color: green
+      ax.annotate/text: "3D"
+      ax.annotate/xytext: [0.1, 0.1]
+      ax.annotate/xy: [0.33, null]
+      bbox/pad: 90
+      bbox/facecolor: none
+      bbox/edgecolor: none
+      arrowprops/relpos: [1.0, 1.0]
+      arrowprops/connectionstyle: "arc3,rad=0.3"
+    4D:
+      include: [{nn/ltnt/dim: 4}]
+      ax.plot/color: red
+    5D:
+      include: [{nn/ltnt/dim: 5}]
+      ax.plot/color: orange
+    6D:
+      include: [{nn/ltnt/dim: 6}]
+      ax.plot/color: purple
+    7D:
+      include: [{nn/ltnt/dim: 7}]
+      ax.plot/color: brown
+    8D:
+      include: [{nn/ltnt/dim: 8}]
+      ax.plot/color: yellow
+    9D:
+      include: [{nn/ltnt/dim: 9}]
+      ax.plot/color: pink
+    10D:
+      include: [{nn/ltnt/dim: 10}]
+      ax.plot/color: black
+      ax.annotate/text: "10D"
+      ax.annotate/xytext: [0.5, 0.85]
+      ax.annotate/xy: [0.33, null]
+      bbox/pad: 90
+      bbox/facecolor: none
+      bbox/edgecolor: none
+      arrowprops/relpos: [0.0, 0.5]
+      arrowprops/connectionstyle: "arc3,rad=0.3"
+
+paper.realism.klwmu.ldim:
+  ref: paper.realism.klwsig.ldim
+  def:
+    ######## The x-Axis Parameters ########
+    xcol: cri/kl/mu/w
+    xlabel: KL-$\mu$ Weight
+
+paper.realism.ldim.klwsig:
+  kind: line
+  colorspec/ref: colorspec
+
+  ######## The x-Axis Parameters ########
+  xcol: nn/ltnt/dim
+  xlabel: Latent Dimension
+  xscale: linear
+  xlim: [1.5, 10.5]
+  xticks: [2, 3, 4, 5, 6, 7, 8, 9, 10]
+  xticklabels: [$2$, $3$, $4$, $5$, $6$, $7$, $8$, $9$, $10$]
+
+  ######## The y-Axis Parameters ########
+  yscale: log
+  ylim: [0.1, 10]
+  yticks: [0.1, 0.3, 1, 3, 10]
+  yticklabels: [$0.1$, $0.3$, $1$, $3$, $10$]
+  ylabelpad: 0
+
+  ######### Summary Parameters ##########
+  smry/sel: epoch
+  smry/cri: max
+
+  ######### ax.plot Parameters ##########
+  ax.plot/marker: '*'
+  ax.plot/lw: 2
+
+  ######## Annotation Parameters ########
+  arrowprops/arrowstyle: "-|>"
+  ax.annotate/xycoords: axes fraction 
+  ax.annotate/textcoords: axes fraction
+
+  ############ Line Elements ############
+  elements:
+    $w_{\sigma}=10^{-6}$:
+      include: [{cri/kl/sig/w: 1e-6}]
+      ax.plot/color: orange
+      ax.annotate/text: $w_{\sigma}=10^{-6}$
+      ax.annotate/xytext: [0.4, 0.77]
+      ax.annotate/xy: [0.94, null]
+      ax.annotate/fontsize: 9
+      bbox/pad: 90
+      bbox/facecolor: none
+      bbox/edgecolor: none
+      arrowprops/relpos: [1.0, 0.5]
+      arrowprops/connectionstyle: "arc3,rad=-0.3"
+    $w_{\sigma}=10^{-5}$:
+      include: [{cri/kl/sig/w: 1e-5}]
+      ax.plot/color: green
+    $w_{\sigma}=10^{-4}$:
+      include: [{cri/kl/sig/w: 1e-4}]
+      ax.plot/color: red
+      ax.annotate/text: $w_{\sigma}=10^{-4}$
+      ax.annotate/xytext: [0.65, 0.47]
+      ax.annotate/xy: [0.57, null]
+      ax.annotate/fontsize: 9
+      bbox/pad: 90
+      bbox/facecolor: none
+      bbox/edgecolor: none
+      arrowprops/relpos: [0.0, 0.5]
+      arrowprops/connectionstyle: "arc3,rad=-0.1"
+    $w_{\sigma}=10^{-3}$:
+      include: [{cri/kl/sig/w: 1e-3}]
+      ax.plot/color: blue
+      ax.annotate/text: $w_{\sigma}=10^{-3}$
+      ax.annotate/xytext: [0.05, 0.05]
+      ax.annotate/xy: [0.6, null]
+      ax.annotate/fontsize: 9
+      bbox/pad: 90
+      bbox/facecolor: none
+      bbox/edgecolor: none
+      arrowprops/relpos: [1.0, 0.5]
+      arrowprops/connectionstyle: "arc3,rad=0.25"
+    $w_{\sigma}=10^{-2}$:
+      include: [{cri/kl/sig/w: 1e-2}]
+      ax.plot/color: purple
+      ax.annotate/text: $w_{\sigma}=10^{-2}$
+      ax.annotate/xytext: [0.55, 0.27]
+      ax.annotate/xy: [0.4, null]
+      ax.annotate/fontsize: 9
+      bbox/pad: 90
+      bbox/facecolor: none
+      bbox/edgecolor: none
+      arrowprops/relpos: [0.0, 0.5]
+      arrowprops/connectionstyle: "arc3,rad=-0.3"
+    $w_{\sigma}=10^{-1}$:
+      include: [{cri/kl/sig/w: 1e-1}]
+      ax.plot/color: brown
+      ax.annotate/text: $w_{\sigma}=10^{-1}$
+      ax.annotate/xytext: [0.15, 0.63]
+      ax.annotate/xy: [0.05, null]
+      ax.annotate/fontsize: 9
+      bbox/pad: 90
+      bbox/facecolor: none
+      bbox/edgecolor: none
+      arrowprops/relpos: [0.0, 0.5]
+      arrowprops/connectionstyle: "arc3,rad=0.3"
+
+paper.realism.ldim.klwmu:
+  kind: line
+  colorspec/ref: colorspec
+
+  ######## The x-Axis Parameters ########
+  xcol: nn/ltnt/dim
+  xlabel: Latent Dimension
+  xscale: linear
+  xlim: [1.5, 10.5]
+  xticks: [2, 3, 4, 5, 6, 7, 8, 9, 10]
+  xticklabels: [$2$, $3$, $4$, $5$, $6$, $7$, $8$, $9$, $10$]
+
+  ######## The y-Axis Parameters ########
+  yscale: log
+  ylim: [0.1, 10]
+  yticks: [0.1, 0.3, 1, 3, 10]
+  yticklabels: [$0.1$, $0.3$, $1$, $3$, $10$]
+  ylabelpad: 0
+
+  ######### Summary Parameters ##########
+  smry/sel: epoch
+  smry/cri: max
+
+  ######### ax.plot Parameters ##########
+  ax.plot/marker: '*'
+  ax.plot/lw: 2
+
+  ######## Annotation Parameters ########
+  arrowprops/arrowstyle: "-|>"
+  ax.annotate/xycoords: axes fraction 
+  ax.annotate/textcoords: axes fraction
+
+  ############ Line Elements ############
+  elements:
+    $w_{\mu}=10^{-6}$:
+      include: [{cri/kl/mu/w: 1e-6}]
+      ax.plot/color: orange
+    $w_{\mu}=10^{-5}$:
+      include: [{cri/kl/mu/w: 1e-5}]
+      ax.plot/color: green
+    $w_{\mu}=10^{-4}$:
+      include: [{cri/kl/mu/w: 1e-4}]
+      ax.plot/color: red
+      ax.annotate/text: $w_{\mu}=10^{-4}$
+      ax.annotate/xytext: [0.6, 0.27]
+      ax.annotate/xy: [0.4, null]
+      ax.annotate/fontsize: 9
+      bbox/pad: 90
+      bbox/facecolor: none
+      bbox/edgecolor: none
+      arrowprops/relpos: [0.0, 0.5]
+      arrowprops/connectionstyle: "arc3,rad=-0.3"
+    $w_{\mu}=10^{-3}$:
+      include: [{cri/kl/mu/w: 1e-3}]
+      ax.plot/color: blue
+      ax.annotate/text: $w_{\mu}=10^{-3}$
+      ax.annotate/xytext: [0.05, 0.05]
+      ax.annotate/xy: [0.6, null]
+      ax.annotate/fontsize: 9
+      bbox/pad: 90
+      bbox/facecolor: none
+      bbox/edgecolor: none
+      arrowprops/relpos: [1.0, 0.5]
+      arrowprops/connectionstyle: "arc3,rad=0.25"
+    $w_{\mu}=10^{-2}$:
+      include: [{cri/kl/mu/w: 1e-2}]
+      ax.plot/color: purple
+    $w_{\mu}=10^{-1}$:
+      include: [{cri/kl/mu/w: 1e-1}]
+      ax.plot/color: brown
+      ax.annotate/text: $w_{\mu}=10^{-1}$
+      ax.annotate/xytext: [0.4, 0.77]
+      ax.annotate/xy: [0.94, null]
+      ax.annotate/fontsize: 9
+      bbox/pad: 90
+      bbox/facecolor: none
+      bbox/edgecolor: none
+      arrowprops/relpos: [1.0, 0.5]
+      arrowprops/connectionstyle: "arc3,rad=-0.3"
+
+#######################################
+########## Parameter Sweeps ###########
+#######################################
+
+paper.hpstudy.figure:
+  type: plot
+
+  ########## Figure Generation ##########
+  plt.subplots/nrows: 5
+  plt.subplots/ncols: 3
+  plt.subplots/squeeze: false
+  plt.subplots/sharex: false
+  plt.subplots/sharey: row
+  plt.subplots/dpi: 100
+  plt.subplots/axsize: [2.3, 2.2]
+
+  ######### Layout Adjustments #########
+  layout/layout: tight
+  layout/w_pad: 0.2
+  layout/h_pad: 0.0
+  layout/rect: [0, 0.1, 1.0, 1.0]
+
+  ########## ax.plot Arguments ##########
+  ax.plot/lw: 1.5
+  ax.plot/marker: '*'
+  ax.plot/markersize: 6
+
+  ################ General ##############
+  style: default
+  rc_context/ref: rc_context
+  tckprms/colors: black
+  xlbl/color: black
+  ylbl/color: black
+  colorspec/ref: colorspec
+  colors/ref: colors
+
+####### Y-Axis Specs ########
+
+paper.hpstudy.yaxis.ccn_cdf.err:
+  ######## The x-Axis Parameters ########
+  ylbl/ylabel: CCN Spectrum Error
+  ylbl/labelpad: null
+  ylbl/share: true
+  yscale/value: linear
+  ylim: [0.0, 0.1]
+  yticks/ticks: [0.0, 0.02, 0.04, 0.06, 0.08, 0.1]
+  ytickformatter/type: sci 
+  ytickformatter/precision: 3
+  ytickformatter/n_maxprez: 5
+  ytickformatter/force_exp: false
+
+paper.hpstudy.yaxis.rcnst_net.err:
+  ref: paper.hpstudy.yaxis.ccn_cdf.err
+  def:
+    ######## The x-Axis Parameters ########
+    ylbl/ylabel: Reconstruction Error
+    yscale/value: log
+    ylim: [0.1, 30]
+    yticks/ticks: [0.1, 0.3, 1, 3, 10, 30]
+
+paper.hpstudy.yaxis.realism.err:
+  ref: paper.hpstudy.yaxis.ccn_cdf.err
+  def:
+    ######## The x-Axis Parameters ########
+    ylbl/ylabel: Realism Error
+    yscale/value: log
+    ylim: [0.03, 100]
+    yticks/ticks: [0.03, 0.1, 0.3, 1, 3, 10, 30, 100]
+
+paper.hpstudy.yaxis.qsa_pop.err:
+  ref: paper.hpstudy.yaxis.ccn_cdf.err
+  def:
+    ######## The x-Axis Parameters ########
+    ylbl/ylabel: Optical Error
+    yscale/value: linear
+    ylim: [0.1, 0.3]
+    yticks/ticks: [0.1, 0.15, 0.2, 0.25, 0.3]
+
+paper.hpstudy.yaxis.logfrznfrac_tmp.err:
+  ref: paper.hpstudy.yaxis.ccn_cdf.err
+  def:
+    ######## The x-Axis Parameters ########
+    ylbl/ylabel: Frozen Fraction Error
+    yscale/value: log
+    ylim: [0.01, 0.3]
+    yticks/ticks: [0.01, 0.03, 0.1, 0.3]
+
+####### X-Axis Specs ########
+
+paper.hpstudy.xaxis.cri.kl.sig.w:
+  ######## The x-Axis Parameters ########
+  xlbl/xlabel: KL-$\sigma$ Weight
+  xlbl/labelpad: null
+  xlbl/share: false
+  xscale/value: log
+  xlim: [6e-7, 0.15]
+  xticks/ticks: [1e-6, 1e-5, 1e-4, 1e-3, 1e-2, 1e-1]
+  xticklabeler/type: sci 
+  xticklabeler/precision: 3
+  xticklabeler/n_maxprez: 5
+  xticklabeler/force_exp: true
+
+paper.hpstudy.xaxis.cri.kl.mu.w:
+  ref: paper.hpstudy.xaxis.cri.kl.sig.w
+  def:
+    ######## The x-Axis Parameters ########
+    xlbl/xlabel: KL-$\mu$ Weight
+
+paper.hpstudy.xaxis.nn.enc.d_ltnt:
+  ######## The x-Axis Parameters ########
+  xlbl/xlabel: Latent Dimension
+  xlim: [1.5, 10.5]
+  xscale/value: linear
+  xticks/ticks: [2, 3, 4, 5, 6, 7, 8, 9, 10]
+  xlbl/labelpad: null
+  xlbl/share: false
+  xticklabeler/type: sci 
+  xticklabeler/precision: 3
+  xticklabeler/n_maxprez: 5
+  xticklabeler/force_exp: true
+
+paper.hpstudy.xaxis.nn.pp.nrmexp:
+  ####### The x-Axis Parameters ########
+  xlbl/xlabel: Mass Norm Exponent
+  xlbl/labelpad: null
+  xlbl/share: false
+  xscale/value: linear
+  xlim: [0.05, 1.05]
+  xticks/ticks: [0.1, 0.3, 0.5, 0.7, 0.9, 1.0]
+  xticklabeler/type: sci 
+  xticklabeler/precision: 3
+  xticklabeler/n_maxprez: 5
+  xticklabeler/force_exp: false
+
+paper.hpstudy.xaxis.nn.pp.magexp:
+  ref: paper.hpstudy.xaxis.nn.pp.nrmexp
+  def:
+    xlbl/xlabel: Mass Mag Exponent
+
+paper.hpstudy.xaxis.nn.pp.cntexp:
+  ref: paper.hpstudy.xaxis.nn.pp.nrmexp
+  def:
+    xlbl/xlabel: Number Conc Exponent
+
+
+###########################################################
+#################### Deprecated Plots #####################
+###########################################################
+
+qs_prt:
+  # This is deprecated
+  ref: m_prthst
+  def:
+    # The y tick formatter
+    ylbl/ylabel: Scattering Efficiency
+    yscale/value: log
+    ylim: [0.001, 10]
+    yticks/ticks: [0.001, 0.01, 0.1, 1, 10.0]
+    yticklabeler/type: sci
+    yticklabeler/precision: 3
+    yticklabeler/n_maxprez: 5
+    yticklabeler/force_exp: true
+
+qa_prt:
+  # This is deprecated
+  ref: qs_prt
+  def: 
+    ylbl/ylabel: Absorption Efficiency
+
+qs_prtsct:
+  type: scatter
+  
+  ########## Figure Generation ##########
+  plt.subplots/ref: ccn_errhist/plt.subplots
+
+  ######## The x-Axis Parameters ########
+  xlbl/xlabel: Original Scattering Efficiency
+  xlbl/labelpad: null
+  xlbl/share: false
+  xscale/value: linear
+  xlim: [-0.1, 5]
+  xticks/ticks: [0, 1, 2, 3, 4, 5]
+
+  ######## The y-Axis Parameters ########
+  ylbl/ylabel: Reconst Scattering Efficiency
+  ylbl/labelpad: null
+  ylbl/share: false
+  yscale/value: linear
+  ylim: [-0.1, 5]
+  yticks/ticks: [0, 1, 2, 3, 4, 5]
+
+  ########## ax.scatter Arguments ##########
+  ax.scatter/marker: o
+  ax.scatter/edgecolor: black
+  ax.scatter/lw: 0.1
+  ax.scatter/alpha: 0.2
+  ax.scatter/s: 1
+
+  ################ General ##############
+  style: default
+  rc_context/ref: rc_context
+  tckprms/colors: black
+  xlbl/color: black
+  ylbl/color: black
+
+  ################ Color ##############
+  colorspec/ref: colorspec
+  colors/qs_prt: blue
+
+qa_prtsct:
+  ref: qs_prtsct
+  def: 
+    xlbl/xlabel: Original Absorption Efficiency
+    ylbl/ylabel: Reconst Absorption Efficiency
+    colors/qa_prt: blue
+
+###########################################################
+########## Conditional Experiment Specifications ##########
+###########################################################
+
+expspec:
+  trad:
+    fpidx:
+      gen/mlp: 11_mlphist.0.0
+      gen/cnn: 12_cnnhist.0.0
+    vrnts:
+      train: [orig, rcnst]
+      test: [orig, rcnst]
+      normal: [genr]
+    resdir: ./20_vaehist/results
+    fig/dir: '{workdir}'
+    n_seeds: 12
+    nicknm/frmla: null
+  
+  cond.mqnt.gnrc:
+    fpidx:
+      frac/mlp: 13_mlpcnd.0.0
+      abs/mlp: 13_mlpcnd.0.1
+    vrnts:
+      normal: [
+        genr, genr0, genr1, genr2, genr3, 
+        gaus, gaus0, gaus1, gaus2, gaus3]
+    resdir: ./20_vaehist/results
+    n_seeds: 10
+    nicknm/frmla: f'{expid}_{arch}'
+    fig/dir: '{workdir}'
+    fig/idx/diag: 52
+    fig/idx/hist: 54
+    fig/idx/mdscls: 56
+    fig/idx/mdssplt: 58
+    
+  cond.cont.plnlbl:
+    fpidx:
+      tri/mlp: 14_mlpcnd.0.0
+      cnt/mlp: 14_mlpcnd.0.1
+      chm/mlp: 14_mlpcnd.0.2
+      brf/mlp: 14_mlpcnd.0.3
+    vrnts:
+      test: [orig, rcnst, znrm, yknn]
+    n_rcns:
+      test/orig: 1
+      test/rcnst: 1
+      test/znrm: 5
+      test/yknn: 5
+    resdir: ./20_vaehist/results
+    n_seeds: 10
+    nicknm/frmla: f'{expid}_{arch}'
+    fig/dir: '{workdir}'
+    fig/idx/diag: 60
+    fig/idx/mdssplt: 64
+  
+  cond.cont.vaelbl:
+    fpidx:
+      tri.y02d.indzy/mlp: 02_adhoc/20_mlpcnd.0.0
+      tri.y02d.depzy/mlp: 02_adhoc/20_mlpcnd.0.1
+      tri.y04d.indzy/mlp: 02_adhoc/20_mlpcnd.0.2
+      tri.y04d.depzy/mlp: 02_adhoc/20_mlpcnd.0.3
+      tri.y08d.indzy/mlp: 02_adhoc/20_mlpcnd.0.4
+      tri.y08d.depzy/mlp: 02_adhoc/20_mlpcnd.0.5
+      tri.y16d.indzy/mlp: 02_adhoc/20_mlpcnd.0.6
+      tri.y16d.depzy/mlp: 02_adhoc/20_mlpcnd.0.7
+      tri.y32d.indzy/mlp: 02_adhoc/20_mlpcnd.0.8
+      tri.y32d.depzy/mlp: 02_adhoc/20_mlpcnd.0.9
+    vrnts:
+      test: [orig, rcnst, znrm, yknn]
+    n_rcns:
+      test/orig: 1
+      test/rcnst: 1
+      test/znrm: 5
+      test/yknn: 5
+    vrnt_specs:
+      - ['orig',  1, 0, 'Original']
+      - ['rcnst', 1, 0, 'Reconst' ]
+      - ['yknn',  5, 0, '1st LNN' ]
+      - ['znrm',  5, 0, 'Norm Lat']
+      - ['znrm',  5, 1, 'Norm Lat']
+      - ['znrm',  5, 2, 'Norm Lat']
+      - ['znrm',  5, 3, 'Norm Lat']
+      - ['znrm',  5, 4, 'Norm Lat']
+    resdir: '{results_dir}'
+    n_seeds: 10
+    nicknm/frmla: expid.replace(".", "_") + "_" + arch
+    fig/dir: '{suppdir}/07_nrmtrgcont'
+    fig/idx/diag: 0
+
+  cond.cont.acsmsmps:
+    fpidx:
+      duo.indzy/mlp: 21_mlpcnd.0.0
+      duo.depzy/mlp: 21_mlpcnd.0.1
+      # acsm.indzy/mlp: 22_mlpcnd.0.0
+      # acsm.depzy/mlp: 22_mlpcnd.0.1
+    vrnts:
+      test: [orig, rcnst, znrm, yknn]
+    n_rcns:
+      test/orig: 1
+      test/rcnst: 1
+      test/znrm: 100
+      test/yknn: 5
+    resdir: ./20_vaehist/results
+    n_seeds: 10
+    n_snrt: 100
+    nicknm/frmla: expid.replace(".", "_") + "_" + arch
+    fig/dir: '{suppdir}/08_acsmsmps'
+    fig/idx/xorig: 0
+    fig/idx/label: 4
+    fig/idx/gendiag: 8
+    fig/idx/vardiag: 12
+    fig/idx/diagsmry: 16
+    fig/idx/diagsmryqnt: 18
+    fig/idx/mdssplt: 20
+  
+  cond.cont.trilbl:
+    fpidx:
+      indzy/mlp: 23_mlpcnd.0.0
+      depzy/mlp: 23_mlpcnd.0.1
+    vrnts:
+      test: [orig, rcnst, znrm, yknn]
+    n_rcns:
+      test/orig: 1
+      test/rcnst: 1
+      test/znrm: 100
+      test/yknn: 5
+    resdir: ./20_vaehist/results
+    n_seeds: 10
+    n_snrt: 100
+    nicknm/frmla: expid.replace(".", "_") + "_" + arch
+    fig/dir: '{suppdir}/09_trilbl'
+    fig/idx/xorig: 0
+    fig/idx/label: 4
+    fig/idx/gendiag: 8
+    fig/idx/vardiag: 12
+    fig/idx/diagsmry: 16
+    fig/idx/diagsmryqnt: 18
+    fig/idx/mdssplt: 20
+
+  cond.mqnt.indzy.gnrc:
+    fpidx:
+      frac.base/mlp: 17_mlpcnd.0.0
+      frac.null/mlp: 17_mlpcnd.0.6
+      abs.base/mlp: 17_mlpcnd.0.1
+      abs.null/mlp:  17_mlpcnd.0.7
+    vrnts:
+      normal: [
+        genr, genr0, genr1, genr2, genr3, 
+        gaus, gaus0, gaus1, gaus2, gaus3]
+    n_seeds: 10
+    resdir: '{results_dir}/02_adhoc'
+    nicknm/frmla: expid.replace(".", "_")
+    fig/dir: '{workdir}'
+    fig/idx/diag: 68
+    fig/idx/hist: 72
+    fig/idx/mdscls: 76
+    fig/idx/mdssplt: 80
+
+  cond.mqnt.indzy.ztrg.himb.frac:
+    fpidx:
+      base/mlp: 16_mlpcnd.2.0
+      null/mlp: 16_mlpcnd.0.7
+      rel.whi/mlp: 16_mlpcnd.2.1
+      rel.whi.attchd/mlp: 16_mlpcnd.0.1
+      rel.wlo.attchd/mlp: 16_mlpcnd.0.0
+      rpd.whi/mlp: 16_mlpcnd.2.2
+      rpd.whi.attchd/mlp: 16_mlpcnd.0.2
+      rpd.wlo/mlp: 16_mlpcnd.2.3
+      rpd.wlo.attchd/mlp: 16_mlpcnd.0.3
+      ptt.whi/mlp: 16_mlpcnd.2.4
+      ptt.whi.attchd/mlp: 16_mlpcnd.0.4
+      ptt.wlo/mlp: 16_mlpcnd.2.5
+      ptt.wlo.attchd/mlp: 16_mlpcnd.0.5
+      raw.whi/mlp: 16_mlpcnd.0.6
+      raw.wlo/mlp: 16_mlpcnd.2.6
+    vrnts:
+      normal: [
+        genr, genr0, genr1, genr2, genr3, 
+        gaus, gaus0, gaus1, gaus2, gaus3]
+    n_seeds: 10
+    resdir: '{results_dir}/02_adhoc'
+    fig/dir: '{suppdir}/01_ztrgfrac'
+    nicknm/frmla: expid.replace(".", "_")
+    fig/idx/diag: 1
+    fig/idx/hist: null
+    fig/idx/mdscls: null
+    fig/idx/mdssplt: null
+  
+  cond.mqnt.indzy.ztrg.himb.abs:
+    fpidx:
+      base/mlp: 16_mlpcnd.3.0
+      null/mlp: 16_mlpcnd.1.7
+      rel.whi/mlp: 16_mlpcnd.3.1
+      rel.whi.attchd/mlp: 16_mlpcnd.1.1
+      rel.wlo.attchd/mlp: 16_mlpcnd.1.0
+      ptt.whi/mlp: 16_mlpcnd.3.4
+      ptt.whi.attchd/mlp: 16_mlpcnd.1.4
+      ptt.wlo/mlp: 16_mlpcnd.3.5
+      ptt.wlo.attchd/mlp: 16_mlpcnd.1.5
+      raw.whi/mlp: 16_mlpcnd.1.6
+      raw.wlo/mlp: 16_mlpcnd.3.6
+      rpd.whi/mlp: 16_mlpcnd.3.2
+      rpd.whi.attchd/mlp: 16_mlpcnd.1.2
+      rpd.wlo/mlp: 16_mlpcnd.3.3
+      rpd.wlo.attchd/mlp: 16_mlpcnd.1.3
+    vrnts:
+      normal: [
+        genr, genr0, genr1, genr2, genr3, 
+        gaus, gaus0, gaus1, gaus2, gaus3]
+    n_seeds: 10
+    resdir: '{results_dir}/02_adhoc'
+    fig/dir: '{suppdir}/02_ztrgabs'
+    nicknm/frmla: expid.replace(".", "_")
+    fig/idx/diag: 1
+    fig/idx/hist: null
+    fig/idx/mdscls: null
+    fig/idx/mdssplt: null
+
+  cond.mqnt.indzy.nrmtrg.himb.frac:
+    fpidx:
+      base/mlp: 17_mlpcnd.0.0
+      null/mlp: 17_mlpcnd.0.6
+      pow1/mlp: 17_mlpcnd.0.8
+      pow4/mlp: 17_mlpcnd.0.10
+      wlow/mlp: 17_mlpcnd.0.4
+      wmed/mlp: 17_mlpcnd.0.2
+      maxrdc/mlp: 17_mlpcnd.0.16
+      nslclow/mlp: 17_mlpcnd.0.14
+      nslcmed/mlp: 17_mlpcnd.0.12
+    vrnts:
+      normal: [
+        genr, genr0, genr1, genr2, genr3, 
+        gaus, gaus0, gaus1, gaus2, gaus3]
+    n_seeds: 10
+    resdir: '{results_dir}/02_adhoc'
+    fig/dir: '{suppdir}/03_nrmtrghimbfrac'
+    nicknm/frmla: expid.replace(".", "_")
+    fig/idx/diag: 1
+    fig/idx/hist: null
+    fig/idx/mdscls: null
+    fig/idx/mdssplt: null
+    fig/idx/massnum: null
+    fig/idx/histcmprd: null
+
+  cond.mqnt.indzy.nrmtrg.himb.abs:
+    fpidx:
+      base/mlp: 17_mlpcnd.0.1
+      null/mlp: 17_mlpcnd.0.7
+      pow1/mlp: 17_mlpcnd.0.9
+      pow4/mlp: 17_mlpcnd.0.11
+      wlow/mlp: 17_mlpcnd.0.5
+      wmed/mlp: 17_mlpcnd.0.3
+      maxrdc/mlp: 17_mlpcnd.0.17
+      nslclow/mlp: 17_mlpcnd.0.15
+      nslcmed/mlp: 17_mlpcnd.0.13
+    vrnts:
+      normal: [
+        genr, genr0, genr1, genr2, genr3, 
+        gaus, gaus0, gaus1, gaus2, gaus3]
+    n_seeds: 10
+    resdir: '{results_dir}/02_adhoc'
+    fig/dir: '{suppdir}/04_nrmtrghimbabs'
+    nicknm/frmla: expid.replace(".", "_")
+    fig/idx/diag: 1
+    fig/idx/hist: null
+    fig/idx/mdscls: null
+    fig/idx/mdssplt: null
+
+  cond.mqnt.indzy.nrmtrg.lomb.frac:
+    fpidx:
+      base/mlp: 18_mlpcnd.0.0
+      null/mlp: 18_mlpcnd.0.6
+      pow1/mlp: 18_mlpcnd.0.18
+      pow4/mlp: 18_mlpcnd.0.20
+      h0064/mlp: 18_mlpcnd.0.16
+      h0128/mlp: 18_mlpcnd.0.14
+      h0256/mlp: 18_mlpcnd.0.12
+      h0512/mlp: 18_mlpcnd.0.10
+      h1024/mlp: 18_mlpcnd.0.8
+      wlow/mlp: 18_mlpcnd.0.4
+      wmed/mlp: 18_mlpcnd.0.2
+      maxrdc/mlp: 18_mlpcnd.0.26
+      nslclow/mlp: 18_mlpcnd.0.24
+      nslcmed/mlp: 18_mlpcnd.0.22
+    vrnts:
+      normal: [
+        genr, genr0, genr1, genr2, genr3, 
+        gaus, gaus0, gaus1, gaus2, gaus3]
+    n_seeds: 10
+    resdir: '{results_dir}/02_adhoc'
+    fig/dir: '{suppdir}/05_nrmtrglombfrac'
+    nicknm/frmla: expid.replace(".", "_")
+    fig/idx/diag: 1
+    fig/idx/hist: null
+    fig/idx/mdscls: null
+    fig/idx/mdssplt: null
+
+  cond.mqnt.indzy.nrmtrg.lomb.abs:
+    fpidx:
+      base/mlp: 18_mlpcnd.0.1
+      null/mlp: 18_mlpcnd.0.7
+      pow1/mlp: 18_mlpcnd.0.19
+      pow4/mlp: 18_mlpcnd.0.21
+      h0064/mlp: 18_mlpcnd.0.17
+      h0128/mlp: 18_mlpcnd.0.15
+      h0256/mlp: 18_mlpcnd.0.13
+      h0512/mlp: 18_mlpcnd.0.11
+      h1024/mlp: 18_mlpcnd.0.9
+      wlow/mlp: 18_mlpcnd.0.5
+      wmed/mlp: 18_mlpcnd.0.3
+      maxrdc/mlp: 18_mlpcnd.0.27
+      nslclow/mlp: 18_mlpcnd.0.25
+      nslcmed/mlp: 18_mlpcnd.0.23
+    vrnts:
+      normal: [
+        genr, genr0, genr1, genr2, genr3, 
+        gaus, gaus0, gaus1, gaus2, gaus3]
+    n_seeds: 10
+    resdir: '{results_dir}/02_adhoc'
+    nicknm/frmla: expid.replace(".", "_")
+    fig/dir: '{suppdir}/06_nrmtrglombabs'
+    fig/idx/diag: 1
+    fig/idx/hist: null
+    fig/idx/mdscls: null
+    fig/idx/mdssplt: null

@@ -1,0 +1,702 @@
+###############################################################################
+########################### Multi-Layer Perceptron ############################
+###############################################################################
+
+nnmodules/mlpenc:
+  input: 
+    m_chmprtnrm: [n_seeds, n_mb, n_chnlsnrm, n_lennrm]
+    m_prthstmag: [n_seeds, n_mb, n_chnlsmag, n_lenmag]
+    n_prthstnrm: [n_seeds, n_mb, n_chnlscnt, n_lencnt]
+  hparams: 
+    depth: null
+    width: null
+    n_chnlsnrm: null
+    n_lennrm: null
+    n_chnlsmag: null
+    n_lenmag: null
+    n_chnlscnt: null
+    n_lencnt: null
+    d_ltnt: null
+    act: null
+    norm: null
+  defs:
+    dinp: "n_chnlsnrm * n_lennrm + n_chnlsmag * n_lenmag + n_chnlscnt * n_lencnt"
+    dims: "[dinp] + depth * [width] + [2 * d_ltnt]"
+  layers:
+    l01_mchmprtnrm:
+      type: flatten
+      input: m_chmprtnrm
+      start_dim: -2
+      end_dim: -1
+      shape: [n_seeds, n_mb, n_chnlsnrm * n_lennrm]
+    l02_mprthstmag:
+      type: flatten
+      input: m_prthstmag
+      start_dim: -2
+      end_dim: -1
+      shape: [n_seeds, n_mb, n_chnlsmag * n_lenmag]
+    l03_nprthstnrm:
+      type: flatten
+      input: n_prthstnrm
+      start_dim: -2
+      end_dim: -1
+      shape: [n_seeds, n_mb, n_chnlscnt * n_lencnt]
+    l04_catdata:
+      type: cat
+      input: [l01_mchmprtnrm, l02_mprthstmag, l03_nprthstnrm]
+      dim: -1
+      shape: [n_seeds, n_mb, dinp]
+    l05_mlp:
+      type: mlp
+      dims: dims
+      act: act
+      bias: true
+      do_actout: false
+      do_normout: false
+      mb_order: 1
+      norm: norm
+      shape: [n_seeds, n_mb, 2 * d_ltnt]
+
+nnmodules/mlpdec:
+  input: 
+    z: [n_seeds, n_mb, d_ltnt]
+  output:
+    m_chmprtnrm: l03_mchmprtnrm
+    m_prthstmag: l04_mprthstmag
+    n_prthstnrm: l05_nprthstnrm
+  hparams: 
+    depth: null
+    width: null
+    act: null
+    norm: null
+    d_ltnt: null
+    n_chnlsnrm: null
+    n_lennrm: null
+    n_chnlsmag: null
+    n_lenmag: null
+    n_chnlscnt: null
+    n_lencnt: null
+  defs:
+    dinp: "n_chnlsnrm * n_lennrm + n_chnlsmag * n_lenmag + n_chnlscnt * n_lencnt"
+    dims: "[d_ltnt] + depth * [width] + [dinp]"
+  layers:
+    l01_mlp:
+      type: mlp
+      dims: dims
+      act: act
+      norm: norm
+      do_actout: false
+      do_normout: false
+      bias: true
+      mb_order: 1
+      shape: [n_seeds, n_mb, dinp]
+    l02_split:
+      type: split
+      split_size_or_sections: "[n_chnlsnrm * n_lennrm, n_chnlsmag * n_lenmag, n_chnlscnt * n_lencnt]"
+      dim: -1
+      shape: 
+        - [n_seeds, n_mb, n_chnlsnrm * n_lennrm]
+        - [n_seeds, n_mb, n_chnlsmag * n_lenmag]
+        - [n_seeds, n_mb, n_chnlscnt * n_lencnt]
+    l03_mchmprtnrm:
+      type: unflatten
+      input: l02_split/0
+      dim: -1
+      sizes: "[n_chnlsnrm, n_lennrm]"
+      shape: [n_seeds, n_mb, n_chnlsnrm, n_lennrm]
+    l04_mprthstmag:
+      type: unflatten
+      input: l02_split/1
+      dim: -1
+      sizes: "[n_chnlsmag, n_lenmag]"
+      shape: [n_seeds, n_mb, n_chnlsmag, n_lenmag]
+    l05_nprthstnrm:
+      type: unflatten
+      input: l02_split/2
+      dim: -1
+      sizes: "[n_chnlscnt, n_lencnt]"
+      shape: [n_seeds, n_mb, n_chnlscnt, n_lencnt]
+
+###############################################################################
+########################### Convolutional Networks ############################
+###############################################################################
+
+nnmodules/cnnenc:
+  input: 
+    m_chmprtnrm: [n_seeds, n_mb, n_chnlsnrm, n_lennrm]
+    m_prthstmag: [n_seeds, n_mb, n_chnlsmag, n_lenmag]
+    n_prthstnrm: [n_seeds, n_mb, n_chnlscnt, n_lencnt]
+  hparams: 
+    n_chnlsnrm: null
+    n_lennrm: null
+    n_chnlsmag: null
+    n_lenmag: null
+    n_chnlscnt: null
+    n_lencnt: null
+    depth_cnn: null
+    nchnls_cnn: null
+    krnlsz_cnn: null
+    depth_mlp: null
+    width_mlp: null
+    d_ltnt: null
+    act: null
+    norm: null
+    stride: 1
+    padding: same
+  defs:
+    cnnchnls_nrm: "[n_chnlsnrm] + [nchnls_cnn] * depth_cnn"
+    cnnchnls_mag: "[n_chnlsmag] + [nchnls_cnn] * depth_cnn"
+    cnnchnls_cnt: "[n_chnlscnt] + [nchnls_cnn] * depth_cnn"
+    krnlsz_cnnnrm: min(krnlsz_cnn, n_lennrm)
+    krnlsz_cnnmag: min(krnlsz_cnn, n_lenmag)
+    krnlsz_cnncnt: min(krnlsz_cnn, n_lencnt)
+  layers:
+    l01_cnnnrm:
+      type: cnn
+      input: m_chmprtnrm
+      channels: cnnchnls_nrm
+      n_convdims:  1
+      kernel_size: krnlsz_cnnnrm
+      act: act
+      norm: norm
+      norm_kwargs: null
+      do_actout: true
+      do_normout: true
+      stride: stride
+      padding: padding
+      dilation: 1
+      padding_mode: zeros
+      mb_order: 1
+      shape: [n_seeds, n_mb, nchnls_cnn, n_lennrm]
+    l02_cnnmag:
+      type: cnn
+      input: m_prthstmag
+      channels: cnnchnls_mag
+      n_convdims:  1
+      kernel_size: krnlsz_cnnmag
+      act: act
+      norm: norm
+      norm_kwargs: null
+      do_actout: true
+      do_normout: true
+      stride: stride
+      padding: padding
+      dilation: 1
+      padding_mode: zeros
+      mb_order: 1
+      shape: [n_seeds, n_mb, nchnls_cnn, n_lenmag]
+    l03_cnncnt:
+      type: cnn
+      input: n_prthstnrm
+      channels: cnnchnls_cnt
+      n_convdims:  1
+      kernel_size: krnlsz_cnncnt
+      act: act
+      norm: norm
+      norm_kwargs: null
+      do_actout: true
+      do_normout: true
+      stride: stride
+      padding: padding
+      dilation: 1
+      padding_mode: zeros
+      mb_order: 1
+      shape: [n_seeds, n_mb, nchnls_cnn, n_lencnt]
+    l04_mlp:
+      type: mlpenc
+      input:
+        m_chmprtnrm: l01_cnnnrm
+        m_prthstmag: l02_cnnmag
+        n_prthstnrm: l03_cnncnt
+      depth: depth_mlp
+      width: width_mlp
+      n_chnlsnrm: nchnls_cnn
+      n_lennrm: n_lennrm
+      n_chnlsmag: nchnls_cnn
+      n_lenmag: n_lenmag
+      n_chnlscnt: nchnls_cnn
+      n_lencnt: n_lencnt
+      d_ltnt: d_ltnt
+      act: act
+      norm: norm
+      shape: [n_seeds, n_mb, 2 * d_ltnt]
+
+nnmodules/cnndec:
+  input: 
+    z: [n_seeds, n_mb, d_ltnt]
+  output:
+    m_chmprtnrm: l02_cnnnrm
+    m_prthstmag: l03_cnnmag
+    n_prthstnrm: l04_cnncnt
+  hparams:
+    n_chnlsnrm: null
+    n_lennrm: null
+    n_chnlsmag: null
+    n_lenmag: null
+    n_chnlscnt: null
+    n_lencnt: null
+    depth_cnn: null
+    nchnls_cnn: null
+    krnlsz_cnn: null
+    depth_mlp: null
+    width_mlp: null
+    d_ltnt: null
+    act: null
+    norm: null
+    stride: 1
+    padding: same
+  defs:
+    cnnchnls_nrm: "[nchnls_cnn] * depth_cnn + [n_chnlsnrm]"
+    cnnchnls_mag: "[nchnls_cnn] * depth_cnn + [n_chnlsmag]"
+    cnnchnls_cnt: "[nchnls_cnn] * depth_cnn + [n_chnlscnt]"
+    krnlsz_cnnnrm: min(krnlsz_cnn, n_lennrm)
+    krnlsz_cnnmag: min(krnlsz_cnn, n_lenmag)
+    krnlsz_cnncnt: min(krnlsz_cnn, n_lencnt)
+  layers:
+    l01_mlp:
+      type: mlpdec
+      depth: depth_mlp
+      width: width_mlp
+      act: act
+      norm: norm
+      d_ltnt: d_ltnt
+      n_chnlsnrm: nchnls_cnn
+      n_lennrm: n_lennrm
+      n_chnlsmag: nchnls_cnn
+      n_lenmag: n_lenmag
+      n_chnlscnt: nchnls_cnn
+      n_lencnt: n_lencnt
+      shape: 
+        m_chmprtnrm: [n_seeds, n_mb, nchnls_cnn, n_lennrm]
+        m_prthstmag: [n_seeds, n_mb, nchnls_cnn, n_lenmag]
+        n_prthstnrm: [n_seeds, n_mb, nchnls_cnn, n_lencnt]
+    l02_cnnnrm:
+      type: cnn
+      input: l01_mlp/m_chmprtnrm
+      channels: cnnchnls_nrm
+      n_convdims:  1
+      kernel_size: krnlsz_cnnnrm
+      act: act
+      norm: norm
+      norm_kwargs: null
+      do_actout: false
+      do_normout: false
+      stride: stride
+      padding: padding
+      dilation: 1
+      padding_mode: zeros
+      mb_order: 1
+      shape: [n_seeds, n_mb, n_chnlsnrm, n_lennrm]
+    l03_cnnmag:
+      type: cnn
+      input: l01_mlp/m_prthstmag
+      channels: cnnchnls_mag
+      n_convdims:  1
+      kernel_size: krnlsz_cnnmag
+      act: act
+      norm: norm
+      norm_kwargs: null
+      do_actout: false
+      do_normout: false
+      stride: stride
+      padding: padding
+      dilation: 1
+      padding_mode: zeros
+      mb_order: 1
+      shape: [n_seeds, n_mb, n_chnlsmag, n_lenmag]
+    l04_cnncnt:
+      type: cnn
+      input: l01_mlp/n_prthstnrm
+      channels: cnnchnls_cnt
+      n_convdims:  1
+      kernel_size: krnlsz_cnncnt
+      act: act
+      norm: norm
+      norm_kwargs: null
+      do_actout: false
+      do_normout: false
+      stride: stride
+      padding: padding
+      dilation: 1
+      padding_mode: zeros
+      mb_order: 1
+      shape: [n_seeds, n_mb, n_chnlscnt, n_lencnt]
+
+###############################################################################
+########################### MLP Resuidual Networks ############################
+###############################################################################
+# Residual MLP block with a projection
+nnmodules/resblockprojmlp:
+  input: l01_input
+  hparams:
+    n_inplen: null
+    n_midlen: null
+    n_outlen: null
+    depth: null
+    norm: null
+    act: null
+  shape: 
+    l01_input: [n_seeds, n_mb, n_inplen]
+  layers:
+    l02_mlpfirst:
+      type: mlp
+      dims: "[n_inplen, n_midlen]"
+      bias: true
+      norm: norm
+      act: act
+      do_actout: true
+      do_normout: true
+      shape: [n_seeds, n_mb, n_midlen]
+    l03_mlpstack:
+      type: repeat
+      n_reps: depth - 2
+      module: mlp
+      dims: "[n_midlen, n_midlen]"
+      norm: norm
+      act: act
+      do_actout: true
+      do_normout: true
+      shape: [n_seeds, n_mb, n_midlen]
+    l04_mlplast:
+      type: mlp
+      dims: "[n_midlen, n_outlen]"
+      bias: true
+      norm: null
+      do_actout: false
+      do_normout: false
+      act: identity
+      shape: [n_seeds, n_mb, n_outlen]
+    l05_mlpinp:
+      type: mlp
+      input: l01_input
+      dims: "[n_inplen, n_outlen]"
+      bias: true
+      norm: null
+      do_actout: false
+      do_normout: false
+      act: identity
+      shape: [n_seeds, n_mb, n_outlen]
+    l06_res:
+      type: add
+      input: [l04_mlplast, l05_mlpinp]
+      shape: [n_seeds, n_mb, n_outlen]
+    l07_unsqz: 
+      type: unsqueeze
+      dim: -1
+      shape: [n_seeds, n_mb, n_outlen, 1]
+    l08_bn:
+      type: norm
+      norm: norm
+      n_spdims: 1
+      n_channels: n_outlen
+      shape: [n_seeds, n_mb, n_outlen, 1]
+    l09_unsqz: 
+      type: squeeze
+      dim: -1
+      shape: [n_seeds, n_mb, n_outlen]
+    l10_act:
+      type: act
+      act: act
+      shape: [n_seeds, n_mb, n_outlen]
+
+# Residual MLP block with identity
+nnmodules/resblockidntymlp:
+  input: l01_input
+  hparams:
+    n_inplen: null
+    n_midlen: null
+    depth: null
+    norm: null
+    act: null
+  shape: 
+    l01_input: [n_seeds, n_mb, n_inplen]
+  layers:
+    l02_mlpfirst:
+      type: mlp
+      dims: "[n_inplen, n_midlen]"
+      bias: true
+      norm: norm
+      act: act
+      do_actout: true
+      do_normout: true
+      shape: [n_seeds, n_mb, n_midlen]
+    l03_mlpstack:
+      type: repeat
+      n_reps: depth - 2
+      module: mlp
+      dims: "[n_midlen, n_midlen]"
+      norm: norm
+      act: act
+      do_actout: true
+      do_normout: true
+      shape: [n_seeds, n_mb, n_midlen]
+    l04_mlplast:
+      type: mlp
+      dims: "[n_midlen, n_inplen]"
+      bias: true
+      norm: null
+      do_actout: false
+      do_normout: false
+      act: identity
+      shape: [n_seeds, n_mb, n_inplen]
+    l05_res:
+      type: add
+      input: [l04_mlplast, l01_input]
+      shape: [n_seeds, n_mb, n_inplen]
+    l06_unsqz: 
+      type: unsqueeze
+      dim: -1
+      shape: [n_seeds, n_mb, n_inplen, 1]
+    l07_bn:
+      type: norm
+      norm: norm
+      n_spdims: 1
+      n_channels: n_inplen
+      shape: [n_seeds, n_mb, n_inplen, 1]
+    l08_unsqz: 
+      type: squeeze
+      dim: -1
+      shape: [n_seeds, n_mb, n_inplen]
+    l09_act:
+      type: act
+      act: act
+      shape: [n_seeds, n_mb, n_inplen]
+
+# Residual MLP Stack Neighborhood
+nnmodules/resmlp:
+  hparams:
+    depth: null
+    width: null
+    n_inplen: null
+    n_outlen: null
+    norm: null
+    act: null
+  shape: [n_seeds, n_mb, n_inplen]
+  layers:
+    l01_resproj:
+      type: resblockprojmlp
+      n_inplen: n_inplen
+      n_midlen: width
+      n_outlen: width
+      depth: 2
+      norm: norm
+      act: act
+      shape: [n_seeds, n_mb, width]
+    l02_residstack:
+      type: repeat
+      module: resblockidntymlp
+      n_reps: depth - 1
+      n_inplen: width
+      n_midlen: width
+      depth: 2
+      norm: norm
+      act: act
+      shape: [n_seeds, n_mb, width]
+    l03_linear:
+      type: mlp
+      dims: "[width, n_outlen]"
+      act: act
+      bias: true
+      do_actout: false
+      do_normout: false
+      mb_order: 1
+      norm: norm
+      shape: [n_seeds, n_mb, n_outlen]
+
+# Residual MLP Encoder
+nnmodules/resmlpenc:
+  input: 
+    m_chmprtnrm: [n_seeds, n_mb, n_chnlsnrm, n_lennrm]
+    m_prthstmag: [n_seeds, n_mb, n_chnlsmag, n_lenmag]
+    n_prthstnrm: [n_seeds, n_mb, n_chnlscnt, n_lencnt]
+  hparams: 
+    depth: null
+    width: null
+    n_chnlsnrm: null
+    n_lennrm: null
+    n_chnlsmag: null
+    n_lenmag: null
+    n_chnlscnt: null
+    n_lencnt: null
+    d_ltnt: null
+    act: null
+    norm: null
+  defs:
+    dinp: "n_chnlsnrm * n_lennrm + n_chnlsmag * n_lenmag + n_chnlscnt * n_lencnt"
+    dims: "[dinp] + depth * [width] + [2 * d_ltnt]"
+  layers:
+    l01_mchmprtnrm:
+      type: flatten
+      input: m_chmprtnrm
+      start_dim: -2
+      end_dim: -1
+      shape: [n_seeds, n_mb, n_chnlsnrm * n_lennrm]
+    l02_mprthstmag:
+      type: flatten
+      input: m_prthstmag
+      start_dim: -2
+      end_dim: -1
+      shape: [n_seeds, n_mb, n_chnlsmag * n_lenmag]
+    l03_nprthstnrm:
+      type: flatten
+      input: n_prthstnrm
+      start_dim: -2
+      end_dim: -1
+      shape: [n_seeds, n_mb, n_chnlscnt * n_lencnt]
+    l04_catdata:
+      type: cat
+      input: [l01_mchmprtnrm, l02_mprthstmag, l03_nprthstnrm]
+      dim: -1
+      shape: [n_seeds, n_mb, dinp]
+    l05_resmlp:
+      type: resmlp
+      depth: depth
+      width: width
+      n_inplen: dinp
+      n_outlen: 2 * d_ltnt
+      norm: norm
+      act: act
+      shape: [n_seeds, n_mb, 2 * d_ltnt]
+
+# Residual MLP Decoder
+nnmodules/resmlpdec:
+  input: 
+    z: [n_seeds, n_mb, d_ltnt]
+  output:
+    m_chmprtnrm: l03_mchmprtnrm
+    m_prthstmag: l04_mprthstmag
+    n_prthstnrm: l05_nprthstnrm
+  hparams: 
+    depth: null
+    width: null
+    act: null
+    norm: null
+    d_ltnt: null
+    n_chnlsnrm: null
+    n_lennrm: null
+    n_chnlsmag: null
+    n_lenmag: null
+    n_chnlscnt: null
+    n_lencnt: null
+  defs:
+    dinp: "n_chnlsnrm * n_lennrm + n_chnlsmag * n_lenmag + n_chnlscnt * n_lencnt"
+    dims: "[d_ltnt] + depth * [width] + [dinp]"
+  layers:
+    l01_resmlp:
+      type: resmlp
+      depth: depth
+      width: width
+      n_inplen: d_ltnt
+      n_outlen: dinp
+      norm: norm
+      act: act
+      shape: [n_seeds, n_mb, dinp]
+    l02_split:
+      type: split
+      split_size_or_sections: "[n_chnlsnrm * n_lennrm, n_chnlsmag * n_lenmag, n_chnlscnt * n_lencnt]"
+      dim: -1
+      shape: 
+        - [n_seeds, n_mb, n_chnlsnrm * n_lennrm]
+        - [n_seeds, n_mb, n_chnlsmag * n_lenmag]
+        - [n_seeds, n_mb, n_chnlscnt * n_lencnt]
+    l03_mchmprtnrm:
+      type: unflatten
+      input: l02_split/0
+      dim: -1
+      sizes: "[n_chnlsnrm, n_lennrm]"
+      shape: [n_seeds, n_mb, n_chnlsnrm, n_lennrm]
+    l04_mprthstmag:
+      type: unflatten
+      input: l02_split/1
+      dim: -1
+      sizes: "[n_chnlsmag, n_lenmag]"
+      shape: [n_seeds, n_mb, n_chnlsmag, n_lenmag]
+    l05_nprthstnrm:
+      type: unflatten
+      input: l02_split/2
+      dim: -1
+      sizes: "[n_chnlscnt, n_lencnt]"
+      shape: [n_seeds, n_mb, n_chnlscnt, n_lencnt]
+
+######### Adding a direct skip connection from the input to the output
+
+# Residual MLP Stack Neighborhood with Direct Skip Connections
+nnmodules/resmlpplus:
+  input:
+    l00_input: [n_seeds, n_mb, n_inplen]
+  hparams:
+    depth: null
+    width: null
+    n_inplen: null
+    n_outlen: null
+    norm: null
+    act: null
+  layers:
+    l01_resproj:
+      type: resblockprojmlp
+      n_inplen: n_inplen
+      n_midlen: width
+      n_outlen: width
+      depth: 2
+      norm: norm
+      act: act
+      shape: [n_seeds, n_mb, width]
+    l02_residstack:
+      type: repeat
+      module: resblockidntymlp
+      n_reps: depth - 1
+      n_inplen: width
+      n_midlen: width
+      depth: 2
+      norm: norm
+      act: act
+      shape: [n_seeds, n_mb, width]
+    l03_linear:
+      type: mlp
+      dims: "[width, n_outlen]"
+      act: act
+      bias: true
+      do_actout: false
+      do_normout: false
+      mb_order: 1
+      norm: norm
+      shape: [n_seeds, n_mb, n_outlen]
+    l04_mlp1inp:
+      type: mlp
+      input: l00_input
+      dims: "[n_inplen, n_outlen]"
+      act: act
+      norm: norm
+      do_actout: false
+      do_normout: false
+      bias: true
+      mb_order: 1
+      shape: [n_seeds, n_mb, n_outlen]
+    l05_mlp2inp:
+      type: mlp
+      input: l00_input
+      dims: "[n_inplen, width, n_outlen]"
+      act: act
+      norm: norm
+      do_actout: false
+      do_normout: false
+      bias: true
+      mb_order: 1
+      shape: [n_seeds, n_mb, n_outlen]
+    l06_stack:
+      type: stack
+      dim: -1
+      input: [l04_mlp1inp, l05_mlp2inp, l03_linear]
+      shape: [n_seeds, n_mb, n_outlen, 3]
+    l06_sum:
+      type: mean
+      dim: -1
+      shape: [n_seeds, n_mb, n_outlen]
+
+nnmodules/resmlpencplus:
+  ref: nnmodules/resmlpenc
+  layers/l05_resmlp/type/def: resmlpplus
+
+nnmodules/resmlpdecplus:
+  ref: nnmodules/resmlpenc
+  layers/l01_resmlp/type/def: resmlpplus

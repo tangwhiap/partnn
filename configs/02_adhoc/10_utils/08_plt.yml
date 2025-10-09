@@ -1,0 +1,373 @@
+############### Colors ###############
+colorspec: 
+  blue: [0.0, 0.11, 0.498, 1.0]
+  orange: [0.694, 0.251, 0.051, 1.0]
+  green: [0.071, 0.443, 0.11, 1.0]
+  red: [0.549, 0.031, 0.0, 1.0]
+  purple: [0.349, 0.118, 0.443, 1.0]
+  brown: [0.349, 0.184, 0.051, 1.0]
+  pink: [0.635, 0.208, 0.51, 1.0]
+  gray: [0.235, 0.235, 0.235, 1.0]
+  yellow: [0.722, 0.522, 0.039, 1.0]
+  cyan: [0.0, 0.388, 0.455, 1.0]
+  black: [0.0, 0.0, 0.0, 1.0]
+  bluelite: [0.0, 0.11, 0.498, 0.5]
+  orangelite: [0.694, 0.251, 0.051, 0.5]
+  greenlite: [0.071, 0.443, 0.11, 0.5]
+  redlite: [0.549, 0.031, 0.0, 0.5]
+  purplelite: [0.349, 0.118, 0.443, 0.5]
+  brownlite: [0.349, 0.184, 0.051, 0.5]
+  pinklite: [0.635, 0.208, 0.51, 0.5]
+  graylite: [0.235, 0.235, 0.235, 0.5]
+  yellowlite: [0.722, 0.522, 0.039, 0.5]
+  cyanlite: [0.0, 0.388, 0.455, 0.5]
+  blacklite: [0.0, 0.0, 0.0, 0.5]
+  
+colors/dark:
+  total number: blue
+  total mass: blue
+  
+  train/orig: blue
+  train/rcnst: aqua
+  test/orig: red
+  test/rcnst: fuchsia
+  normal/genr: green
+  train/ltnt: blue
+  test/ltnt: red
+  normal/ltnt: green
+  train/blob: blue
+  test/blob: red
+  
+  SO4: bluelite
+  NO3: orange
+  Cl: green
+  NH4: redlite
+  MSA: purple
+  ARO1: brown
+  ARO2: pink
+  ALK1: graylite
+  OLE1: yellow
+  API1: cyan
+  API2: black
+  LIM1: cyanlite
+  LIM2: orangelite
+  CO3: green
+  Na: brownlite
+  Ca: purplelite
+  OIN: red
+  OC: pinklite
+  BC: gray
+  MOC: yellowlite
+  H2O: blue
+
+colors/bright:
+  ref: colors/dark
+  def:
+    train/orig: blue
+    train/rcnst: cyan
+    test/orig: red
+    test/rcnst: pink
+    normal/genr: green
+    train/ltnt: blue
+    test/ltnt: red
+    normal/ltnt: green
+    train/blob: blue
+    test/blob: red
+
+########### General Themes ###########
+theme/dark:
+  style: dark_background
+  tckprms/colors: white
+  xlbl/color: white
+  ylbl/color: white
+  colorspec/ref: colorspec
+  colors/ref: colors/dark
+
+theme/bright:
+  style: default
+  tckprms/colors: black
+  xlbl/color: black
+  ylbl/color: black
+  colorspec/ref: colorspec
+  colors/ref: colors/bright
+
+########### Mass Bar Plots ###########
+# Bar plot options for 5x5 axis (dark, y-shared, mass)
+mplopts/mbar/5x5/dark:
+  ref: theme/dark
+
+  ######## The x-Axis Parameters ########
+  xlbl/xlabel: Diameter
+  xlbl/labelpad: null
+  xscale: log
+  xlim: [1e-9, 1e-4]
+  xticks/ticks: [1e-8, 1e-5]
+
+  # The x tick formatter
+  xtickformatter/type: eng
+  xtickformatter/unit: m
+  xtickformatter/sep: ''
+
+  ######## The y-Axis Parameters ########
+  ylbl/ylabel: $m_{chem}$
+  ylbl/labelpad: null
+  yscale: linear
+
+  # The y tick formatter
+  ytickformatter/type: eng
+  ytickformatter/unit: g
+  ytickformatter/sep: ''
+  ytickformatter/mul: 1000.0
+
+  ########## Figure Generation ##########
+  plt.subplots/nrows: 5
+  plt.subplots/ncols: 5
+  plt.subplots/squeeze: false
+  plt.subplots/sharex: true
+  plt.subplots/sharey: true
+  plt.subplots/dpi: 120
+  plt.subplots/layout: tight
+  plt.subplots/axsize: [2.0, 1.4]
+
+  ######### Layout Adjustments #########
+  layout/layout: tight
+  layout/w_pad: 0.05
+  layout/h_pad: 0.2
+  layout/rect: [0, 0.1, 1.0, 1.0]
+
+  ########## ax.bar Arguments ##########
+  # Note: 
+  #     The 'bar' method is inefficient, however, 
+  #     it allows you to see the dividers between bars.
+  #     Uncomment the following two ines, and comment 
+  #     the 'fill_between' method to use the 'bar' method.
+  # ax.bar/method: bar
+  # ax.bar/align: edge
+  ax.bar/method: fill_between
+  ax.bar/edgecolor: white
+  ax.bar/lw: 0.7
+
+  # ########### Channel Labels ###########
+  # labels: [SO4, NO3, Cl, NH4, MSA, ARO1, ARO2, ALK1, OLE1, API1, 
+  #   API2, LIM1, LIM2, CO3, Na, Ca, OIN, OC, BC, MOC, H2O]
+  
+  ################ Legend ###############
+  leg/loc: lower center
+  leg/bbox_to_anchor: [0.5, -0.02]
+  leg/ncol: 7
+
+  ################ General ##############
+  colorspec/ref: colorspec
+  colors/ref: colors
+
+# Bar plot options for 5x5 axis (bright, y-shared, mass)
+mplopts/mbar/5x5/bright:
+  ref:
+    - mplopts/mbar/5x5/dark
+    - theme/bright
+
+# Bar plot options for 5x5 axis (dark, y-indep., mass)
+mplopts/mbar/5x5i/dark:
+  ref: mplopts/mbar/5x5/dark
+  def:
+    ########## Figure Generation ##########
+    plt.subplots/axsize: [2.1, 1.4]
+    plt.subplots/sharey: false
+    ######### Layout Adjustments #########
+    layout/w_pad: 0.2
+    layout/h_pad: 0.2
+
+# Bar plot options for 5x5 axis (bright, y-indep., mass)
+mplopts/mbar/5x5i/bright:
+  ref:
+    - mplopts/mbar/5x5i/dark
+    - theme/bright
+
+########### Count Bar Plots ##########
+# Bar plot options for 5x5 axis (dark, y-shared, count)
+mplopts/nbar/5x5/dark:
+  ref: mplopts/mbar/5x5/dark
+  def:
+    # The y tick formatter
+    ytickformatter/type: eng
+    ytickformatter/unit: ''
+    ytickformatter/sep: ''
+    ytickformatter/mul: 1000.0
+    ######## The y-Axis Parameters ########
+    ylbl/ylabel: $n_{prt}$
+  pop: [leg]
+
+# Bar plot options for 5x5 axis (bright, y-shared, count)
+mplopts/nbar/5x5/bright:
+  ref: mplopts/mbar/5x5/bright
+  def:
+    # The y tick formatter
+    ytickformatter/type: eng
+    ytickformatter/unit: ''
+    ytickformatter/sep: ''
+    ytickformatter/mul: 1000.0
+    ######## The y-Axis Parameters ########
+    ylbl/ylabel: $n_{prt}$
+  pop: [leg]
+
+# Bar plot options for 5x5 axis (dark, y-indep., count)
+mplopts/nbar/5x5i/dark:
+  ref: mplopts/mbar/5x5i/dark
+  def:
+    # The y tick formatter
+    ytickformatter/type: eng
+    ytickformatter/unit: ''
+    ytickformatter/sep: ''
+    ytickformatter/mul: 1000.0
+    ######## The y-Axis Parameters ########
+    ylbl/ylabel: $n_{prt}$
+  pop: [leg]
+
+# Bar plot options for 5x5 axis (bright, y-indep., count)
+mplopts/nbar/5x5i/bright:
+  ref: mplopts/mbar/5x5i/bright
+  def:
+    # The y tick formatter
+    ytickformatter/type: eng
+    ytickformatter/unit: ''
+    ytickformatter/sep: ''
+    ytickformatter/mul: 1000.0
+    ######## The y-Axis Parameters ########
+    ylbl/ylabel: $n_{prt}$
+  pop: [leg]
+
+########### Scatter Plots ############
+# Dark Themes
+# Scatter plot options for 1x1 axis (dark style)
+mplopts/sct/1x1/dark:
+  ############ General Style ###########
+  ref: theme/dark
+
+  ######## The x-Axis Parameters ########
+  xlbl/xlabel: '$MDS_1$'
+  xlbl/labelpad: null
+  xscale: linear
+  xticks/ticks: []
+  xticks/labels: []
+
+  ######## The y-Axis Parameters ########
+  ylbl/ylabel: '$MDS_2$'
+  ylbl/labelpad: null
+  yscale: linear
+  yticks/ticks: []
+  yticks/labels: []
+
+  ########## Figure Generation ##########
+  plt.subplots/nrows: 1
+  plt.subplots/ncols: 1
+  plt.subplots/squeeze: false
+  plt.subplots/sharex: false
+  plt.subplots/sharey: false
+  plt.subplots/dpi: 180
+  plt.subplots/layout: tight
+  # plt.subplots/axsize: [4.5, 3.0]
+  plt.subplots/axsize: [6.0, 4.5]
+
+  ######### Layout Adjustments #########
+  layout/layout: tight
+  layout/w_pad: null
+  layout/h_pad: null
+  layout/rect: [0, 0, 0.80, 1]
+
+  ######## ax.scatter Arguments ########
+  ax.scatter/marker: 'o'
+  ax.scatter/s: 7
+  ax.scatter/alpha: 1.0
+  ax.scatter/edgecolor: [1.0, 1.0, 1.0, 0.9]
+  ax.scatter/lw: 0.25
+
+  ################ Legend ###############
+  leg/loc: center right
+  leg/bbox_to_anchor: [1.0, 0.55]
+  leg/ncol: 1
+  leg/markerscale: 2
+  leg/borderaxespad: 0.0
+  leg/handletextpad: -0.2
+  leglbls/train/orig: Train Original
+  leglbls/train/rcnst: Train Rcnst.
+  leglbls/test/orig: Test Original
+  leglbls/test/rcnst: Test Rcnst.
+  leglbls/normal/genr: Generated
+  leglbls/train/ltnt: Train Latent
+  leglbls/test/ltnt: Test Latent
+  leglbls/normal/ltnt: Gen. Latent
+  leglbls/train/blob: Train Blobs
+  leglbls/test/blob: Test Blobs
+
+# Scatter plot options for 2x2 axis (dark style)
+mplopts/sct/2x2/dark:
+  ref: mplopts/sct/1x1/dark
+  def:
+    ########## Figure Generation ##########
+    plt.subplots/nrows: 2
+    plt.subplots/ncols: 2
+    plt.subplots/axsize: [4.0, 4.0]
+    ######## ax.scatter Arguments ########
+    ax.scatter/s: 5
+    ax.scatter/alpha: 0.9
+    ax.scatter/lw: 0.125
+    ################ Legend ###############
+    leg/loc: lower center
+    leg/ncol: 5
+    leg/markerscale: 4
+    leg/bbox_to_anchor: [0.5, 0.02]
+    ######### Layout Adjustments #########
+    layout/rect: [0, 0.05, 1.0, 1.0]
+
+# Scatter plot options for 5x5 axis (dark style)
+mplopts/sct/5x5/dark:
+  ########## Figure Generation ##########
+  plt.subplots/nrows: 5
+  plt.subplots/ncols: 5
+  plt.subplots/axsize: [2.0, 2.0]
+  ######## ax.scatter Arguments ########
+  ax.scatter/s: 1
+  ax.scatter/alpha: 0.9
+  ax.scatter/lw: 0.005
+  ################ Legend ###############
+  leg/loc: lower center
+  leg/ncol: 5
+  leg/markerscale: 10
+  leg/bbox_to_anchor: [0.5, 0.02]
+  ######### Layout Adjustments #########
+  layout/rect: [0, 0.05, 1.0, 1.0]
+
+# Bright Themes
+# Scatter plot options for 1x1 axis (bright style)
+mplopts/sct/1x1/bright:
+  ref: 
+    - mplopts/sct/1x1/dark
+    - theme/bright
+
+# Scatter plot options for 2x2 axis (bright style)
+mplopts/sct/2x2/bright:
+  ref: 
+    - mplopts/sct/2x2/dark
+    - theme/bright
+
+# Scatter plot options for 5x5 axis (bright style)
+mplopts/sct/5x5/bright:
+  ref: 
+    - mplopts/sct/5x5/dark
+    - theme/bright
+
+# Scatter and blob plot for 1x1 axis (dark style)
+mplopts/blb/1x1/dark:
+  ref: mplopts/sct/1x1/dark
+  def:
+    xlbl/xlabel: $Z_1$
+    xticks/ticks: []
+    xticks/labels: []
+
+    ylbl/ylabel: $Z_2$
+    yticks/ticks: []
+    yticks/labels: []
+
+    ax.scatter/s: 0.15
+    ax.scatter/lw: 0.05
+    leg/markerscale: 15

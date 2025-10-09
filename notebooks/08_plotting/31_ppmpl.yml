@@ -1,0 +1,371 @@
+###############################################################################
+######################## Main Setting 1 (Legacy Plots) ########################
+###############################################################################
+main/mplglbls:
+  figsize: [2.2, 3.8]
+  smry/sel: null
+  smry/cri: null
+  colorspec: 
+    blue: '#001c7f'
+    orange: '#b1400d'
+    green: '#12711c'
+    red: '#8c0800'
+    purple: '#591e71'
+    brown: '#592f0d'
+    pink: '#a23582'
+    gray: '#3c3c3c'
+    yellow: '#b8850a'
+    cyan: '#006374'
+    black: '#000000'
+  yscale: log
+  ax.plot/marker: '*'
+  ax.plot/lw: 2
+  ax.bar/edgecolor: black
+  ax.bar/linewidth: 1
+  ax.bar/barswidth: 0.85
+  ax.bar/grpby: x
+  arrowprops/arrowstyle: "-|>"
+  ax.annotate/xycoords: axes fraction 
+  ax.annotate/textcoords: axes fraction
+  elements:
+    '$\sigma_{\text{sim}}=0.1$':
+      include: [{model: sim, noise_amp: 0.1}]
+      ax.plot/color: blue
+      ax.bar/color: blue
+    '$\sigma_{\text{sim}}=0.2$':
+      include: [{model: sim, noise_amp: 0.2}]
+      ax.plot/color: green
+      ax.bar/color: green
+    '$\sigma_{\text{sim}}=0.3$':
+      include: [{model: sim, noise_amp: 0.3}]
+      ax.plot/color: red
+      ax.bar/color: red
+    '$\sigma_{\text{sim}}=0.4$':
+      include: [{model: sim, noise_amp: 0.4}]
+      ax.plot/color: orange
+      ax.bar/color: orange
+    '$\sigma_{\text{sim}}=0.5$':
+      include: [{model: sim, noise_amp: 0.5}]
+      ax.plot/color: purple
+      ax.bar/color: purple
+    MLP:
+      include: [{model: mlp}]
+      ax.plot/color: cyan
+      ax.bar/color: cyan
+    CNN:
+      include: [{model: cnn}]
+      ax.plot/color: pink
+      ax.bar/color: pink
+
+main/valrplcs:
+  n_bins: Bins
+  n_chem: Chems
+  one: One
+  l1: '$L_1$'
+  l2: '$L_2$'
+  'on': On
+  'off': Off
+  'n_chem, n_bins': 'Both'
+  full: Full
+
+main/xspecs:
+  magdim:
+    xlabel: 'Mag Dim'
+    kind: grpbar 
+
+  magpnrm:
+    xlabel: 'Mag P-Norm'
+    kind: grpbar
+
+  magexp:
+    xlabel: 'Mag Exponent ($\alpha_1$)'
+    kind: line
+    xlim: [0.05, 1.05]
+    xticks: [0.1, 0.4, 0.7, 1.0]
+  
+  magshft:
+    xlabel: 'Mag Shift'
+    kind: grpbar
+  
+  magscl:
+    xlabel: 'Mag Scale'
+    kind: grpbar
+
+  magscleps:
+    xlabel: 'Mag Scale Epsilon'
+    kind: line
+    xscale: log
+    xlim: [6e-7, 1.5e0]
+    xticks: [1e-6, 1e-4, 1e-2, 1e0]
+    xticklabels: ['$0$', '$10^{-4}$', '$10^{-2}$', '$10^{0}$']
+  
+  nrmexp: 
+    xlabel: 'Norm Exponent ($\alpha_2$)'
+    kind: line
+    xlim: [0.05, 1.05]
+    xticks: [0.1, 0.4, 0.7, 1.0]
+
+  nrmshft: 
+    xlabel: 'Norm Shift'
+    kind: grpbar
+  nrmscl: 
+    xlabel: 'Norm Scale'
+    kind: grpbar
+
+  nrmscleps: 
+    xlabel: 'Norm Scale Epsilon'
+    kind: line
+    xscale: log
+    xlim: [6e-7, 1.5e0]
+    xticks: [1e-6, 1e-4, 1e-2, 1e0]
+    xticklabels: ['$0$', '$10^{-4}$', '$10^{-2}$', '$10^{0}$']
+
+  nrmscldim: 
+    xlabel: 'Norm Scale Dim'
+    kind: grpbar
+    xtickparams/labelsize: 9
+  
+  cntexp: 
+    xlabel: 'Number Exponent ($\alpha_3$)'
+    kind: line
+    xlim: [0.05, 1.05]
+    xticks: [0.1, 0.4, 0.7, 1.0]
+  
+  cntshft: 
+    xlabel: 'Number Shift'
+    kind: grpbar
+  cntscl: 
+    xlabel: 'Number Scale'
+    kind: grpbar
+
+  cntscleps: 
+    xlabel: 'Number Scale Epsilon'
+    kind: line
+    xscale: log
+    xlim: [6e-7, 1.5e0]
+    xticks: [1e-6, 1e-4, 1e-2, 1e0]
+    xticklabels: ['$0$', '$10^{-4}$', '$10^{-2}$', '$10^{0}$']
+
+  cntscldim: 
+    xlabel: 'Number Scale Dim'
+    kind: grpbar
+  
+  nrmeps:
+    xlabel: 'Mass Input Epsilon'
+    kind: line
+    xscale: log
+    xlim: [1e-105, 1e-20]
+    xticks: [1e-100, 1e-75, 1e-50, 1e-25]
+    xticklabels: ['$10^{-100}$', '$10^{-75}$', '$10^{-50}$', '$10^{-25}$']
+
+  cnteps:
+    xlabel: 'Count Input Epsilon'
+    kind: line
+    xscale: log
+    xlim: [6e2, 1.5e5]
+    xticks: [1e3, 1e4, 1e5]
+    xticklabels: ['$10^{3}$', '$10^{4}$', '$10^{5}$']
+
+main/yspecs:
+  ccn_err:
+    ylabel: CCN Spectrum Error
+    ylim: [0.03, 2.0]
+    yticks: [0.03, 0.1, 0.3, 1.0]
+    yticklabels: ['0.03', '0.1', '0.3', '1']
+    ylabelpad: -3
+
+  opt_err:
+    ylabel: Optical Error
+    ylim: [0.1, 2.0]
+    yticks: [0.1, 0.3, 1.0]
+    yticklabels: ['0.1', '0.3', '1']
+    ylabelpad: 1
+
+  loginp_err:
+    ylabel: INP Frozen Fraction Error
+    ylim: [10, 500]
+    yticks: [10, 30, 100, 300]
+    yticklabels: ['10', '30', '100', '300']
+    ylabelpad: 1
+
+  n_relerr:
+    ylabel: Count Relative Error
+    ylim: [0.01, 1.0]
+    yticks: [0.01, 0.03, 0.1, 0.3, 1.0]
+    yticklabels: ['.01', '.03', '.1', '.3', '1']
+    ylabelpad: 1
+
+  m_chmrelerr:
+    ylabel: Speciated Mass Relative Error
+    ylim: [0.1, 2.0]
+    yticks: [0.1, 0.3, 1.0]
+    yticklabels: ['0.1', '0.3', '1']
+    ylabelpad: 1
+
+  m_perchmrelerr:
+    ylabel: Per-Chem Mass Relative Error
+    ylim: [0.29, 2.01]
+    yticks: [0.3, 0.4, 0.6, 0.8, 2.0]
+    yticklabels: ['.3', '', '', '.8', '2']
+    ylabelpad: 3
+
+  qs_relerr/ylabel: Scattering Efficiency Relative Error
+  qa_relerr/ylabel: Absorption Efficiency Relative Error
+  inp_err/ylabel: INP Frozen Fraction Curve Error
+  m_relerr/ylabel: Total Mass Relative Error
+
+###############################################################################
+####################### Main Setting 2 (Paper Revision) #######################
+###############################################################################
+
+main/mplglbls2:
+  ref: main/mplglbls
+  def:
+    yscale: linear
+    elements:
+      '$\sigma_i=0.1$':
+        include: [{model: sim, noise_amp: 0.1}]
+        ax.plot/color: blue
+        ax.bar/color: blue
+      '$\sigma_i=0.2$':
+        include: [{model: sim, noise_amp: 0.2}]
+        ax.plot/color: green
+        ax.bar/color: green
+      '$\sigma_i=0.3$':
+        include: [{model: sim, noise_amp: 0.3}]
+        ax.plot/color: red
+        ax.bar/color: red
+      '$\sigma_i=0.4$':
+        include: [{model: sim, noise_amp: 0.4}]
+        ax.plot/color: orange
+        ax.bar/color: orange
+      '$\sigma_i=0.5$':
+        include: [{model: sim, noise_amp: 0.5}]
+        ax.plot/color: purple
+        ax.bar/color: purple
+      Full Model Training:
+        include: [{model: cnn}]
+        ax.plot/color: pink
+        ax.bar/color: pink
+
+  pop:
+    - elements/MLP
+    - elements/CNN
+    - elements/$\sigma_{\text{sim}}=0.1$
+    - elements/$\sigma_{\text{sim}}=0.2$
+    - elements/$\sigma_{\text{sim}}=0.3$
+    - elements/$\sigma_{\text{sim}}=0.4$
+    - elements/$\sigma_{\text{sim}}=0.5$
+
+main/valrplcs2:
+  ref: main/valrplcs
+  def: 
+    l1: '$l_1$'
+    l2: '$l_2$'
+
+main/xspecs2:
+  ref: main/xspecs
+  def:
+    magdim/xlabel: 'Mass Mag Dim'
+
+    magpnrm/xlabel: 'Mass Mag P-Norm'
+
+    magexp/xlabel: 'Mass Mag Exp ($\alpha_1$)'
+    
+    magshft/xlabel: 'Mass Mag Shift'
+    
+    magscl/xlabel: 'Mass Mag Scale'
+
+    magscleps/xlabel: 'Mass Mag Scale Epsilon'
+    
+    nrmexp/xlabel: 'Mass Prop Exp ($\alpha_2$)'
+
+    nrmshft/xlabel: 'Mass Prop Shift'
+    
+    nrmscl/xlabel: 'Mass Prop Scale'
+
+    nrmscleps/xlabel: 'Mass Prop Scale Epsilon'
+
+    nrmscldim/xlabel: 'Mass Prop Scale Dim'
+    
+    cntexp/xlabel: 'Number Exp ($\alpha_3$)'
+    
+    cntshft/xlabel: 'Number Shift'
+
+    cntscl/xlabel: 'Number Scale'
+
+    cntscleps/xlabel: 'Number Scale Epsilon'
+
+    cntscldim/xlabel: 'Number Scale Dim'
+    
+    nrmeps/xlabel: 'Mass Input Epsilon ($\epsilon_m$)'
+
+    cnteps/xlabel: 'Count Input Epsilon ($\epsilon_n$)'
+
+main/yspecs2:
+  ccn_err:
+    ylabel: CCN Spectrum Relative Error
+    ylim: [0.0, 1.0]
+    yticks: [0.0, 0.2, 0.4, 0.6, 0.8, 1.0]
+    yticklabels: ['0', '0.2', '0.4', '0.6', '0.8', '1']
+    ylabelpad: 3
+
+  opt_err:
+    ylabel: Optical Relative Error
+    ylim: [0.0, 1.0]
+    yticks: [0.0, 0.2, 0.4, 0.6, 0.8, 1.0]
+    yticklabels: ['0', '0.2', '0.4', '0.6', '0.8', '1']
+    ylabelpad: 3
+
+  n_relerr:
+    ylabel: Number Relative Error
+    ylim: [0.0, 1.0]
+    yticks: [0.0, 0.2, 0.4, 0.6, 0.8, 1.0]
+    yticklabels: ['0', '0.2', '0.4', '0.6', '0.8', '1']
+    ylabelpad: 3
+
+  m_chmrelerr:
+    ylabel: Speciated Mass Relative Error
+    ylim: [0.0, 1.0]
+    yticks: [0.0, 0.2, 0.4, 0.6, 0.8, 1.0]
+    yticklabels: ['0', '0.2', '0.4', '0.6', '0.8', '1']
+    ylabelpad: 3
+
+  m_perchmrelerr:
+    ylabel: Per-Chem Mass Relative Error
+    ylim: [0.0, 1.0]
+    yticks: [0.0, 0.2, 0.4, 0.6, 0.8, 1.0]
+    yticklabels: ['0', '0.2', '0.4', '0.6', '0.8', '1']
+    ylabelpad: 3
+
+  qs_relerr/ylabel: Scattering Relative Error
+  qa_relerr/ylabel: Absorption Relative Error
+  m_relerr/ylabel: Total Mass Relative Error
+
+###############################################################################
+############################# Hue Grouped Setting #############################
+###############################################################################
+# This is a second variant of the main settings, where the bar plots are 
+# grouped by their hue rather than the x value.
+huegrpd/ref: main
+huegrpd/def:
+  mplglbls/ax.bar/grpby: hue
+
+  valrplcs:
+    n_bins: B
+    n_chem: C
+    one: O
+    l1: '"1"'
+    l2: '"2"'
+    'on': 'Y'
+    'off': 'N'
+    'n_chem, n_bins': 'T'
+    full: F
+
+  xspecs/magdim/xtickparams/labelsize: 6
+  xspecs/magpnrm/xtickparams/labelsize: 10
+  xspecs/nrmscldim/xtickparams/labelsize: 5.5
+
+  
+
+  
